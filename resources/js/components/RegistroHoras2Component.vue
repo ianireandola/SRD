@@ -159,7 +159,6 @@
                 </tbody>
             </table>
         </b-modal>
-
     </div>
 </template>
 
@@ -427,6 +426,7 @@ export default {
                 .then(()=>{
                     this.letras.splice(index, 1);
                 });
+            
         },
         eliminarProyecto(item, index)
         {
@@ -437,17 +437,35 @@ export default {
         },
         eliminarSRDLetra(item, index)
         {
-            axios.delete(`/srd_letras/${item.id}`)
-                .then(()=>{
-                    this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
-                });
+            this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                okVariant: 'danger',
+                okTitle: 'Eliminar',
+                cancelTitle: 'Cancelar'
+            }).then(value=> {
+                if( value === true )
+                {
+                    axios.delete(`/srd_letras/${item.id}`)
+                        .then(()=>{
+                            this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
+                        });
+                }
+            })  
         },
         eliminarSRDProyecto(item, index)
         {
-            axios.delete(`/srd_proyectos/${item.id}`)
-                .then(()=>{
-                    this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
-                });   
+            this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                okVariant: 'danger',
+                okTitle: 'Eliminar',
+                cancelTitle: 'Cancelar'
+            }).then(value=> {
+                if( value === true )
+                {
+                    axios.delete(`/srd_proyectos/${item.id}`)
+                        .then(()=>{
+                            this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
+                        }); 
+                }
+            })  
         },
         añadirLetra(item)
         {
