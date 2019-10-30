@@ -2,7 +2,6 @@
 <div>
     <h2> Historial de horas registradas </h2>
 
-     <form @submit.prevent="registrarHoras()" class="mb-3">
         <table class="table table-hover table-reponsive overflow-auto">
             <thead class="thead-light">
                 <tr>
@@ -34,7 +33,7 @@
                 </tr>
             </tbody>
         </table>
-     </form>
+     
 </div>
 </template>
 
@@ -79,23 +78,37 @@
         },
         methods:
         {
-            registrarHoras()
-            {
-
-            },
             eliminarSRDLetra(item, index)
             {
-                axios.delete(`/srd_letras/${item.id}`)
-                    .then(()=>{
-                        this.srd_letras.splice(index, 1);
-                    });
+                this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                    okVariant: 'danger',
+                    okTitle: 'Eliminar',
+                    cancelTitle: 'Cancelar'
+                }).then(value=> {
+                    if( value === true )
+                    {
+                        axios.delete(`/srd_letras/${item.id}`)
+                            .then(()=>{
+                                this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
+                            });
+                    }
+                })
             }, 
             eliminarSRDProyecto(item, index)
             {
-                axios.delete(`/srd_proyectos/${item.id}`)
-                    .then(()=>{
-                        this.srd_proyectos.splice(index, 1);
-                    });
+                this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                    okVariant: 'danger',
+                    okTitle: 'Eliminar',
+                    cancelTitle: 'Cancelar'
+                }).then(value=> {
+                    if( value === true )
+                    {
+                        axios.delete(`/srd_proyectos/${item.id}`)
+                            .then(()=>{
+                                this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
+                            }); 
+                    }
+                }) 
             }
         }
     }
