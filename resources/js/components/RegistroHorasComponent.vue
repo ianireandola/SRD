@@ -70,13 +70,13 @@
                     <tr v-for="(letra, index) in letras" v-bind:key="index">
                         <td class="text-center"><font-awesome-icon :icon="['fas', 'times-circle']"  @click="eliminarLetra(letra, index)"/></td>
                         <td>{{letra.nombre}}</td>
-                        <td class="text-center"> <b-form-input type="number" step="0.01" v-model="srd_letra.cantidadHoras[index]" v-on:change="guardarSRDLetra(letra, index)"/></td>
+                        <td class="text-center"> <b-form-input type="number" min="0" max="12" step="0.25" v-model="srd_letra.cantidadHoras[index]" v-on:change="guardarSRDLetra(letra, index)"/></td>
                         <td class="text-center"> <b-form-checkbox class="mb-3" v-model="srd_letra.viaje[index]" v-on:change="guardarSRDLetra(letra, index)"/></td>
                     </tr>
                     <tr v-for="(proyecto, index) in proyectos" v-bind:key="`A-${index}`">
                         <td class="text-center"><font-awesome-icon :icon="['fas', 'times-circle']"  @click="eliminarProyecto(proyecto, index)"/></td>
                         <td>{{proyecto.nombre}}</td>
-                        <td class="text-center"><b-form-input type="number" step="0.01" v-model="srd_proyecto.cantidadHoras[index]" v-on:change="guardarSRDProyecto(proyecto, index)"/></td>
+                        <td class="text-center"><b-form-input type="number" min="0" max="12" v-model="srd_proyecto.cantidadHoras[index]" v-on:change="guardarSRDProyecto(proyecto, index)"/></td>
                         <td class="text-center"><b-form-checkbox class="mb-3" v-model="srd_proyecto.viaje[index]" v-on:change="guardarSRDProyecto(proyecto, index)"/></td>
                     </tr>
                 </tbody>
@@ -156,7 +156,6 @@ export default {
         return{
             valueType,
             date: null,
-            cantidadHoras: 0,
             numCoincidentes: 0,
             finalindexletra: 0,
             finalindexproyecto: 0,
