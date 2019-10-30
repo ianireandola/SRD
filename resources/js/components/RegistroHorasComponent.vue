@@ -55,7 +55,7 @@
                             <b-popover target="popover-target-3" triggers="hover" placement="top">
                                 Elimina letra/proyecto de tu panel de habituales
                             </b-popover>
-                        <th class="text-center" scope="col" width="84%"> HABITUALES </th>
+                        <th scope="col" width="84%"> HABITUALES </th>
                         <th id="popover-target-6" class="text-center" scope="col" width="3%"> INTRODUCIR HORAS</th>
                             <b-popover target="popover-target-6" triggers="hover" placement="top">
                                 Cantidad de horas necesitadas
@@ -76,8 +76,8 @@
                     <tr v-for="(proyecto, index) in proyectos" v-bind:key="`A-${index}`">
                         <td class="text-center"><font-awesome-icon :icon="['fas', 'times-circle']"  @click="eliminarProyecto(proyecto, index)"/></td>
                         <td>{{proyecto.nombre}}</td>
-                        <td class="text-center"> <b-form-input type="number" step="0.01" v-model="srd_proyecto.cantidadHoras[index]" v-on:change="guardarSRDProyecto(proyecto, index)"/></td>
-                        <td class="text-center"> <b-form-checkbox class="mb-3" v-model="srd_proyecto.viaje[index]" v-on:change="guardarSRDProyecto(proyecto, index)"/></td>
+                        <td class="text-center"><b-form-input type="number" step="0.01" v-model="srd_proyecto.cantidadHoras[index]" v-on:change="guardarSRDProyecto(proyecto, index)"/></td>
+                        <td class="text-center"><b-form-checkbox class="mb-3" v-model="srd_proyecto.viaje[index]" v-on:change="guardarSRDProyecto(proyecto, index)"/></td>
                     </tr>
                 </tbody>
             </table>
@@ -101,8 +101,8 @@
             </template>
 
             <table class="table table-hover">
-                <thead>
-                    <th class="text-center" scope="col">HABITUALES</th>
+                <thead class="thead-light">
+                    <th scope="col">HABITUALES</th>
                     <th class="text-center" scope="col">CANTIDAD HORAS</th>
                     <th class="text-center" scop e="col">SERVICIO OFICIAL</th>
                     <th class="text-center" scop e="col">ELIMINAR</th>
@@ -114,7 +114,7 @@
                         <td class="text-center">
                             <input class="form-check-input" type="checkbox" v-model="srd_letra_coincidente.viaje" disabled>
                         </td>
-                        <td class="text-center"><b-button block variant="secondary" type="submit" @click="eliminarSRDLetra(srd_letra, index)">Eliminar</b-button></td>
+                        <td class="text-center"><b-button block variant="secondary" type="submit" @click="eliminarSRDLetra(srd_letra_coincidente, index)">Eliminar</b-button></td>
                     </tr>
                     <tr v-for="(srd_proyecto_coincidente, index) in srd_proyecto_coincidentes" v-bind:key="`A-${index}`">
                         <td>{{srd_proyecto_coincidente.nombre}}</td>
@@ -122,7 +122,7 @@
                         <td class="text-center">
                             <input class="form-check-input" type="checkbox" v-model="srd_proyecto_coincidente.viaje" disabled>
                         </td>
-                        <td class="text-center"><b-button block variant="secondary" type="submit" @click="eliminarSRDProyecto(srd_proyecto, index)">Eliminar</b-button></td>
+                        <td class="text-center"><b-button block variant="secondary" type="submit" @click="eliminarSRDProyecto(srd_proyecto_coincidente, index)">Eliminar</b-button></td>
                     </tr>
                 </tbody>
             </table>
@@ -136,6 +136,8 @@ import Datepicker from 'vue2-datepicker'
 import moment from "moment";
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faTimesCircle } from '@fortawesome/free-solid-svg-icons'
+
+library.add(faTimesCircle)
 
 export default {
     name: "RegistroHoras",
@@ -155,7 +157,7 @@ export default {
             valueType,
             date: null,
             cantidadHoras: 0,
-            viaje: 0,
+            numCoincidentes: 0,
             finalindexletra: 0,
             finalindexproyecto: 0,
             letras: [],
@@ -274,11 +276,11 @@ export default {
                             this.srd_letra.viaje[i] = 0;
                         }
                         const params ={
-                        letra_id: this.srd_letra.letra_id[i],
-                        user_id: this.currentUser,
-                        fecha: this.date,
-                        cantidadHoras: this.srd_letra.cantidadHoras[i],
-                        viaje: this.srd_letra.viaje[i]
+                            letra_id: this.srd_letra.letra_id[i],
+                            user_id: this.currentUser,
+                            fecha: this.date,
+                            cantidadHoras: this.srd_letra.cantidadHoras[i],
+                            viaje: this.srd_letra.viaje[i]
                         }
                         axios.post(`/srd_letras`, params)
                     }                    
@@ -292,11 +294,11 @@ export default {
                             this.srd_proyecto.viaje[i] = 0;
                         }
                         const params={
-                        proyecto_id: this.srd_proyecto.proyecto_id[i],
-                        user_id: this.currentUser,
-                        fecha: this.date,
-                        cantidadHoras: this.srd_proyecto.cantidadHoras[i],
-                        viaje: this.srd_proyecto.viaje[i]
+                            proyecto_id: this.srd_proyecto.proyecto_id[i],
+                            user_id: this.currentUser,
+                            fecha: this.date,
+                            cantidadHoras: this.srd_proyecto.cantidadHoras[i],
+                            viaje: this.srd_proyecto.viaje[i]
                         }
                         axios.post(`/srd_proyectos`, params)
                     }
@@ -362,6 +364,20 @@ export default {
                     this.proyectos.splice(index, 1);
                 });
         },
+        eliminarSRDLetra(item, index)
+        {
+            axios.delete(`/srd_letras/${item.id}`)
+                .then(()=>{
+                    this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
+                });
+        },
+        eliminarSRDProyecto(item, index)
+        {
+            axios.delete(`/srd_proyectos/${item.id}`)
+                .then(()=>{
+                    this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
+                });   
+        },
         añadirLetra(item)
         {
             this.todoLetra = item;
@@ -425,8 +441,24 @@ export default {
         },
         comprobarFecha()
         {
+            axios.get(`srd_proyectos/${this.date}/edit`)
+                .then(res =>{
 
-            console.log(this.srd_proyecto_coincidentes.length)
+                    this.numCoincidentes = res.data;
+                    if(this.numCoincidentes === 0)
+                    {
+                        this.$swal.fire({
+                            position: 'top-end',
+                            type: 'warning',
+                            title: 'No hay horas registradas!',
+                            showConfirmButton: false,
+                            timer: 500
+                        })
+                    }else{
+                        this.$root.$emit('bv::show::modal', 'modal-tabla', '#focusThisOnClose');
+                    }
+                });
+
             axios.get(`/srd_letras/${this.date}`)
                 .then(res =>{
                     this.srd_letra_coincidentes = res.data;
@@ -435,12 +467,7 @@ export default {
             axios.get(`/srd_proyectos/${this.date}`)
                 .then(res=>{
                     this.srd_proyecto_coincidentes = res.data;
-                });
-
-            console.log(this.srd_proyecto_coincidentes.length)
-
-            this.$root.$emit('bv::show::modal', 'modal-tabla', '#focusThisOnClose');
- 
+                });         
         }
     }
 }

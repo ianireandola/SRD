@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Seccion;
 use App\Proyecto;
 use App\srd_proyecto;
+use App\srd_letra;
 
 class SRDProyectoController extends Controller
 {
@@ -64,6 +65,7 @@ class SRDProyectoController extends Controller
             $srd_proyecto->el_id = $request->elemento_id;
             $srd_proyecto->fecha = $request->fecha;
             $srd_proyecto->cantidadHoras = $request->cantidadHoras;
+            $srd_proyecto->viaje = $request->viaje;
 
             $srd_proyecto->save();
         }else{
@@ -72,6 +74,7 @@ class SRDProyectoController extends Controller
             $srd_proyecto->us_id = $request->user_id;
             $srd_proyecto->fecha = $request->fecha;
             $srd_proyecto->cantidadHoras = $request->cantidadHoras;
+            $srd_proyecto->viaje = $request->viaje;
 
             $srd_proyecto->save();
         }
@@ -100,9 +103,19 @@ class SRDProyectoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($fecha)
     {
-        //
+        $srd_proyectos = srd_proyecto::select('srd_proyectos.id')
+            ->where('srd_proyectos.fecha', '=', $fecha)
+            ->count();
+
+        $srd_letras = srd_letra::select('srd_letras.id')
+            ->where('srd_letras.fecha', '=', $fecha)
+            ->count();
+
+        $srd_total = $srd_letras + $srd_proyectos;
+
+        return $srd_total;
     }
 
     /**

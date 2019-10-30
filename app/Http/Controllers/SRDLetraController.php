@@ -76,9 +76,13 @@ class SRDLetraController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($fecha)
     {
-        //
+        $srd_letras = srd_letra::select('srd_letras.id')
+            ->where('srd_letras.fecha', '=', $fecha)
+            ->count();
+
+        return $srd_letras;
     }
 
     /**

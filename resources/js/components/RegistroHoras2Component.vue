@@ -55,7 +55,7 @@
                             <b-popover target="popover-target-3" triggers="hover" placement="top">
                                 Elimina letra/proyecto de tu panel de habituales
                             </b-popover>
-                        <th class="text-center" scope="col" width="32%"> HABITUALES </th>
+                        <th scope="col" width="32%"> HABITUALES </th>
                         <th id="popover-target-4" class="text-center" scope="col" width="29,5%"> ACCIÓN NIVEL 1 </th>
                             <b-popover target="popover-target-4" triggers="hover" placement="top">
                                 Acción que se ha llevado a cabo
@@ -126,6 +126,40 @@
                 </b-col>
             </b-row>
         </form>
+
+        <b-modal id="modal-tabla" hide-footer size="lg">
+            <template v-slot:modal-title>
+                Horas registradas en día: <b>{{date}} </b>
+            </template>
+            <b-alert show>Para más información sobre las horas registradas en proyectos en el historial</b-alert>
+            <table class="table table-hover">
+                <thead class="thead-light">
+                    <th scope="col">HABITUALES</th>
+                    <th class="text-center" scope="col">CANTIDAD HORAS</th>
+                    <th class="text-center" scop e="col">SERVICIO OFICIAL</th>
+                    <th class="text-center" scop e="col">ELIMINAR</th>
+                </thead>
+                <tbody>
+                    <tr v-for="(srd_letra_coincidente, index) in srd_letra_coincidentes" v-bind:key="index">
+                        <td>{{srd_letra_coincidente.nombre}}</td>
+                        <td class="text-center">{{srd_letra_coincidente.cantidadHoras}}</td>
+                        <td class="text-center">
+                            <input class="form-check-input" type="checkbox" v-model="srd_letra_coincidente.viaje" disabled>
+                        </td>
+                        <td class="text-center"><b-button block variant="secondary" type="submit" @click="eliminarSRDLetra(srd_letra_coincidente, index)">Eliminar</b-button></td>
+                    </tr>
+                    <tr v-for="(srd_proyecto_coincidente, index) in srd_proyecto_coincidentes" v-bind:key="`A-${index}`">
+                        <td>{{srd_proyecto_coincidente.nombre}}</td>
+                        <td class="text-center">{{srd_proyecto_coincidente.cantidadHoras}}</td>
+                        <td class="text-center">
+                            <input class="form-check-input" type="checkbox" v-model="srd_proyecto_coincidente.viaje" disabled>
+                        </td>
+                        <td class="text-center"><b-button block variant="secondary" type="submit" @click="eliminarSRDProyecto(srd_proyecto_coincidente, index)">Eliminar</b-button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </b-modal>
+
     </div>
 </template>
 
@@ -156,8 +190,9 @@ export default {
         return{
             valueType,
             date: null,
-            finalindexletra: undefined,
-            finalindexproyecto: undefined,
+            numCoincidentes: 0,
+            finalindexletra: 0,
+            finalindexproyecto: 0,
             letras: [],
             letra:
             {
@@ -224,10 +259,24 @@ export default {
                 nombre: '',
                 proyecto_id: ''
             },
-            letras_coincidentes: [],
-            letra_coincidente:
-            { 
-                id: ''
+            srd_letra_coincidentes: [],
+            srd_letra_coincidente:
+            {
+                id: '',
+                letra_id: '',
+                fecha: '',
+                nombre: '',
+                cantidadHoras: '',
+                viaje: ''
+            },
+            srd_proyecto_coincidentes: [],
+            srd_proyecto_coincidente:
+            {
+                id: '',
+                fecha: '',
+                nombre: '',
+                cantidadHoras: '',
+                viaje: ''
             }
         }
     },
@@ -278,8 +327,8 @@ export default {
             {
                 alert("Debes añadir una fecha");
                 return;
-            }else{
-                console.log("Final index LETRA: " + this.finalindexletra);
+            }else
+            {
                 for(var i=0; i<=this.finalindexletra; i++)
                 {
                     if(this.srd_letra.cantidadHoras[i] !== undefined)
@@ -298,7 +347,6 @@ export default {
                         axios.post(`/srd_letras`, params)
                     }
                 }
-                console.log("Final index PROYECTO: " + this.finalindexproyecto);
                 for(var i=0; i<=this.finalindexproyecto; i++)
                 {
                     if(this.srd_proyecto.cantidadHoras[i] !== undefined)
@@ -349,9 +397,57 @@ export default {
                 this.srd_proyecto.accion2_id[i] = '',
                 this.srd_proyecto.elemento_id[i] = ''
             }
-            this.finalindexletra = undefined;
-            this.finalindexproyecto = undefined;
+            this.finalindexletra = 0;
+            this.finalindexproyecto = 0;
             this.date = null;
+        },
+        guardarSRDLetra(item, index)
+        {
+            this.srd_letra.letra_id[index] = item.id;
+            this.srd_letra.user_id = this.currentUser;
+
+            if(index > this.finalindexletra)
+            {
+                this.finalindexletra = index;
+            }            
+        },
+        guardarSRDProyecto(item, index)
+        {
+            this.srd_proyecto.proyecto_id[index] = item.id;
+            this.srd_proyecto.user_id = this.currentUser;
+
+            if(index > this.finalindexproyecto)
+            {
+                this.finalindexproyecto = index;
+            }
+        },
+        eliminarLetra(item, index)
+        {
+            axios.delete(`/letras/${item.id}/${this.currentUser}`)
+                .then(()=>{
+                    this.letras.splice(index, 1);
+                });
+        },
+        eliminarProyecto(item, index)
+        {
+            axios.delete(`/proyecto_user/${item.id}/${this.currentUser}`)
+                .then(()=>{
+                    this.proyectos.splice(index, 1);
+                });
+        },
+        eliminarSRDLetra(item, index)
+        {
+            axios.delete(`/srd_letras/${item.id}`)
+                .then(()=>{
+                    this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
+                });
+        },
+        eliminarSRDProyecto(item, index)
+        {
+            axios.delete(`/srd_proyectos/${item.id}`)
+                .then(()=>{
+                    this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
+                });   
         },
         añadirLetra(item)
         {
@@ -395,52 +491,6 @@ export default {
         {
             this.proyectos.push(item);
         },
-        eliminarLetra(item, index)
-        {
-            axios.delete(`/letras/${item.id}/${this.currentUser}`)
-                .then(()=>{
-                    this.letras.splice(index, 1);
-                });
-        },
-        eliminarProyecto(item, index)
-        {
-            axios.delete(`/proyecto_user/${item.id}/${this.currentUser}`)
-                .then(()=>{
-                    this.proyectos.splice(index, 1);
-                });
-        },
-        //Cuando se modifica la cantidad de horas o se clicka el viaje se guarda en el índice de la letra
-        guardarSRDLetra(item, index)
-        {
-            this.srd_letra.letra_id[index] = item.id;
-            this.srd_letra.user_id = this.currentUser;
-
-            if(this.finalindexletra === undefined)
-            {
-                this.finalindexletra = index;
-            }else{
-                if(index > this.finalindexletra)
-                {
-                    this.finalindexletra = index;
-                }
-            }
-            
-        },
-        guardarSRDProyecto(item, index)
-        {
-            this.srd_proyecto.proyecto_id[index] = item.id;
-            this.srd_proyecto.user_id = this.currentUser;
-
-            if(this.finalindexproyecto === undefined)
-            {
-                this.finalindexproyecto = index;
-            }else{
-                if(index > this.finalindexproyecto)
-                {
-                    this.finalindexproyecto = index;
-                }
-            }
-        },
         cancelar()
         {
             this.date = '';
@@ -468,23 +518,33 @@ export default {
         },
         comprobarFecha()
         {
-            /*axios.get(`/srd_letras`)
+            axios.get(`srd_proyectos/${this.date}/edit`)
                 .then(res =>{
-                    this.srd_letras = res.data;
+
+                    this.numCoincidentes = res.data;
+                    if(this.numCoincidentes === 0)
+                    {
+                        this.$swal.fire({
+                            position: 'top-end',
+                            type: 'warning',
+                            title: 'No hay horas registradas!',
+                            showConfirmButton: false,
+                            timer: 500
+                        })
+                    }else{
+                        this.$root.$emit('bv::show::modal', 'modal-tabla', '#focusThisOnClose');
+                    }
                 });
-            axios.get(`/srd_proyectos/create`)
+
+            axios.get(`/srd_letras/${this.date}`)
+                .then(res =>{
+                    this.srd_letra_coincidentes = res.data;
+                });
+
+            axios.get(`/srd_proyectos/${this.date}`)
                 .then(res=>{
-                    this.srd_proyectos = res.data;
+                    this.srd_proyecto_coincidentes = res.data;
                 });
-                
-            for(var i=0; i<=this.srd_letras.length; i++)
-            {
-                if(this.srd_letras[i].fecha === this.date)
-                {
-                    this.letras_coincidentes.push(this.srd_letras[i].letra_id);
-                    console.log("Coinciden: " + this.date + "   " + this.srd_letras[i].letra_id);
-                }
-            }*/
         }
     }
 }
