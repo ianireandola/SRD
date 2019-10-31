@@ -63,4 +63,6 @@ Route::prefix('admin')->group(function()
     Route::get('/usuarios/{usuario_id}/buscarFE', 'UserAdminController@FEcoincidentes');
     Route::resource('/usuarios', 'UserAdminController');
     Route::resource('/proyectos', 'ProyectoAdminController');
+    Route::match(['put', 'patch'], '/proyectospadre/nacionUpdate/{resource}', 'proyectoPadreController@nacionUpdate')->name('proyectospadre.nacionUpdate');
+    Route::resource('/proyectospadre', 'ProyectoPadreController');
 });
