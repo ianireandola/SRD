@@ -47,7 +47,7 @@
                 <td class="text-center">{{item.Q_Ind}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
-                    <button type="button" @click="relacionSecciones(item, index)" class="btn btn-info">Relación con secciones</button>
+                    <button type="button" @click="relacionSecciones(item)" class="btn btn-info">Relación con secciones</button>
                     <button type="button" @click="eliminarArea(item, index)" class="btn btn-secondary">Eliminar</button>
                 </td>
             </tr>
@@ -165,7 +165,7 @@ export default {
                     this.area = {nombre:'', Q_Ind:''};
                 })
         },
-        relacionSecciones(item, index)
+        relacionSecciones(item)
         {
             this.area.nombre = item.nombre;
             this.area.Q_Ind = item.Q_Ind;

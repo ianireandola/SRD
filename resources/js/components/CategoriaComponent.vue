@@ -29,6 +29,7 @@
                 <td class="text-center">{{item.nombre}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
+                    <button type="button" @click="relacionUsuarios(item)" class="btn btn-info">Relación con usuarios</button>
                     <button type="button" @click="eliminarCategoria(item, index)" class="btn btn-secondary">Eliminar</button>
                 </td>
             </tr>
@@ -46,14 +47,12 @@
             <thead>
                 <tr>
                     <th class="text-center" scope="col">USUARIO</th>
-                    <th class="text-center" scope="col">CATEGORÍA PERTENECIENTE</th>
                     <th class="text-center" scope="col">ELEGIR OTRA CATEGORÍA</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(usuario_coincidente, index) in usuarios_coincidentes" v-bind:key="index">
                     <td>{{usuario_coincidente.id}} - {{usuario_coincidente.nombre}}</td>
-                    <td class="text-center">{{usuario_coincidente.categoria_id}}</td>
                     <td class="text-center">
                         <b-form-select v-model="usuario_coincidente.categoria_id" v-on:change="guardarCambios(usuario_coincidente, index)">
                             <option v-for="categoria in categorias" v-bind:key="categoria.id" :value="categoria.id">{{categoria.id}} - {{categoria.nombre}}</option>
@@ -63,9 +62,6 @@
             </tbody>
         </table>
         <b-row>
-            <b-col>
-                <b-button class="mt-3" variant="primary" block>Guardar cambios</b-button>
-            </b-col>
             <b-col>
                 <b-button class="mt-3" block @click="cancelarEdicionModal($bvModal.hide('modal-categoria'))"> Cerrar </b-button>
             </b-col>
@@ -108,7 +104,6 @@ export default {
     },
     created()
     {
-        console.log('categoriaComponent created')
         axios.get('/admin/categorias/create')
             .then(res=>{
                 this.categorias = res.data;
@@ -148,11 +143,11 @@ export default {
                     this.categoria = {nombre:''};
                 })
         },
-        eliminarCategoria(item, index)
+        relacionUsuarios(item)
         {
             this.categoria.nombre = item.nombre;
             this.categoria.id = item.id;
-
+            
             for(var i=0; i<this.usuarios.length; i++)
             {
                 if(this.usuarios[i].categoria_id === item.id)
@@ -160,17 +155,32 @@ export default {
                     this.usuarios_coincidentes.push(this.usuarios[i]);
                 }
             }
-            if(this.usuarios_coincidentes.length === 0)
-            {
-                axios.delete(`/admin/categorias/${item.id}`)
-                .then(()=>{
-                    this.categorias.splice(index, 1);
-                });
-            }else
-            {
-                this.$root.$emit('bv::show::modal', 'modal-categoria', '#btnShow')
-            }
-            
+            this.$root.$emit('bv::show::modal', 'modal-categoria', '#btnShow')
+        },
+        eliminarCategoria(item, index)
+        {
+            axios.get(`/admin/usuarios/${item.id}/edit`)
+                .then(res=>{
+                    if (res.data === 0 )
+                    {
+                        this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                            okVariant: 'danger',
+                            okTitle: 'Eliminar',
+                            cancelTitle: 'Cancelar'
+                        }).then(value=>{
+                            if(value === true)
+                            {
+                                axios.delete(`/admin/categorias/${item.id}`)
+                                    .then(()=>{
+                                        this.categorias.splice(index, 1);
+                                    })
+                            }
+                        })
+                    }else
+                    {
+                        alert("La categoría tiene usuarios relacionados, no se puede eliminar")
+                    }
+                })           
         },
         cancelarEdicion()
         {

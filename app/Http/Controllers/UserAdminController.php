@@ -98,9 +98,13 @@ class UserAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($categoria_id)
     {
-        //
+        $usuarios = User::select('users.id')
+            ->where('users.categoria_id', '=', $categoria_id)
+            ->count();
+
+        return $usuarios;
     }
 
     /**
