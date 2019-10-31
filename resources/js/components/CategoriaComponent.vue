@@ -16,7 +16,7 @@
     </form>
 
     <table class="table table-hover">
-        <thead>
+        <thead class="thead-light">
             <tr>
                 <th class="text-center" scope="col">ID</th>
                 <th class="text-center" scope="col">NOMBRE</th>
@@ -44,7 +44,7 @@
             <p>No se puede eliminar, está relacionada con los siguientes atributos: </p>
         </div>
         <table class="table table-hover">
-            <thead>
+            <thead class="thead-light">
                 <tr>
                     <th class="text-center" scope="col">USUARIO</th>
                     <th class="text-center" scope="col">ELEGIR OTRA CATEGORÍA</th>

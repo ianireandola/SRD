@@ -16,7 +16,7 @@
     </form>
 
     <table class="table table-hover">
-        <thead>
+        <thead class="thead-light">
             <tr>
                 <th class="text-center" scope="col">ID</th>
                 <th class="text-center" scope="col">NOMBRE</th>
@@ -29,6 +29,7 @@
                 <td class="text-center">{{item.nombre}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
+                    <button type="button" @click="relacionUsuarios(item)" class="btn btn-info">Relación con usuarios</button>
                     <button type="button" @click="eliminarFijoEventual(item, index)" class="btn btn-secondary">Eliminar</button>
                 </td>
             </tr>
@@ -43,17 +44,15 @@
             <p>No se puede eliminar, está relacionado con los siguientes atributos: </p>
         </div>
         <table class="table table-hover">
-            <thead>
+            <thead class="thead-light">
                 <tr>
                     <th class="text-center" scope="col">USUARIO</th>
-                    <th class="text-center" scope="col">FIJO/EVENTUAL PERTENECIENTE</th>
                     <th class="text-center" scope="col">ELEGIR OTRO FIJO/EVENTUAL</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(usuario_coincidente, index) in usuarios_coincidentes" v-bind:key="index">
                     <td>{{usuario_coincidente.id}} - {{usuario_coincidente.nombre}}</td>
-                    <td class="text-center">{{usuario_coincidente.fijoeventual_id}}</td>
                     <td class="text-center">
                         <b-form-select v-model="usuario_coincidente.fijoeventual_id" v-on:change="guardarCambios(usuario_coincidente, index)">
                             <option v-for="fijo_eventual in fijos_eventuales" v-bind:key="fijo_eventual.id" :value="fijo_eventual.id">{{fijo_eventual.id}} - {{fijo_eventual.nombre}}</option>
@@ -63,9 +62,6 @@
             </tbody>
         </table>
         <b-row>
-            <b-col>
-                <b-button class="mt-3" variant="primary" block>Guardar cambios</b-button>
-            </b-col>
             <b-col>
                 <b-button class="mt-3" block @click="cancelarEdicionModal($bvModal.hide('modal-fijoeventual'))">Cerrar</b-button>
             </b-col>
@@ -107,7 +103,6 @@ export default {
     },
     created()
     {
-        console.log('FijoEventualComponent created')
         axios.get('/admin/fijos_eventuales/create')
             .then(res=>{
                 this.fijos_eventuales = res.data;
@@ -147,7 +142,7 @@ export default {
                     this.fijo_eventual = {nombre:''};
                 })
         },
-        eliminarFijoEventual(item, index)
+        relacionUsuarios(item)
         {
             this.fijo_eventual.nombre = item.nombre;
             this.fijo_eventual.id = item.id;
@@ -159,16 +154,33 @@ export default {
                     this.usuarios_coincidentes.push(this.usuarios[i]);
                 }
             }
-            if(this.usuarios_coincidentes.length === 0)
-            {
-                axios.delete(`/admin/fijos_eventuales/${item.id}`)
-                    .then(()=>{
-                        this.fijos_eventuales.splice(index, 1);
-                });
-            }else
-            {
-                this.$root.$emit('bv::show::modal', 'modal-fijoeventual', '#btnShow')
-            }            
+
+            this.$root.$emit('bv::show::modal', 'modal-fijoeventual', '#btnShow')
+        },
+        eliminarFijoEventual(item, index)
+        {
+            axios.get(`/admin/usuarios/${item.id}/buscarFE`)
+                .then(res=>{
+                    if (res.data === 0 )
+                    {
+                        this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                            okVariant: 'danger',
+                            okTitle: 'Eliminar',
+                            cancelTitle: 'Cancelar'
+                        }).then(value=>{
+                            if(value === true)
+                            {
+                                axios.delete(`/admin/fijos_eventuales/${item.id}`)
+                                    .then(()=>{
+                                        this.fijos_eventuales.splice(index, 1);
+                                    })
+                            }
+                        })
+                    }else
+                    {
+                        alert("El fijo/eventual tiene usuarios relacionados, no se puede eliminar")
+                    }
+                })           
         },
         cancelarEdicion()
         {

@@ -11,6 +11,8 @@
 |
 */
 
+use App\Http\Controllers\UserAdminController;
+
 Route::get('/', function () {
     return view('principal');
 });
@@ -58,6 +60,7 @@ Route::prefix('admin')->group(function()
     Route::resource('/accion2s', 'Accion2AdminController');
     Route::resource('/admins', 'AdminAdminController');
     Route::match(['put', 'patch'], '/usuarios/categoriaUpdate/{resource}', 'UserAdminController@categoriaUpdate')->name('usuarios.categoriaUpdate');
+    Route::get('/usuarios/{usuario_id}/buscarFE', 'UserAdminController@FEcoincidentes');
     Route::resource('/usuarios', 'UserAdminController');
     Route::resource('/proyectos', 'ProyectoAdminController');
 });

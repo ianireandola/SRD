@@ -107,6 +107,16 @@ class UserAdminController extends Controller
         return $usuarios;
     }
 
+
+    public function FEcoincidentes($fijoeventual_id)
+    {
+        $usuarios = User::select('users.id')
+            ->where('users.fijoeventual_id', '=', $fijoeventual_id)
+            ->count();
+
+        return $usuarios;
+    }
+
     /**
      * Update the specified resource in storage.
      *
