@@ -49,6 +49,7 @@ class AdminAdminController extends Controller
     public function store(Request $request)
     {
         $admin = new Admin();
+        $admin->chapa = $request->chapa;
         $admin->nombre = $request->nombre;
         $admin->password = Hash::make($request->password_confirmation);
         $admin->password_confirmation = $request->password_confirmation;

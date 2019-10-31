@@ -59,4 +59,5 @@ Route::prefix('admin')->group(function()
     Route::resource('/admins', 'AdminAdminController');
     Route::match(['put', 'patch'], '/usuarios/categoriaUpdate/{resource}', 'UserAdminController@categoriaUpdate')->name('usuarios.categoriaUpdate');
     Route::resource('/usuarios', 'UserAdminController');
+    Route::resource('/proyectos', 'ProyectoAdminController');
 });

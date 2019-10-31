@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Accion2;
+use App\Proyecto;
 
-class Accion2AdminController extends Controller
+class ProyectoAdminController extends Controller
 {
     /**
      * Create a new controller instance.
@@ -24,7 +24,7 @@ class Accion2AdminController extends Controller
      */
     public function index()
     {
-        return view('accion2');
+        //
     }
 
     /**
@@ -34,12 +34,9 @@ class Accion2AdminController extends Controller
      */
     public function create()
     {
-        $accion2s = Accion2::selectRaw('accion2s.id, accion2s.nombre, accion2s.descripcion, proyectos.nombre AS "nombre_proyecto"')
-            ->join('proyectos', 'proyectos.id', '=', 'accion2s.proyecto_id')
-            ->orderBy('accion2s.nombre')
-            ->get();
+        $proyectos = Proyecto::all();
 
-        return $accion2s;
+        return $proyectos;
     }
 
     /**
@@ -50,15 +47,7 @@ class Accion2AdminController extends Controller
      */
     public function store(Request $request)
     {
-        $accion2 = new Accion2();
-        $accion2->nombre = $request->nombre;
-        $accion2->descripcion = $request->descripcion;
-        $accion2->proyecto_id = $request->proyecto_id;
-        $accion2->save();
-
-        $accion2->nombre_proyecto = $request->nombre_proyecto;
-
-        return $accion2;
+        //
     }
 
     /**
@@ -69,11 +58,7 @@ class Accion2AdminController extends Controller
      */
     public function show($id)
     {
-        $accion2 = Accion2::select('accion2s.nombre')
-            ->where('accion2s.id', '=', $id)
-            ->get();
-    
-        return $accion2;
+        //
     }
 
     /**
@@ -96,15 +81,7 @@ class Accion2AdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $accion2 = Accion2::find($id);
-        $accion2->nombre = $request->nombre;
-        $accion2->descripcion = $request->descripcion;
-        $accion2->proyecto_id = $request->proyecto_id;
-        $accion2->save();
-
-        $accion2->nombre_proyecto = $request->nombre_proyecto;
-
-        return $accion2;
+        //
     }
 
     /**
@@ -115,7 +92,6 @@ class Accion2AdminController extends Controller
      */
     public function destroy($id)
     {
-        $accion2 = Accion2::find($id);
-        $accion2->delete();
+        //
     }
 }

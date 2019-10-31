@@ -19,12 +19,12 @@ class CreateProyectoPadresTable extends Migration
             $table->bigInteger('nacion_id')->unsigned();
             $table->bigInteger('dedicacion_id')->unsigned();
             $table->string('nombre');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
             $table->enum('estado', ['Activo', 'Cerrado', 'Bloqueado']);
             $table->string('Q-Proyecto');
-            $table->string('planificacion');
-            $table->string('safety');
-            $table->string('homologaciones');
+            $table->string('planificacion')->nullable();
+            $table->string('safety')->nullable();
+            $table->string('homologaciones')->nullable();
 
             $table->foreign('tipoProyecto_id')->references('id')->on('tipo_proyectos');
             $table->foreign('nacion_id')->references('id')->on('nacions');

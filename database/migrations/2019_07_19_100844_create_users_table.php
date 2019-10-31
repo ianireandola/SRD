@@ -20,15 +20,14 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('password_confirmation');
-            $table->string('funcion');
-            $table->string('comentario');
+            $table->string('funcion')->nullable();
+            $table->string('comentario')->nullable();
             $table->bigInteger('categoria_id')->unsigned();
             $table->bigInteger('fijoeventual_id')->unsigned();
             $table->bigInteger('seccion_id')->unsigned();
             $table->boolean('CPUportatil');
             $table->date('fechaCPUportatil');            
             $table->rememberToken();
-            $table->timestamps();
 
 
             $table->foreign('seccion_id')->references('id')->on('seccions');

@@ -17,7 +17,7 @@ class CreateLetrasTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('dedicacion_id')->unsigned();
             $table->string('nombre');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
 
             $table->foreign('dedicacion_id')->references('id')->on('dedicacions');
         });

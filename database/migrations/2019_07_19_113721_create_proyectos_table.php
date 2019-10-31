@@ -17,11 +17,11 @@ class CreateProyectosTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('proyectoPadre_id')->unsigned();
             $table->string('nombre');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
             $table->enum('estado', ['Activo', 'Cerrado', 'Bloqueado']);
             $table->integer('cantidadActual');
             $table->integer('cantidadTotal');
-            $table->string('Ed_PF');
+            $table->string('Ed_PF')->nullable();
             $table->date('ultimaRevision');
             $table->string('fabricacion');
 

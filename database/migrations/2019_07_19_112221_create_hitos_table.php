@@ -17,7 +17,7 @@ class CreateHitosTable extends Migration
             $table->bigIncrements('id');
             $table->bigInteger('fase_id')->unsigned();
             $table->string('nombre');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
 
             $table->foreign('fase_id')->references('id')->on('fases');
         });

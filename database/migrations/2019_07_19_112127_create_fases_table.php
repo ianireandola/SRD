@@ -16,7 +16,7 @@ class CreateFasesTable extends Migration
         Schema::create('fases', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
         });
     }
 

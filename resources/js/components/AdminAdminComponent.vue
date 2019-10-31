@@ -4,6 +4,7 @@
 
     <!--Cuando "editarActivo=true" EDITAR-->
     <form @submit.prevent="editarAdmin(admin)" v-if="editarActivo" class="mb-5">
+        <input type="text" class="form-control mb-2" placeholder="Chapa" v-model="admin.chapa">
         <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="admin.nombre">
         <input type="text" class="form-control mb-2" placeholder="Contraseña" v-model="admin.password_confirmation">
         <button type="submit" class="btn btn-success btn-block">Guardar</button>
@@ -12,15 +13,16 @@
 
     <!--Cuando "editarActivo=false" AGREGAR -->
     <form @submit.prevent="registrarAdmin" v-else class="mb-5">
+        <input type="text" class="form-control mb-2" placeholder="Chapa" v-model="admin.chapa">
         <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="admin.nombre">
         <input type="text" class="form-control mb-2" placeholder="Contraseña" v-model="admin.password_confirmation">
         <button type="submit" class="btn btn-success btn-block mb-7">Agregar</button>
     </form>
 
     <table class="table table-hover">
-        <thead>
+        <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col">ID</th>
+                <th class="text-center" scope="col">CHAPA</th>
                 <th class="text-center" scope="col">NOMBRE</th>
                 <th class="text-center" scope="col">CONTRASEÑA</th>
                 <th class="text-center" scope="col">OPCIONES</th>
@@ -28,7 +30,7 @@
         </thead>
         <tbody>
             <tr v-for="(item, index) in admins" v-bind:key="index">
-                <td class="text-center">{{item.id}}</td>
+                <td class="text-center">{{item.chapa}}</td>
                 <td class="text-center">{{item.nombre}}</td>
                 <td class="text-center">{{item.password_confirmation}}</td>
                 <td class="text-center">
@@ -52,6 +54,7 @@ export default {
             admin:
             {
                 id: '',
+                chapa: '',
                 nombre: '',
                 password: '',
                 password_confirmation: ''
@@ -61,7 +64,6 @@ export default {
     },
     created()
     {
-        console.log('AdminAdminComponent created')
         axios.get('/admin/admins/create')
             .then(res=>{
                 this.admins = res.data;
@@ -76,12 +78,24 @@ export default {
                 alert('Debes completar todos los campos antes de guardar');
                 return;
             }
-            const params = {nombre: this.admin.nombre, password_confirmation: this.admin.password_confirmation};
+            const params = {chapa: this.admin.chapa, nombre: this.admin.nombre, password_confirmation: this.admin.password_confirmation};
 
             axios.post(`/admin/admins`, params)
                 .then(res=>{
                     this.admins.push(res.data);
-                })
+                });
+            this.admin.chapa = '',
+            this.admin.nombre = '',
+            this.admin.password_confirmation = '',
+            this.admin.password = 
+
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado!',
+                showConfirmButton: false,
+                timer: 1500
+            })
         },
         eliminarAdmin(admin, index)
         {
@@ -90,10 +104,19 @@ export default {
                 alert('Eres tú mismo no te puedes eliminar');
                 return;
             }else{
-                axios.delete(`/admin/admins/${admin.id}`)
-                    .then(()=>{
-                        this.admins.splice(index, 1);
-                    })
+                this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                    okVariant: 'danger',
+                    okTitle: 'Eliminar',
+                    cancelTitle: 'Cancelar'
+                }).then(value=> {
+                if( value === true )
+                {
+                    axios.delete(`/admin/admins/${admin.id}`)
+                        .then(()=>{
+                            this.admins.splice(index, 1);
+                        })
+                }
+            })  
             }
         },
         editarFormulario(item)

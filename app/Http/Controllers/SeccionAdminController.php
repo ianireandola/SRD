@@ -68,9 +68,13 @@ class SeccionAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($area_id)
     {
-        //
+        $secciones = seccion::select('seccions.id')
+            ->where('seccions.area_id', '=', $area_id)
+            ->count();
+
+        return $secciones;
     }
 
     /**

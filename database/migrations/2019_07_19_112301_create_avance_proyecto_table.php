@@ -16,7 +16,7 @@ class CreateAvanceProyectoTable extends Migration
         Schema::create('avance_proyecto', function (Blueprint $table) {
             $table->bigInteger('hito_id')->unsigned();
             $table->bigInteger('proyectoPadre_id')->unsigned();
-            $table->integer('NTP'); //Programak beak kalkulau beharko do
+            $table->integer('NTP');
 
             $table->primary(['hito_id', 'proyectoPadre_id']);
 

@@ -9,8 +9,8 @@
                 <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="area.nombre">
             </div>
             <div class="col">
-                <label class="checkbox" for="Q_Ind">  Q_Ind</label>
-                <input type="checkbox" id="Q_Ind" v-model="area.Q_Ind">
+                <input class="form-check-input" type="checkbox" v-model="area.Q_Ind">
+                <label for="checkbox"> Q_Ind </label>
             </div>
         </div>
         <button type="submit" class="btn btn-success btn-block">Guardar</button>
@@ -24,8 +24,8 @@
                 <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="area.nombre">
             </div>
             <div class="col">
-                <label class="checkbox" for="Q_Ind">  Q_Ind</label>
-                <input type="checkbox" id="Q_Ind" v-model="area.Q_Ind">
+                <input class="form-check-input" type="checkbox" v-model="area.Q_Ind">
+                <label for="checkbox"> Q_Ind </label>
             </div>
         </div>
         <button type="submit" class="btn btn-success btn-block mb-7">Agregar</button>
@@ -47,6 +47,7 @@
                 <td class="text-center">{{item.Q_Ind}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
+                    <button type="button" @click="relacionSecciones(item, index)" class="btn btn-info">Relación con secciones</button>
                     <button type="button" @click="eliminarArea(item, index)" class="btn btn-secondary">Eliminar</button>
                 </td>
             </tr>
@@ -58,20 +59,18 @@
             Área a eliminar: <b> {{area.id}} - {{area.nombre}} </b>
         </template>
         <div>
-            <p>No se puede eliminar, está relacionada con los siguientes atributos: </p>
+            <p>No se puede eliminar, está relacionada con las siguientes secciones: </p>
         </div>
         <table class="table table-hover">
-            <thead>
+            <thead class="thead-light">
                 <tr>
                     <th class="text-center" scope="col">SECCIÓN</th>
-                    <th class="text-center" scope="col">ÁREA PERTENECIENTE</th>
                     <th class="text-center" scope="col">ELEGIR OTRA ÁREA</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(seccion_coincidente, index) in secciones_coincidentes" v-bind:key="index">
                     <td>{{seccion_coincidente.id}} - {{seccion_coincidente.nombre}}</td>
-                    <td class="text-center">{{seccion_coincidente.area_id}}</td>
                     <td class="text-center">
                         <b-form-select v-model="seccion_coincidente.area_id" v-on:change="guardarCambios(seccion_coincidente, index)">
                             <option v-for="area in areas" v-bind:key="area.id" :value="area.id">{{area.id}} - {{area.nombre}}</option>
@@ -81,9 +80,6 @@
             </tbody>
         </table>
         <b-row>
-            <b-col>
-                <b-button class="mt-3" variant="primary" block>Guardar cambios</b-button>
-            </b-col>
             <b-col>
                 <b-button class="mt-3" block @click="cancelarEdicionModal($bvModal.hide('modal-seccion'))"> Cerrar </b-button>
             </b-col>
@@ -128,7 +124,6 @@ export default {
     },
     created()
     {
-        console.log('AreaComponent created')
         axios.get('/admin/areas/create')
             .then(res=>{
                 this.areas = res.data;
@@ -143,7 +138,7 @@ export default {
     {
         agregar()
         {
-            if(this.area.nombre.trim() === '' || this.area.Q_Ind.trim() === '')
+            if(this.area.nombre.trim() === '' || this.area.Q_Ind === '')
             {
                 alert('Debes completar todos los campos antes de guardar');
                 return;
@@ -170,7 +165,7 @@ export default {
                     this.area = {nombre:'', Q_Ind:''};
                 })
         },
-        eliminarArea(item, index)
+        relacionSecciones(item, index)
         {
             this.area.nombre = item.nombre;
             this.area.Q_Ind = item.Q_Ind;
@@ -183,16 +178,33 @@ export default {
                     this.secciones_coincidentes.push(this.secciones[i]);
                 }
             }
-            if(this.secciones_coincidentes.length === 0)
-            {
-                axios.delete(`/admin/areas/${item.id}`)
-                .then(()=>{
-                    this.areas.splice(index, 1);
-                });
-            }else
-            {
-                this.$root.$emit('bv::show::modal', 'modal-seccion', '#btnShow')
-            }
+            this.$root.$emit('bv::show::modal', 'modal-seccion', '#btnShow')
+        },
+        eliminarArea(area, index)
+        {
+            axios.get(`/admin/secciones/${area.id}`)
+                .then(res=>{
+                    if (res.data === 0 )
+                    {
+                        this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                            okVariant: 'danger',
+                            okTitle: 'Eliminar',
+                            cancelTitle: 'Cancelar'
+                        }).then(value=>{
+                            if(value === true)
+                            {
+                                axios.delete(`/admin/areas/${area.id}`)
+                                    .then(()=>{
+                                        this.areas.splice(index, 1);
+                                    })
+                            }
+                        })
+                    }else
+                    {
+                        alert("El área tiene secciones relacionadas, no se puede eliminar")
+                    }
+                })
+            
         },
         cancelarEdicion()
         {
