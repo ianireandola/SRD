@@ -29,6 +29,7 @@
                 <td class="text-center">{{item.nombre}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
+                    <button type="button" @click="relacionSecciones(item)" class="btn btn-info">Relación con secciones</button>
                     <button type="button" @click="eliminarPlanta(item, index)" class="btn btn-secondary">Eliminar</button>
                 </td>
             </tr>
@@ -109,7 +110,6 @@ export default {
     },
     created()
     {
-        console.log('PlantaComponent created')
         axios.get('/admin/plantas/create')
             .then(res=>{
                 this.plantas = res.data;
@@ -149,7 +149,7 @@ export default {
                     this.planta = {nombre:''};
                 })
         },
-        eliminarPlanta(item, index)
+        relacionSecciones(item)
         {
             this.planta.nombre = item.nombre;
             this.planta.id = item.id;
@@ -161,16 +161,32 @@ export default {
                     this.secciones_coincidentes.push(this.secciones[i]);
                 }
             }
-            if(this.secciones_coincidentes.length === 0)
-            {
-                axios.delete(`/admin/plantas/${item.id}`)
-                .then(()=>{
-                    this.plantas.splice(index, 1);
-                });
-            }else
-            {
-                this.$root.$emit('bv::show::modal', 'modal-planta', '#btnShow')
-            }
+            this.$root.$emit('bv::show::modal', 'modal-planta', '#btnShow')
+        },
+        eliminarPlanta(item, index)
+        {
+            axios.get(`/admin/secciones/${item.id}/edit`)
+                .then(res=>{
+                    if (res.data === 0 )
+                    {
+                        this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                            okVariant: 'danger',
+                            okTitle: 'Eliminar',
+                            cancelTitle: 'Cancelar'
+                        }).then(value=>{
+                            if(value === true)
+                            {
+                                axios.delete(`/admin/plantas/${item.id}`)
+                                    .then(()=>{
+                                        this.plantas.splice(index, 1);
+                                    })
+                            }
+                        })
+                    }else
+                    {
+                        alert("La categoría tiene usuarios relacionados, no se puede eliminar")
+                    }
+                })
         },
         cancelarEdicion()
         {
