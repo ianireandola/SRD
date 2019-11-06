@@ -13,7 +13,7 @@ class CreateUserLetraTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_letra', function (Blueprint $table) {
+        Schema::create('user_letras', function (Blueprint $table) {
             $table->bigInteger('letra_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
 
@@ -31,6 +31,6 @@ class CreateUserLetraTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_letra');
+        Schema::dropIfExists('user_letras');
     }
 }

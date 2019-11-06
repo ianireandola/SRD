@@ -58,7 +58,7 @@
                             <tr>
                                 <td class="text-center">
                                     <img src="images/letra.png" width="70" height="70" alt="Letra" title="Letra">
-                                    <a href="#"><h3 class="h4 mb-2">X-Letra</a>
+                                    <a href="/admin/letras"><h3 class="h4 mb-2">Letra</a>
                                 </td>
                                 <td class="text-center">
                                     <img src="images/nacion.png" width="70" height="70" alt="Nación" title="Nación">

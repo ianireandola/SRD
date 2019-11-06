@@ -19,7 +19,7 @@ class Letra extends Model
 
     public function usersletras()
     {
-        return $this->belongsToMany('App\User', 'user_letra');
+        return $this->belongsToMany('App\User', 'user_letras');
     }
 
     public $timestamps = false;

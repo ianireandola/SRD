@@ -13,7 +13,7 @@ class CreateUserProyectoTable extends Migration
      */
     public function up()
     {
-        Schema::create('user_proyecto', function (Blueprint $table) {
+        Schema::create('user_proyectos', function (Blueprint $table) {
             $table->bigInteger('proyecto_id')->unsigned();
             $table->bigInteger('user_id')->unsigned();
 
@@ -31,6 +31,6 @@ class CreateUserProyectoTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('user_proyecto');
+        Schema::dropIfExists('user_proyectos');
     }
 }

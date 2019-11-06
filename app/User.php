@@ -53,7 +53,7 @@ class User extends Authenticatable
 
     public function usersproyectos()
     {
-        return $this->belongsToMany('App\Proyecto', 'user_proyecto');
+        return $this->belongsToMany('App\Proyecto', 'user_proyectos');
     }
 
     public function accion2s()
@@ -70,7 +70,7 @@ class User extends Authenticatable
 
     public function usersletras()
     {
-        return $this->belongsToMany('App\Letra', 'user_letra');
+        return $this->belongsToMany('App\Letra', 'user_letras');
     }
 
     

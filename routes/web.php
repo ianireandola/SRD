@@ -28,6 +28,7 @@ Route::delete('/letras/{letra_id}/{user_id}', 'LetraController@destroy');
 Route::resource('/letras', 'LetraController');
 Route::resource('/letras_todo', 'LetrasTodoController');
 Route::resource('/proyectos', 'ProyectoController');
+Route::match(['get', 'head'], '/srd_letras/showLetra/{letra_id}', 'SRDLetraController@showLetra');
 Route::resource('/srd_letras', 'SRDLetraController');
 Route::resource('/secciones', 'SeccionController');
 Route::resource('/srd_proyectos', 'SRDProyectoController');
@@ -67,4 +68,5 @@ Route::prefix('admin')->group(function()
     Route::match(['put', 'patch'], '/proyectospadre/tipoProyectoUpdate/{resource}', 'ProyectoPadreController@tipoProyectoUpdate')->name('proyectospadre.tipoProyectoUpdate');
     Route::resource('/proyectospadre', 'ProyectoPadreController');
     Route::resource('/hitos', 'HitoController');
+    Route::resource('/letras', 'LetraAdminController');
 });

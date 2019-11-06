@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
 use App\Letra;
 use App\srd_letra;
+use App\user_letra;
 use DB;
 
 class SRDLetraController extends Controller
@@ -70,6 +70,21 @@ class SRDLetraController extends Controller
         return $letras;        
     }
 
+    public function showLetra($letra_id)
+    {
+        $num = srd_letra::select('srd_letras.id')
+            ->where('srd_letras.letra_id', '=', $letra_id)
+            ->count();
+
+        $num2 = user_letra::select('user_letras.letra_id')
+            ->where('user_letras.letra_id', '=', $letra_id)
+            ->count();
+
+        $total = $num + $num2;
+        
+        return $total;   
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -81,6 +96,8 @@ class SRDLetraController extends Controller
         $srd_letras = srd_letra::select('srd_letras.id')
             ->where('srd_letras.fecha', '=', $fecha)
             ->count();
+
+        
 
         return $srd_letras;
     }
