@@ -1,17 +1,16 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="w-screen mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     <a href="{{ route('admin.dashboard') }}">
                         <i class="fa fa-home" aria-hidden="true"></i>
                     </a>
-                    <b>       Administrador </b>
+                    <b>       Administrador</b>
                 </div>
-
                 <div class="card-body">
                     <adminadmin-component v-bind:current-admin = '{{ Auth::user()->id }}'/>
                 </div>

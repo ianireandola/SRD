@@ -8,7 +8,7 @@
         <input type="text" class="form-control mb-2" placeholder="Descripcion" v-model="accion2.descripcion">
         <b-form-group label="Proyecto relacionado:">
             <b-form-select v-model="proyecto" v-on:change="asignarProyecto(proyecto)">
-                <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.nombre}}</option>
+                <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.id}} - {{proyecto.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <button type="submit" class="btn btn-success btn-block">Guardar</button>
@@ -30,22 +30,27 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th class="text-center" scope="col">ID</th>
-                <th scope="col">NOMBRE</th>
-                <th class="text-center" scope="col">PROYECTO PERTENECIENTE</th>
-                <th class="text-center" scope="col">DESCRIPCION</th>
-                <th class="text-center" scope="col">OPCIONES</th>
+                <th class="text-center" scope="col" width="3%">ID</th>
+                <th scope="col" width="25%">NOMBRE</th>
+                <th scope="col" width="30%">PROYECTO PERTENECIENTE</th>
+                <th class="text-center" scope="col" width="10%">DESCRIPCION</th>
+                <th class="text-center" scope="col" width="32%" >OPCIONES</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(item, index) in accion2s" v-bind:key="index">
-                <td class="text-center">{{item.id}}</td>
-                <td>{{item.nombre}}</td>
-                <td>{{item.nombre_proyecto}}</td>
-                <td class="text-center">{{item.descripcion}}</td>
+            <tr v-for="(accion2, index) in accion2s" v-bind:key="index">
+                <td class="text-center">{{accion2.id}}</td>
+                <td>{{accion2.nombre}}</td>
+                <!--<template v-for="proyecto in proyectos">
+                    <td v-if="proyecto.id === accion2.proyecto_id" v-bind:key="`A-${proyecto.id}`">
+                        {{proyecto.nombre}}
+                    </td>
+                </template>-->
+                <td>{{accion2.nombre_proyecto}}</td>
+                <td class="text-center">{{accion2.descripcion}}</td>
                 <td class="text-center">
-                    <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
-                    <button type="button" @click="eliminarAccion2(item, index)" class="btn btn-secondary">Eliminar</button>
+                    <button type="button" @click="editarFormulario(accion2)" class="btn btn-primary">Modificar</button>
+                    <button type="button" @click="eliminarAccion2(accion2, index)" class="btn btn-secondary">Eliminar</button>
                 </td>
             </tr>
         </tbody>
@@ -72,15 +77,8 @@ export default {
             proyecto:
             {
                 id: '',
-                proyectoPadre_id: '',
                 nombre: '',
-                descripcion: '',
-                estado: '',
-                cantidadActual: '',
-                cantidadTotal: '',
-                Ed_PF: '',
-                ultimaRevision: '',
-                fabricacion: ''
+                descripcion: ''
             },
             editarActivo: false
         }
@@ -129,7 +127,7 @@ export default {
         },
         editarAccion2(item)
         {
-            const params = {nombre: item.nombre, descripcion: item.descripcion, proyecto_id: this.accion2.proyecto_id, nombre_proyecto: this.accion2.nombre_proyecto}
+            const params = {nombre: item.nombre, descripcion: item.descripcion, proyecto_id: this.accion2.proyecto_id}
             axios.put(`/admin/accion2s/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
@@ -163,10 +161,6 @@ export default {
                         alert("La accion nivel 2 tiene horas de trabajadores asignadas, no se puede eliminar")
                     }
                 })
-
-
-
-            
         },
         cancelarEdicion()
         {
@@ -175,10 +169,21 @@ export default {
         },
         editarFormulario(item)
         {
+            console.log('entro' + item.nombre_proyecto);
             this.editarActivo = true;
             this.accion2.nombre = item.nombre;
             this.accion2.descripcion = item.descripcion;
             this.accion2.id = item.id;
+
+            for(var i=0; i<this.proyectos.length; i++)
+            {
+                if(this.proyectos[i].nombre === item.nombre_proyecto)
+                {
+                    this.proyecto = this.proyectos[i];
+                    this.accion2.proyecto_id = this.proyectos[i].id;
+                    this.accion2.nombre_proyecto = this.proyectos[i].nombre;
+                }
+            }
         },
         asignarProyecto(item)
         {

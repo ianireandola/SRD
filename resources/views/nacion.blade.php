@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="w-screen mt-4">
     <div class="row justify-content-center">
-        <div class="col-md-12">
+        <div class="col-md-10">
             <div class="card">
                 <div class="card-header">
                     <a href="{{ route('admin.dashboard') }}">
@@ -11,7 +11,6 @@
                     </a>
                     <b>       Administrador</b>
                 </div>
-
                 <div class="card-body">
                     <nacion-component/>
                 </div>
