@@ -48,9 +48,13 @@ class ProyectoPadreController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($tipoProyecto_id)
     {
-        //
+        $proyectospadre = ProyectoPadre::select('proyecto_padres.id')
+            ->where('proyecto_padres.tipoProyecto_id', '=', $tipoProyecto_id)
+            ->count();
+
+        return $proyectospadre;
     }
 
     /**
@@ -84,6 +88,15 @@ class ProyectoPadreController extends Controller
     {
         $proyectopadre = ProyectoPadre::find($id);
         $proyectopadre->nacion_id = $request->nacion_id;
+        $proyectopadre->save();
+
+        return $proyectopadre;
+    }
+
+    public function tipoProyectoUpdate(Request $request, $id)
+    {
+        $proyectopadre = ProyectoPadre::find($id);
+        $proyectopadre->tipoProyecto_id = $request->tipoProyecto_id;
         $proyectopadre->save();
 
         return $proyectopadre;

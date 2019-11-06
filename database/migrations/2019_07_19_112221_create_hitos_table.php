@@ -15,9 +15,9 @@ class CreateHitosTable extends Migration
     {
         Schema::create('hitos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('fase_id')->unsigned();
             $table->string('nombre');
             $table->text('descripcion')->nullable();
+            $table->bigInteger('fase_id')->unsigned();
 
             $table->foreign('fase_id')->references('id')->on('fases');
         });

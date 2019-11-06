@@ -158,7 +158,7 @@ export default {
         },
         eliminarNacion(nacion, index)
         {
-            axios.get(`/admin/proyectospadre/${nacion .id}/edit`)
+            axios.get(`/admin/proyectospadre/${nacion.id}/edit`)
                 .then(res=>{
                     if(res.data === 0)
                     {

@@ -31,7 +31,7 @@
         <thead>
             <tr>
                 <th class="text-center" scope="col">ID</th>
-                <th class="text-center" scope="col">NOMBRE</th>
+                <th scope="col">NOMBRE</th>
                 <th class="text-center" scope="col">PROYECTO PERTENECIENTE</th>
                 <th class="text-center" scope="col">DESCRIPCION</th>
                 <th class="text-center" scope="col">OPCIONES</th>
