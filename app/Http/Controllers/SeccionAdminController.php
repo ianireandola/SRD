@@ -49,12 +49,7 @@ class SeccionAdminController extends Controller
     {
         $seccion = new Seccion();
         $seccion->nombre = $request->nombre;
-        if($request->nivel2 === true)
-        {
-            $seccion->nivel2 = 1;
-        }else{
-            $seccion->nivel2 = 0;
-        }
+        $seccion->nivel2 = $request->nivel2;
         $seccion->area_id = $request->area_id;
         $seccion->planta_id = $request->planta_id;
         $seccion->save();
@@ -75,6 +70,16 @@ class SeccionAdminController extends Controller
             ->count();
 
         return $secciones;
+    }
+
+    public function showTrabajan($seccion_id)
+    {
+        $num = Seccion::select('seccions.id')
+            ->join('trabajan', 'seccions.id', '=', 'trabajan.seccion_id')
+            ->where('trabajan.seccion_id', '=', $seccion_id)
+            ->count();
+
+        return $num;
     }
 
     /**
@@ -119,6 +124,7 @@ class SeccionAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $seccion = Seccion::find($id);
+        $seccion->delete();
     }
 }

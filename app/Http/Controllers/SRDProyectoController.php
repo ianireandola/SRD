@@ -97,6 +97,15 @@ class SRDProyectoController extends Controller
         return $proyectos;
     }
 
+    public function showAccion2($accion2_id)
+    {
+        $num = srd_proyecto::select('srd_proyectos.id')
+            ->where('srd_proyectos.acc_id', '=', $accion2_id)
+            ->count();
+
+        return $num;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

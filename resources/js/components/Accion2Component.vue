@@ -142,19 +142,31 @@ export default {
         },
         eliminarAccion2(accion2, index)
         {
-            this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
-                okVariant: 'danger',
-                okTitle: 'Eliminar',
-                cancelTitle: 'Cancelar'
-            }).then(value=>{
-                if(value === true)
-                {
-                    axios.delete(`/admin/accion2s/${accion2.id}`)
-                        .then(()=>{
-                            this.accion2s.splice(index, 1);
+            axios.get(`/srd_proyectos/showAccion2/${accion2.id}`)
+                .then(res=>{
+                    if(res.data===0)
+                    {
+                        this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                            okVariant: 'danger',
+                            okTitle: 'Eliminar',
+                            cancelTitle: 'Cancelar'
+                        }).then(value=>{
+                            if(value === true)
+                            {
+                                axios.delete(`/admin/accion2s/${accion2.id}`)
+                                    .then(()=>{
+                                        this.accion2s.splice(index, 1);
+                                    })
+                            }
                         })
-                }
-            })
+                    }else{
+                        alert("La accion nivel 2 tiene horas de trabajadores asignadas, no se puede eliminar")
+                    }
+                })
+
+
+
+            
         },
         cancelarEdicion()
         {

@@ -27,6 +27,7 @@ Route::get('/home', 'HomeController@index')->name('registroHoras');
 Route::delete('/letras/{letra_id}/{user_id}', 'LetraController@destroy');
 Route::resource('/letras', 'LetraController');
 Route::resource('/letras_todo', 'LetrasTodoController');
+Route::match(['get', 'head'], '/srd_proyectos/showAccion2/{accion2_id}', 'SRDProyectoController@showAccion2');
 Route::resource('/proyectos', 'ProyectoController');
 Route::match(['get', 'head'], '/srd_letras/showLetra/{letra_id}', 'SRDLetraController@showLetra');
 Route::resource('/srd_letras', 'SRDLetraController');
@@ -49,6 +50,7 @@ Route::prefix('admin')->group(function()
     Route::post('/login', 'Auth\AdminLoginController@login')->name('admin.login.submit');
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::resource('/areas', 'AreaController');
+    Route::match(['get', 'head'], '/secciones/showTrabajan/{seccion_id}', 'SeccionAdminController@showTrabajan');
     Route::resource('/secciones', 'SeccionAdminController');
     Route::resource('/plantas', 'PlantaController');
     Route::resource('/categorias', 'CategoriaController');
@@ -62,6 +64,7 @@ Route::prefix('admin')->group(function()
     Route::resource('/admins', 'AdminAdminController');
     Route::match(['put', 'patch'], '/usuarios/categoriaUpdate/{resource}', 'UserAdminController@categoriaUpdate')->name('usuarios.categoriaUpdate');
     Route::get('/usuarios/{usuario_id}/buscarFE', 'UserAdminController@FEcoincidentes');
+    Route::match(['get', 'head'], '/usuarios/showSeccion/{seccion_id}', 'UserAdminController@showSeccion');
     Route::resource('/usuarios', 'UserAdminController');
     Route::resource('/proyectos', 'ProyectoAdminController');
     Route::match(['put', 'patch'], '/proyectospadre/nacionUpdate/{resource}', 'ProyectoPadreController@nacionUpdate')->name('proyectospadre.nacionUpdate');

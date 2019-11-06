@@ -92,6 +92,15 @@ class UserAdminController extends Controller
         return $usuario;
     }
 
+    public function showSeccion($seccion_id)
+    {
+        $num = User::select('users.id')
+            ->where('users.seccion_id', '=', $seccion_id)
+            ->count();
+
+        return $num;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
