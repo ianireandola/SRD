@@ -49,7 +49,14 @@ class TrabajanController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $trabajan = new Trabajan();
+        $trabajan->proyecto_id = $request->proyecto_id;
+        $trabajan->seccion_id = $request->seccion_id;
+        $trabajan->horasEstimadas = $request->horasEstimadas;
+        $trabajan->presupuesto = $request->presupuesto;
+        $trabajan ->save();
+
+        return $trabajan;
     }
 
     /**
@@ -83,7 +90,14 @@ class TrabajanController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $trabajan = Trabajan::find($id);
+        $trabajan->proyecto_id = $request->proyecto_id;
+        $trabajan->seccion_id = $request->seccion_id;
+        $trabajan->horasEstimadas = $request->horasEstimadas;
+        $trabajan->presupuesto = $request->presupuesto;
+        $trabajan->save();
+
+        return $trabajan; 
     }
 
     /**
@@ -94,6 +108,7 @@ class TrabajanController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $trabajan = Trabajan::find($id);
+        $trabajan->delete();
     }
 }

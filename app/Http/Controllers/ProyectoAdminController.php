@@ -34,7 +34,9 @@ class ProyectoAdminController extends Controller
      */
     public function create()
     {
-        $proyectos = Proyecto::all();
+        $proyectos = Proyecto::select('*')
+            ->orderBy('proyectos.nombre')
+            ->get();
 
         return $proyectos;
     }

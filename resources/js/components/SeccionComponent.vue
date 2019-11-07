@@ -207,7 +207,7 @@ export default {
                 if(this.areas[i].id === seccion.area_id)
                 {
                     this.area = this.areas[i];
-                    this.seccion.aread_id = this.areas[id];
+                    this.seccion.aread_id = this.areas[i].id;
                 }
             }
             

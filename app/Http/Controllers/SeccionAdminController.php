@@ -34,7 +34,9 @@ class SeccionAdminController extends Controller
      */
     public function create()
     {
-        $secciones = Seccion::all();
+        $secciones = Seccion::select('*')
+            ->orderBy('seccions.nombre')
+            ->get();
 
         return $secciones;
     }
