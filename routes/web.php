@@ -77,4 +77,5 @@ Route::prefix('admin')->group(function()
     Route::resource('/elementos', 'ElementoAdminController');
     Route::resource('/tipo_elementos', 'TipoElementoAdminController');
     Route::resource('/avance_proyectos', 'AvanceProyectoController');
+    Route::resource('/trabajan', 'TrabajanController');
 });

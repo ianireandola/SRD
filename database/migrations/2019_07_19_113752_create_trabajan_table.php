@@ -14,12 +14,13 @@ class CreateTrabajanTable extends Migration
     public function up()
     {
         Schema::create('trabajan', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->bigInteger('proyecto_id')->unsigned();
             $table->bigInteger('seccion_id')->unsigned();
             $table->integer('horasEstimadas');
             $table->integer('presupuesto');
 
-            $table->primary(['proyecto_id', 'seccion_id']);
+            $table->unique(['proyecto_id', 'seccion_id']);
 
             $table->foreign('proyecto_id')->references('id')->on('proyectos');
             $table->foreign('seccion_id')->references('id')->on('seccions');

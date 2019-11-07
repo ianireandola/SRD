@@ -51,15 +51,11 @@
                                     <a href="/admin/hitos"><h3 class="h4 mb-2">Hito</a>
                                 </td>
                                 <td class="text-center">
-                                    <img src="images/user_letra.png" width="70" height="70" alt="Usuario/Letra" title="Usuario/Letra">
-                                    <a href="#"><h3 class="h4 mb-2">X-Usuario/Letra</a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td class="text-center">
                                     <img src="images/letra.png" width="70" height="70" alt="Letra" title="Letra">
                                     <a href="/admin/letras"><h3 class="h4 mb-2">Letra</a>
                                 </td>
+                            </tr>
+                            <tr>
                                 <td class="text-center">
                                     <img src="images/nacion.png" width="70" height="70" alt="Nación" title="Nación">
                                     <a href="/admin/naciones"><h3 class="h4 mb-2">Nación</a>
@@ -70,18 +66,18 @@
                                 </td>
                                 <td class="text-center">
                                     <img src="images/trabajan.png" width="70" height="70" alt="Proyecto/Sección" title="Proyecto/Sección">
-                                    <a href="#"><h3 class="h4 mb-2">X-Proyecto/Sección</a>
+                                    <a href="/admin/trabajan"><h3 class="h4 mb-2">Proyecto/Sección</a>
                                 </td>
                                 <td class="text-center">
                                     <img src="images/composicion.png" width="70" height="70" alt="Proyecto/Tipo de Elemento" title="Proyecto/Tipo de Elemento">
                                     <a href="#"><h3 class="h4 mb-2">X-Proyecto/Tipo de Elemento</a>
                                 </td>
-                            </tr>
-                            <tr>
                                 <td class="text-center">
                                     <img src="images/proyecto.png" width="70" height="70" alt="Proyecto" title="Proyecto">
                                     <a href="#"><h3 class="h4 mb-2">X-Proyecto</a>
                                 </td>
+                            </tr>
+                            <tr>
                                 <td class="text-center">
                                     <img src="images/proyecto_padre.png" width="70" height="70" alt="Proyecto Padre" title="Proyecto Padre">
                                     <a href="#"><h3 class="h4 mb-2">X-Proyecto padre</a>
@@ -98,13 +94,14 @@
                                     <img src="images/srd_proyecto.png" width="70" height="70" alt="SRD Proyecto" title="SRD Proyecto">
                                     <a href="#"><h3 class="h4 mb-2">X-SRD Proyecto</a>
                                 </td> 
-                            </tr>
-                            <tr>
-                                <td></td>
                                 <td class="text-center">
                                     <img src="images/tipo_elemento.png" width="70" height="70" alt="Tipo de Elemento" title="Tipo de Elemento">
                                     <a href="/admin/tipo_elementos"><h3 class="h4 mb-2">Tipo de Elemento</a>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td></td>
+                                <td></td>
                                 <td class="text-center">
                                     <img src="images/tipo_proyecto.png" width="70" height="70" alt="Tipo de Proyecto" title="Tipo de Proyecto">
                                     <a href="/admin/tipos_proyecto"><h3 class="h4 mb-2">Tipo de Proyecto</a>

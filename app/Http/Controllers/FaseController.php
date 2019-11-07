@@ -34,7 +34,9 @@ class FaseController extends Controller
      */
     public function create()
     {
-        $fases = Fase::all();
+        $fases = Fase::select('*')
+            ->orderBy('fases.nombre')
+            ->get();
 
         return $fases;
     }

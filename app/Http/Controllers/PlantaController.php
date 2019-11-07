@@ -34,7 +34,9 @@ class PlantaController extends Controller
      */
     public function create()
     {
-        $plantas = Planta::all();
+        $plantas = Planta::select('*')
+            ->orderBy('plantas.nombre')
+            ->get();
 
         return $plantas;
     }
