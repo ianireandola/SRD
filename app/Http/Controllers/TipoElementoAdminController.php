@@ -14,7 +14,7 @@ class TipoElementoAdminController extends Controller
      */
     public function index()
     {
-        //
+        return view ('tipo-elemento');
     }
 
     /**
@@ -24,7 +24,9 @@ class TipoElementoAdminController extends Controller
      */
     public function create()
     {
-        $tipo_elementos = TipoElemento::all();
+        $tipo_elementos = TipoElemento::select('*')
+            ->orderBy('tipo_elementos.nombre')
+            ->get();
 
         return $tipo_elementos;
     }
@@ -37,7 +39,11 @@ class TipoElementoAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $tipo_elemento = new TipoElemento();
+        $tipo_elemento->nombre = $request->nombre;
+        $tipo_elemento->save();
+
+        return $tipo_elemento;
     }
 
     /**
@@ -46,9 +52,14 @@ class TipoElementoAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($tipoelemento_id)
     {
-        //
+        $tipo_elementos = TipoElemento::select('composicion.tipoElemento_id')
+            ->where('tipo_elementos.id', '=', $tipoelemento_id)
+            ->join('composicion', 'composicion.tipoElemento_id', '=', 'tipo_elementos.id')
+            ->count();
+
+        return $tipo_elementos;
     }
 
     /**
@@ -71,7 +82,11 @@ class TipoElementoAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $tipo_elemento = TipoElemento::find($id);
+        $tipo_elemento->nombre = $request->nombre;
+        $tipo_elemento->save();
+
+        return $tipo_elemento;
     }
 
     /**
@@ -82,6 +97,7 @@ class TipoElementoAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $tipo_elemento = TipoElemento::find($id);
+        $tipo_elemento->delete();
     }
 }

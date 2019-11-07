@@ -34,7 +34,9 @@ class ElementoAdminController extends Controller
      */
     public function create()
     {
-        $elementos = Elemento::all();
+        $elementos = Elemento::select('*')
+            ->orderBy('elementos.nombre')
+            ->get();
 
         return $elementos;
     }
@@ -64,9 +66,13 @@ class ElementoAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($tipoelemento_id)
     {
-        //
+        $elementos = Elemento::select('elementos.id')
+            ->where('elementos.tipoElemento_id', '=', $tipoelemento_id)
+            ->count();
+
+        return $elementos;
     }
 
     /**
@@ -78,6 +84,15 @@ class ElementoAdminController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function tipoElementoUpdate(Request $request, $id)
+    {
+        $elemento = Elemento::find($id);
+        $elemento->tipoElemento_id = $request->tipoElemento_id;
+        $elemento->save();
+
+        return $elemento;
     }
 
     /**

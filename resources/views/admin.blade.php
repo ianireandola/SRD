@@ -103,7 +103,7 @@
                                 <td></td>
                                 <td class="text-center">
                                     <img src="images/tipo_elemento.png" width="70" height="70" alt="Tipo de Elemento" title="Tipo de Elemento">
-                                    <a href="#"><h3 class="h4 mb-2">X-Tipo de Elemento</a>
+                                    <a href="/admin/tipo_elementos"><h3 class="h4 mb-2">Tipo de Elemento</a>
                                 </td>
                                 <td class="text-center">
                                     <img src="images/tipo_proyecto.png" width="70" height="70" alt="Tipo de Proyecto" title="Tipo de Proyecto">
