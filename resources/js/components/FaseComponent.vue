@@ -40,7 +40,7 @@
         </tbody>
     </table>
 
-    <b-modal size="xl" id="modal-hitos" ref="btnUser" hide-footer no-close-on-esc hide-header-close>
+    <b-modal size="xl" id="modal-hitos" ref="btnFase" hide-footer no-close-on-esc hide-header-close>
         <template v-slot:modal-title>
             Fase a eliminar: <b> {{fase.id}} - {{fase.nombre}} </b>
         </template>
@@ -59,7 +59,7 @@
                     <td>{{hito_coincidente.id}} - {{hito_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="hito_coincidente.fase_id" v-on:change="guardarCambios(hito_coincidente, index)">
-                            <option v-for="hito in hitos" v-bind:key="hito.id" :value="hito.id">{{hito.id}} - {{hito.nombre}}</option>
+                            <option v-for="fase in fases" v-bind:key="fase.id" :value="fase.id">{{fase.id}} - {{fase.nombre}}</option>
                         </b-form-select>
                     </td>
                 </tr>
