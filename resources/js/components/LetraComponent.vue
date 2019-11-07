@@ -26,7 +26,7 @@
     </form>
 
     <table class="table table-hover">
-        <thead>
+        <thead class="thead-light">
             <tr>
                 <th class="text-center" scope="col">ID</th>
                 <th class="text-center" scope="col">NOMBRE</th>

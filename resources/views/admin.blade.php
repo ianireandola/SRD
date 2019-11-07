@@ -48,7 +48,7 @@
                                 </td>
                                 <td class="text-center">
                                     <img src="images/hito.png" width="70" height="70" alt="Hito" title="Hito">
-                                    <a href="#"><h3 class="h4 mb-2">X-Hito</a>
+                                    <a href="/admin/hitos"><h3 class="h4 mb-2">Hito</a>
                                 </td>
                                 <td class="text-center">
                                     <img src="images/user_letra.png" width="70" height="70" alt="Usuario/Letra" title="Usuario/Letra">

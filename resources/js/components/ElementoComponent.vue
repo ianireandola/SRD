@@ -53,7 +53,7 @@
 
 
     <table class="table table-hover">
-        <thead>
+        <thead class="thead-light">
             <tr>
                 <th class="text-center" scope="col" width="3%">ID</th>
                 <th scope="col" width="15%">NOMBRE</th>

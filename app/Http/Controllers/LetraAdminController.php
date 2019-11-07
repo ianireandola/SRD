@@ -35,7 +35,9 @@ class LetraAdminController extends Controller
      */
     public function create()
     {
-        $letras = Letra::all();
+        $letras = Letra::select('*')
+            ->orderBy('letras.nombre')
+            ->get();
 
         return $letras;
     }
