@@ -28,6 +28,7 @@ Route::delete('/letras/{letra_id}/{user_id}', 'LetraController@destroy');
 Route::resource('/letras', 'LetraController');
 Route::resource('/letras_todo', 'LetrasTodoController');
 Route::match(['get', 'head'], '/srd_proyectos/showAccion2/{accion2_id}', 'SRDProyectoController@showAccion2');
+Route::match(['get', 'head'], '/srd_proyectos/showElemento/{elemento_id}', 'SRDProyectoController@showElemento');
 Route::resource('/proyectos', 'ProyectoController');
 Route::match(['get', 'head'], '/srd_letras/showLetra/{letra_id}', 'SRDLetraController@showLetra');
 Route::resource('/srd_letras', 'SRDLetraController');
@@ -72,4 +73,6 @@ Route::prefix('admin')->group(function()
     Route::resource('/proyectospadre', 'ProyectoPadreController');
     Route::resource('/hitos', 'HitoController');
     Route::resource('/letras', 'LetraAdminController');
+    Route::resource('/elementos', 'ElementoAdminController');
+    Route::resource('/tipo_elementos', 'TipoElementoAdminController');
 });

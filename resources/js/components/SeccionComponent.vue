@@ -6,14 +6,16 @@
     <form @submit.prevent="editarSeccion(seccion)" v-if="editarActivo" class="mb-5">
         <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="seccion.nombre">
         <b-form-checkbox v-model="checkbox_nivel2">Nivel 2</b-form-checkbox>
-        <div>
-            <b-form-select class="form-control mb-2" v-model="area" v-on:change="areaElegida(area)">
+        <b-form-group label="Área relacionada:">
+            <b-form-select class="form-control" v-model="area" v-on:change="areaElegida(area)">
                 <option v-for="area in areas" v-bind:key="area.id" :value="area">{{area.id}} - {{area.nombre}}</option>
             </b-form-select>
+        </b-form-group>
+        <b-form-group label="Planta relacionada:">
             <b-form-select class="form-control mb-2" v-model="planta" v-on:change="plantaElegida(planta)">
                 <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta">{{planta.id}} - {{planta.nombre}}</option>
             </b-form-select>
-        </div>
+        </b-form-group>
         <button type="submit" class="btn btn-success btn-block">Guardar</button>
         <button class="btn btn-danger btn-block mb-7" type="submit" @click="cancelarEdicion()">Cancelar</button>
     </form>
@@ -22,14 +24,16 @@
     <form @submit.prevent="agregar" v-else class="mb-5">
         <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="seccion.nombre">
         <b-form-checkbox v-model="checkbox_nivel2">Nivel 2</b-form-checkbox>
-        <div>
-            <b-form-select class="form-control mb-2" v-model="area" v-on:change="areaElegida(area)">
+        <b-form-group label="Área relacionada:">
+            <b-form-select class="form-control" v-model="area" v-on:change="areaElegida(area)">
                 <option v-for="area in areas" v-bind:key="area.id" :value="area">{{area.id}} - {{area.nombre}}</option>
             </b-form-select>
+        </b-form-group>
+        <b-form-group label="Planta relacionada:">
             <b-form-select class="form-control mb-2" v-model="planta" v-on:change="plantaElegida(planta)">
                 <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta">{{planta.id}} - {{planta.nombre}}</option>
             </b-form-select>
-        </div>
+        </b-form-group>
         <button type="submit" class="btn btn-success btn-block mb-7">Agregar</button>
     </form>
 

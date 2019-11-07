@@ -5,7 +5,7 @@
     <!--Cuando "editarActivo=true" EDITAR-->
     <form @submit.prevent="editarAccion2(accion2)" v-if="editarActivo" class="mb-5">
         <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="accion2.nombre">
-        <input type="text" class="form-control mb-2" placeholder="Descripcion" v-model="accion2.descripcion">
+        <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="accion2.descripcion"/>
         <b-form-group label="Proyecto relacionado:">
             <b-form-select v-model="proyecto" v-on:change="asignarProyecto(proyecto)">
                 <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.id}} - {{proyecto.nombre}}</option>
@@ -18,7 +18,7 @@
     <!--Cuando "editarActivo=false" AGREGAR -->
     <form @submit.prevent="agregar" v-else class="mb-5">
         <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="accion2.nombre">
-        <input type="text" class="form-control mb-2" placeholder="Descripcion" v-model="accion2.descripcion">
+        <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="accion2.descripcion"/>
         <b-form-group label="Proyecto relacionado:">
             <b-form-select v-model="proyecto" v-on:change="asignarProyecto(proyecto)">
                 <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.nombre}}</option>
@@ -187,11 +187,8 @@ export default {
         },
         asignarProyecto(item)
         {
-            console.log("Asigno a accion2.proyecto_id: " + item.id);
             this.accion2.proyecto_id = item.id;
             this.accion2.nombre_proyecto = item.nombre;
-
-            console.log("Proyecto asignado: " + this.accion2.proyecto_id)
         }
     }
 }

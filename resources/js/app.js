@@ -35,6 +35,7 @@ Vue.component('user-component', require('./components/UserComponent.vue').defaul
 Vue.component('historial-component', require('./components/HistorialComponent.vue').default);
 Vue.component('historial2-component', require('./components/Historial2Component.vue').default);
 Vue.component('letra-component', require('./components/LetraComponent.vue').default);
+Vue.component('elemento-component', require('./components/ElementoComponent.vue').default);
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

@@ -30,7 +30,7 @@
                                 </td>
                                 <td class="text-center">
                                     <img src="images/elemento.png" width="70" height="70" alt="Elemento" title="Elemento">
-                                    <a href="#"><h3 class="h4 mb-2">X-Elemento</a>
+                                    <a href="/admin/elementos"><h3 class="h4 mb-2">Elemento</a>
                                 </td>
                             </tr>
                             <tr>
