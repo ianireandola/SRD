@@ -14,11 +14,12 @@ class CreateAvanceProyectoTable extends Migration
     public function up()
     {
         Schema::create('avance_proyecto', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->bigInteger('hito_id')->unsigned();
             $table->bigInteger('proyectoPadre_id')->unsigned();
             $table->integer('NTP');
 
-            $table->primary(['hito_id', 'proyectoPadre_id']);
+            $table->unique(['hito_id', 'proyectoPadre_id']);
 
             $table->foreign('hito_id')->references('id')->on('hitos');
             $table->foreign('proyectoPadre_id')->references('id')->on('proyecto_padres');

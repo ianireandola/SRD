@@ -76,4 +76,5 @@ Route::prefix('admin')->group(function()
     Route::match(['put', 'patch'], '/elementos/tipoElementoUpdate/{resource}', 'ElementoAdminController@tipoElementoUpdate');
     Route::resource('/elementos', 'ElementoAdminController');
     Route::resource('/tipo_elementos', 'TipoElementoAdminController');
+    Route::resource('/avance_proyectos', 'AvanceProyectoController');
 });

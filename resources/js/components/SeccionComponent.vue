@@ -256,6 +256,13 @@ export default {
                     alert("La sección tiene usuarios o proyectos asignados, no se puede eliminar")
                 }
             })
+        },
+        cancelarEdicion()
+        {
+            this.editarActivo = false;
+            this.seccion = { id: '', nombre: '', nivel2: '', area_id: '', area_nombre: '', planta_id: '', planta_nombre: ''}
+            this.area = '',
+            this.planta = ''
         }
     }
 }

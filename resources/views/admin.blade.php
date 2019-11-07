@@ -44,7 +44,7 @@
                                 </td>
                                 <td class="text-center">
                                     <img src="images/avance_proyecto.png" width="70" height="70" alt="Avance de Proyecto" title="Avance de Proyecto">
-                                    <a href="#"><h3 class="h4 mb-2">X-Avance de Proyecto</a>
+                                    <a href="/admin/avance_proyectos"><h3 class="h4 mb-2">Avance de Proyecto</a>
                                 </td>
                                 <td class="text-center">
                                     <img src="images/hito.png" width="70" height="70" alt="Hito" title="Hito">

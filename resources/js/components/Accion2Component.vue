@@ -41,11 +41,6 @@
             <tr v-for="(accion2, index) in accion2s" v-bind:key="index">
                 <td class="text-center">{{accion2.id}}</td>
                 <td>{{accion2.nombre}}</td>
-                <!--<template v-for="proyecto in proyectos">
-                    <td v-if="proyecto.id === accion2.proyecto_id" v-bind:key="`A-${proyecto.id}`">
-                        {{proyecto.nombre}}
-                    </td>
-                </template>-->
                 <td>{{accion2.nombre_proyecto}}</td>
                 <td class="text-center">{{accion2.descripcion}}</td>
                 <td class="text-center">
@@ -165,7 +160,8 @@ export default {
         cancelarEdicion()
         {
             this.editarActivo = false;
-            this.accion2 = {nombre: '', descripcion: ''};
+            this.accion2 = {nombre: '', descripcion: '', proyecto_id: ''};
+            this.proyecto = ''
         },
         editarFormulario(item)
         {
