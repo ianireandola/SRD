@@ -40,6 +40,7 @@ Vue.component('hito-component', require('./components/HitoComponent.vue').defaul
 Vue.component('tipo-elemento-component', require('./components/TipoElementoComponent.vue').default);
 Vue.component('avance-proyecto-component', require('./components/AvanceProyectoComponent.vue').default);
 Vue.component('trabajan-component', require('./components/TrabajanComponent.vue').default);
+Vue.component('proyecto-padre-component', require('./components/ProyectoPadreComponent.vue').default);
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

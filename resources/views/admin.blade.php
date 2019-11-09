@@ -80,7 +80,7 @@
                             <tr>
                                 <td class="text-center">
                                     <img src="images/proyecto_padre.png" width="70" height="70" alt="Proyecto Padre" title="Proyecto Padre">
-                                    <a href="#"><h3 class="h4 mb-2">X-Proyecto padre</a>
+                                    <a href="/admin/proyectospadre"><h3 class="h4 mb-2">Proyecto padre</a>
                                 </td>
                                 <td class="text-center">
                                     <img src="images/seccion.png" width="70" height="70" alt="Sección" title="Sección">

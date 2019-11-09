@@ -14,7 +14,7 @@ class ProyectoPadreController extends Controller
      */
     public function index()
     {
-        //
+        return view('proyecto-padre');
     }
 
     /**
@@ -39,7 +39,20 @@ class ProyectoPadreController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $proyecto_padre = new ProyectoPadre();
+        $proyecto_padre->nombre = $request->nombre;
+        $proyecto_padre->descripcion = $request->descripcion;
+        $proyecto_padre->estado = $request->estado;
+        $proyecto_padre->Q_Proyecto = $request->Q_Proyecto;
+        $proyecto_padre->planificacion = $request->planificacion;
+        $proyecto_padre->safety = $request->safety;
+        $proyecto_padre->homologaciones = $request->homologaciones;
+        $proyecto_padre->tipoProyecto_id = $request->tipoProyecto_id;
+        $proyecto_padre->nacion_id = $request->nacion_id;
+        $proyecto_padre->dedicacion_id = '1';
+        $proyecto_padre->save();
+
+        return $proyecto_padre;
     }
 
     /**
@@ -81,7 +94,20 @@ class ProyectoPadreController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $proyecto_padre = ProyectoPadre::find($id);
+        $proyecto_padre->nombre = $request->nombre;
+        $proyecto_padre->descripcion = $request->descripcion;
+        $proyecto_padre->estado = $request->estado;
+        $proyecto_padre->Q_Proyecto = $request->Q_Proyecto;
+        $proyecto_padre->planificacion = $request->planificacion;
+        $proyecto_padre->safety = $request->safety;
+        $proyecto_padre->homologaciones = $request->homologaciones;
+        $proyecto_padre->tipoProyecto_id = $request->tipoProyecto_id;
+        $proyecto_padre->nacion_id = $request->nacion_id;
+        $proyecto_padre->dedicacion_id = $request->dedicacion_id;
+        $proyecto_padre->save();
+
+        return $proyecto_padre;
     }
 
     public function nacionUpdate(Request $request, $id)
