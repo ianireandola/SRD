@@ -305,12 +305,10 @@ export default {
             axios.get(`/admin/fijos_eventuales/${this.usuario.fijoeventual_id}`)
                 .then(res =>{
                     this.usuario.fijoeventual_nombre = res.data;
-                    console.log(res.data);
                 });
             axios.get(`/admin/categorias/${this.usuario.categoria_id}`)
                 .then(res =>{
                     this.usuario.categoria_nombre = res.data;
-                    console.log(res.data);
                 })
             if(this.usuario.CPUportatil === 0 )
             {

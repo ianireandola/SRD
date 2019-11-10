@@ -192,6 +192,7 @@ export default {
                 nombre: ''
             },
             estado: '',
+            total: 0,
             editarActivo: false
         }
     },
@@ -216,11 +217,6 @@ export default {
     {
         agregar()
         {
-            console.log("Nombre: " + this.proyecto_padre.nombre)
-            console.log("Estado: " + this.proyecto_padre.estado)
-            console.log("Q_proyecto: " + this.proyecto_padre.Q_Proyecto)
-            console.log("Tipo proyecto: " + this.proyecto_padre.tipoProyecto_id)
-            console.log("Nacion: " + this.proyecto_padre.nacion_id)
             if(this.proyecto_padre.nombre.trim() === '' || this.proyecto_padre.estado === '' || this.proyecto_padre.Q_Proyecto === '' || this.proyecto_padre.tipoProyecto_id === '' || this.proyecto_padre.nacion_id === '')
             {
                 alert('Debes completar todos los campos antes de guardar');
@@ -326,7 +322,33 @@ export default {
         },
         eliminarProyectoPadre(proyecto_padre, index)
         {
-            
+            axios.get(`/admin/proyectos/showProyectoPadre/${proyecto_padre.id}`)
+                .then(res=>{
+                    this.total = res.data;
+                })
+            axios.get(`/admin/proyectospadre/showAvance/${proyecto_padre.id}`)
+                .then(res=>{
+                    this.total = this.total + res.data;
+                    if(this.total === 0)
+                    {
+                        this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                            okVariant: 'danger',
+                            okTitle: 'Eliminar',
+                            cancelTitle: 'Cancelar'
+                    }).then(value=>{
+                        if(value === true)
+                        {
+                            axios.delete(`/admin/proyectospadre/${proyecto_padre.id}`)
+                                .then(()=>{
+                                    this.proyecto_padres.splice(index, 1);
+                                })
+                        }
+                    })
+                }else
+                {
+                    alert("La sección tiene usuarios o proyectos asignados, no se puede eliminar")
+                }
+            })
         },
         asignarEstado(estado)
         {

@@ -63,13 +63,15 @@ Route::prefix('admin')->group(function()
     Route::resource('/fases', 'FaseController');
     Route::resource('/accion2s', 'Accion2AdminController');
     Route::resource('/admins', 'AdminAdminController');
-    Route::match(['put', 'patch'], '/usuarios/categoriaUpdate/{resource}', 'UserAdminController@categoriaUpdate')->name('usuarios.categoriaUpdate');
+    Route::match(['put', 'patch'], '/usuarios/categoriaUpdate/{resource}', 'UserAdminController@categoriaUpdate');
     Route::get('/usuarios/{usuario_id}/buscarFE', 'UserAdminController@FEcoincidentes');
     Route::match(['get', 'head'], '/usuarios/showSeccion/{seccion_id}', 'UserAdminController@showSeccion');
     Route::resource('/usuarios', 'UserAdminController');
+    Route::match(['get', 'head'], '/proyectos/showProyectoPadre/{proyectoPadre_id}', 'ProyectoAdminController@showProyectoPadre');
     Route::resource('/proyectos', 'ProyectoAdminController');
-    Route::match(['put', 'patch'], '/proyectospadre/nacionUpdate/{resource}', 'ProyectoPadreController@nacionUpdate')->name('proyectospadre.nacionUpdate');
-    Route::match(['put', 'patch'], '/proyectospadre/tipoProyectoUpdate/{resource}', 'ProyectoPadreController@tipoProyectoUpdate')->name('proyectospadre.tipoProyectoUpdate');
+    Route::match(['put', 'patch'], '/proyectospadre/nacionUpdate/{resource}', 'ProyectoPadreController@nacionUpdate');
+    Route::match(['put', 'patch'], '/proyectospadre/tipoProyectoUpdate/{resource}', 'ProyectoPadreController@tipoProyectoUpdate');
+    Route::match(['get', 'head'], '/proyectospadre/showAvance/{proyectoPadre_id}', 'ProyectoPadreController@showAvance');
     Route::resource('/proyectospadre', 'ProyectoPadreController');
     Route::resource('/hitos', 'HitoController');
     Route::resource('/letras', 'LetraAdminController');

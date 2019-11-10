@@ -55,6 +55,16 @@ class ProyectoPadreController extends Controller
         return $proyecto_padre;
     }
 
+    public function showAvance($proyectoPadre_id)
+    {
+        $num = ProyectoPadre::select('proyecto_padres.id')
+            ->join('avance_proyecto', 'proyecto_padres.id', '=', 'avance_proyecto.proyectoPadre_id')
+            ->where('avance_proyecto.proyectoPadre_id', '=', $proyectoPadre_id)
+            ->count();
+
+        return $num;
+    }
+
     /**
      * Display the specified resource.
      *
@@ -136,6 +146,7 @@ class ProyectoPadreController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $proyecto_padre = ProyectoPadre::find($id);
+        $proyecto_padre->delete();
     }
 }

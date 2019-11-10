@@ -63,6 +63,15 @@ class ProyectoAdminController extends Controller
         //
     }
 
+    public function showProyectoPadre($proyectoPadre_id)
+    {
+        $num = Proyecto::select('proyectos.id')
+            ->where('proyectos.proyectoPadre_id', '=', $proyectoPadre_id)
+            ->count();
+
+        return $num;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
