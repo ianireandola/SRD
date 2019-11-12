@@ -24,7 +24,7 @@ class ProyectoAdminController extends Controller
      */
     public function index()
     {
-        //
+        return view ('proyecto');
     }
 
     /**

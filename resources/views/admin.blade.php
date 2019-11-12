@@ -74,7 +74,7 @@
                                 </td>
                                 <td class="text-center">
                                     <img src="images/proyecto.png" width="70" height="70" alt="Proyecto" title="Proyecto">
-                                    <a href="#"><h3 class="h4 mb-2">X-Proyecto</a>
+                                    <a href="/admin/proyectos"><h3 class="h4 mb-2">Proyecto</a>
                                 </td>
                             </tr>
                             <tr>
