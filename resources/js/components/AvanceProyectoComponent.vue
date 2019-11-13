@@ -135,7 +135,7 @@
                 this.avance.hito_id = '',
                 this.avance.proyectoPadre_id = '',
                 this.avance.NTP = '',
-                this.proyectos_padre = '',
+                this.proyecto_padre = '',
                 this.hito = ''
 
                 axios.post(`/admin/avance_proyectos`, params)

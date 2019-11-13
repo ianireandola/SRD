@@ -338,6 +338,11 @@ export default {
     {
         agregar()
         {
+            if(this.proyecto.cantidadActual > this.proyecto.cantidadTotal)
+            {
+                alert('La cantidad actual no puede ser mayor a la total');
+                return;
+            }
             this.proyecto.ultimaRevision = this.date;
             if(this.proyecto.nombre.trim() === '' || this.proyecto.estado === '' || this.proyecto.cantidadActual === '' || this.proyecto.cantidadTotal === ''
                  || this.proyecto.ultimaRevision === '' || this.proyecto.fabricacion === '' || this.proyecto.proyectoPadre_id === '')

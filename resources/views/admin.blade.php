@@ -70,7 +70,7 @@
                                 </td>
                                 <td class="text-center">
                                     <img src="images/composicion.png" width="70" height="70" alt="Proyecto/Tipo de Elemento" title="Proyecto/Tipo de Elemento">
-                                    <a href="#"><h3 class="h4 mb-2">X-Proyecto/Tipo de Elemento</a>
+                                    <a href="/admin/composicion"><h3 class="h4 mb-2">Proyecto/Tipo de Elemento</a>
                                 </td>
                                 <td class="text-center">
                                     <img src="images/proyecto.png" width="70" height="70" alt="Proyecto" title="Proyecto">

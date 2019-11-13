@@ -14,7 +14,7 @@ class ComposicionController extends Controller
      */
     public function index()
     {
-        //
+        return view ('composicion');
     }
 
     /**
@@ -24,7 +24,11 @@ class ComposicionController extends Controller
      */
     public function create()
     {
-        //
+        $composiciones = Composicion::select('*')
+            ->orderBy('composicion.proyecto_id')
+            ->get();
+
+        return $composiciones;
     }
 
     /**
@@ -35,7 +39,12 @@ class ComposicionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $composicion = new Composicion();
+        $composicion->proyecto_id = $request->proyecto_id;
+        $composicion->tipoElemento_id = $request->tipoElemento_id;
+        $composicion->save();
+
+        return $composicion;
     }
 
     /**
@@ -73,7 +82,12 @@ class ComposicionController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $composicion = Composicion::find($id);
+        $composicion->proyecto_id = $request->proyecto_id;
+        $composicion->tipoElemento_id = $request->tipoElemento_id;
+        $composicion->save();
+
+        return $composicion;
     }
 
     /**
@@ -84,6 +98,7 @@ class ComposicionController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $composicion = Composicion::find($id);
+        $composicion->delete();
     }
 }
