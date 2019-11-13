@@ -34,7 +34,7 @@ class Accion2AdminController extends Controller
      */
     public function create()
     {
-        $accion2s = Accion2::selectRaw('accion2s.id, accion2s.nombre, accion2s.descripcion, proyectos.nombre AS "nombre_proyecto"')
+        $accion2s = Accion2::selectRaw('accion2s.id, accion2s.nombre, accion2s.proyecto_id, accion2s.descripcion, proyectos.nombre AS "nombre_proyecto"')
             ->join('proyectos', 'proyectos.id', '=', 'accion2s.proyecto_id')
             ->orderBy('accion2s.nombre')
             ->get();
@@ -76,6 +76,15 @@ class Accion2AdminController extends Controller
         return $accion2;
     }
 
+    public function showProyecto($proyecto_id)
+    {
+        $num = Accion2::select('accion2s.id')
+            ->where('accion2s.proyecto_id', '=', $proyecto_id)
+            ->count();
+
+        return $num;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -85,6 +94,15 @@ class Accion2AdminController extends Controller
     public function edit($id)
     {
         //
+    }
+
+    public function updateProyecto(Request $request, $id)
+    {
+        $accion2 = Accion2::find($id);
+        $accion2->proyecto_id = $request->proyecto_id;
+        $accion2->save();
+
+        return $accion2;
     }
 
     /**

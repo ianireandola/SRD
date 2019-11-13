@@ -15,7 +15,6 @@ class CreateProyectosTable extends Migration
     {
         Schema::create('proyectos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('proyectoPadre_id')->unsigned();
             $table->string('nombre');
             $table->text('descripcion')->nullable();
             $table->enum('estado', ['Activo', 'Cerrado', 'Bloqueado']);
@@ -24,6 +23,7 @@ class CreateProyectosTable extends Migration
             $table->string('Ed_PF')->nullable();
             $table->date('ultimaRevision');
             $table->string('fabricacion');
+            $table->bigInteger('proyectoPadre_id')->unsigned();
 
             $table->foreign('proyectoPadre_id')->references('id')->on('proyecto_padres');
         });

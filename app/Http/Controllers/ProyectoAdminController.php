@@ -49,7 +49,19 @@ class ProyectoAdminController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $proyecto = new Proyecto();
+        $proyecto->nombre = $request->nombre;
+        $proyecto->descripcion = $request->descripcion;
+        $proyecto->estado = $request->estado;
+        $proyecto->cantidadActual = $request->cantidadActual;
+        $proyecto->cantidadTotal = $request->cantidadTotal;
+        $proyecto->Ed_PF = $request->Ed_PF;
+        $proyecto->ultimaRevision = $request->ultimaRevision;
+        $proyecto->fabricacion = $request->fabricacion;
+        $proyecto->proyectoPadre_id = $request->proyectoPadre_id;
+        $proyecto->save();
+
+        return $proyecto;
     }
 
     /**
@@ -92,7 +104,19 @@ class ProyectoAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $proyecto = Proyecto::find($id);
+        $proyecto->nombre = $request->nombre;
+        $proyecto->descripcion = $request->descripcion;
+        $proyecto->estado = $request->estado;
+        $proyecto->cantidadActual = $proyecto->cantidadActual;
+        $proyecto->cantidadTotal = $request->cantidadTotal;
+        $proyecto->Ed_PF = $request->Ed_PF;
+        $proyecto->ultimaRevision = $request->ultimaRevision;
+        $proyecto->proyectoPadre_id = $request->proyectoPadre_id;
+        $proyecto->fabricacion = $request->fabricacion;
+        $proyecto->save();
+
+        return $proyecto;
     }
 
     /**
@@ -103,6 +127,7 @@ class ProyectoAdminController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $proyecto = Proyecto::find($id);
+        $proyecto->delete();
     }
 }

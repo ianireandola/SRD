@@ -346,7 +346,7 @@ export default {
                     })
                 }else
                 {
-                    alert("La sección tiene usuarios o proyectos asignados, no se puede eliminar")
+                    alert("El proyecto tiene avances o proyectos asignados, no se puede eliminar")
                 }
             })
         },

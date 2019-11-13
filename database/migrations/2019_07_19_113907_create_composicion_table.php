@@ -14,10 +14,11 @@ class CreateComposicionTable extends Migration
     public function up()
     {
         Schema::create('composicion', function (Blueprint $table) {
+            $table->bigIncrements('id');
             $table->bigInteger('proyecto_id')->unsigned();
             $table->bigInteger('tipoElemento_id')->unsigned();
 
-            $table->primary(['proyecto_id', 'tipoElemento_id']);
+            $table->unique(['proyecto_id', 'tipoElemento_id']);
 
             $table->foreign('proyecto_id')->references('id')->on('proyectos');
             $table->foreign('tipoElemento_id')->references('id')->on('tipo_elementos');

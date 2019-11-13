@@ -3,7 +3,7 @@
     <h3 class="text-center mb-3">Gestión de Proyectos</h3>
 
     <!--Cuando "editarActivo=true" EDITAR-->
-    <form @submit.prevent="editarProyectoPadre(proyecto_padre)" v-if="editarActivo" class="mb-5">
+    <form @submit.prevent="editarProyecto(proyecto)" v-if="editarActivo" class="mb-5">
         <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="proyecto.nombre">
         <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="proyecto.descripcion"/>
         <div class="row">
@@ -15,6 +15,9 @@
             </div>
             <div class="col">
                 <b-form-input class="mb-4" type="number" v-model="proyecto.Ed_PF" placeholder="Ed PF"/>
+            </div>
+            <div class="col">
+                <input type="text" class="form-control mb-2" placeholder="Fabricación en " v-model="proyecto.fabricacion">
             </div>
         </div> 
         <div class="row">
@@ -28,9 +31,9 @@
                 </b-form-group>
             </div>
             <div class="col">
-                <b-form-group label="Fabricación en planta de:">
-                    <b-form-select v-model="planta" v-on:change="asignarFabrican(planta)">
-                        <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta">{{planta.id}} - {{planta.nombre}}</option>
+                <b-form-group label="Proyecto Padre relacionado:">
+                    <b-form-select v-model="proyecto_padre" v-on:change="asignarProyectoPadre(proyecto_padre)">
+                        <option v-for="proyecto_padre in proyecto_padres" v-bind:key="proyecto_padre.id" :value="proyecto_padre">{{proyecto_padre.id}} - {{proyecto_padre.nombre}}</option>
                     </b-form-select>
                 </b-form-group>
             </div>
@@ -47,7 +50,7 @@
                         lang="es"/>  
                 </b-form-group>
             </div>
-        </div> 
+        </div>  
         <button type="submit" class="btn btn-success btn-block">Guardar</button>
         <button class="btn btn-danger btn-block mb-7" type="submit" @click="cancelarEdicion()">Cancelar</button>
     </form>
@@ -66,6 +69,9 @@
             <div class="col">
                 <b-form-input class="mb-4" type="number" v-model="proyecto.Ed_PF" placeholder="Ed PF"/>
             </div>
+            <div class="col">
+                <input type="text" class="form-control mb-2" placeholder="Fabricación en " v-model="proyecto.fabricacion">
+            </div>
         </div> 
         <div class="row">
             <div class="col">
@@ -78,9 +84,9 @@
                 </b-form-group>
             </div>
             <div class="col">
-                <b-form-group label="Fabricación en planta de:">
-                    <b-form-select v-model="planta" v-on:change="asignarFabrican(planta)">
-                        <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta">{{planta.id}} - {{planta.nombre}}</option>
+                <b-form-group label="Proyecto Padre relacionado:">
+                    <b-form-select v-model="proyecto_padre" v-on:change="asignarProyectoPadre(proyecto_padre)">
+                        <option v-for="proyecto_padre in proyecto_padres" v-bind:key="proyecto_padre.id" :value="proyecto_padre">{{proyecto_padre.id}} - {{proyecto_padre.nombre}}</option>
                     </b-form-select>
                 </b-form-group>
             </div>
@@ -105,28 +111,22 @@
         <thead class="thead-light">
             <tr>
                 <th class="text-center" scope="col" width="3%">ID</th>
-                <th class="text-center" scope="col" width="20%">NOMBRE</th>
-                <th class="text-center" scope="col" width="25%">DESCRIPCIÓN</th>
-                <th class="text-center" scope="col" width="10%">ESTADO</th>
-                <th class="text-center" scope="col" width="20%">FAMILIA DE PROYECTO</th>
-                <th class="text-center" scope="col" width="22%">OPCIONES</th>
+                <th class="text-center" scope="col" width="30%">NOMBRE</th>
+                <th class="text-center" scope="col" width="20%">DESCRIPCIÓN</th>
+                <th class="text-center" scope="col" width="47%">OPCIONES</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="(proyecto, index) in proyecto" v-bind:key="proyecto.id">
+            <tr v-for="(proyecto, index) in proyectos" v-bind:key="proyecto.id">
                 <td class="text-center">{{proyecto.id}}</td>
                 <td >{{proyecto.nombre}}</td>
                 <td>{{proyecto.descripcion}}</td>
-                <td>{{proyecto.estado}}</td>
-                <template v-for="proyecto_padre in proyecto_padres">
-                    <td v-if="proyecto_padre.id === proyecto.proyectoPadre_id" v-bind:key="`A-${proyecto_padre.id}`">
-                        {{proyecto_padre.nombre}}
-                    </td>
-                </template>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(proyecto)" class="btn btn-primary">Modificar</button>
                     <b-button variant="info" v-b-modal.center @click="mostrarDetalle(proyecto, $bvModal.show('modal-center'))">Detalle</b-button>
-                    <button type="button" @click="eliminarProyectoPadre(proyecto, index)" class="btn btn-secondary">Eliminar</button>
+                    <button type="button" @click="relacionNivel2(proyecto)" class="btn btn-info">Niveles 2</button>
+                    <button type="button" @click="relacionElementos(proyecto)" class="btn btn-info">Elementos</button>
+                    <button type="button" @click="eliminarProyecto(proyecto, index)" class="btn btn-secondary">Eliminar</button>
                 </td>
             </tr>
         </tbody>
@@ -134,7 +134,7 @@
 
     <b-modal id="modal-center" hide-footer>
         <template v-slot:modal-title>
-            Detalle del Proyecto Padre: <b> {{proyecto.id}} - {{proyecto.nombre}} </b>
+            Detalle del Proyecto Padre: <b> {{proyecto.nombre}} </b>
         </template>
         <div class="d-block text-left">
             <p><b>ID:</b> {{proyecto.id}}</p>
@@ -145,13 +145,7 @@
             <p><b>Cantidad Total:</b> {{proyecto.cantidadTotal}}</p>
             <p><b>Ed PF:</b> {{proyecto.Ed_PF}}</p>
             <p><b>Última revisión:</b> {{proyecto.ultimaRevision}}</p>
-            <p><b>Fabricación en planta de:</b>
-                <template v-for="planta in plantas">
-                    <p v-if="planta.id === proyecto.fabricacion" v-bind:key="`A-${planta.id}`">
-                        {{planta.nombre}}
-                    </p>
-                </template>
-            </p>
+            <p><b>Fabricación en :</b> {{proyecto.fabricacion}}</p>
             <p><b>Proyecto Padre:</b> 
                 <template v-for="proyecto_padre in proyecto_padres">
                     <p v-if="proyecto_padre.id === proyecto.proyectoPadre_id" v-bind:key="`B-${proyecto_padre.id}`">
@@ -162,11 +156,76 @@
         </div>
         <b-button class="mt-3" block @click="$bvModal.hide('modal-center')">Cerrar</b-button>
     </b-modal>
+
+    <b-modal size="xl" id="modal-nivel2" ref="btnproyecto" hide-footer no-close-on-esc hide-header-close>
+        <template v-slot:modal-title>
+            Proyecto a eliminar: <b> {{proyecto.id}} - {{proyecto.nombre}} </b>
+        </template>
+        <div>
+            <p>No se puede eliminar, está relacionada con las siguientes acciones de nivel 2: </p>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center" scope="col">ACCIÓN DE NIVEL 2 </th>
+                    <th class="text-center" scope="col">ELEGIR OTRO PROYECTO: </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(nivel2_coincidente, index) in niveles2_coincidentes" v-bind:key="index">
+                    <td>{{nivel2_coincidente.id}} - {{nivel2_coincidente.nombre}}</td>
+                    <td class="text-center">
+                        <b-form-select v-model="nivel2_coincidente.proyecto_id" v-on:change="guardarCambiosNivel2(nivel2_coincidente, index)">
+                            <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto.id">{{proyecto.id}} - {{proyecto.nombre}}</option>
+                        </b-form-select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <b-row>
+            <b-col>
+                <b-button class="mt-3" block @click="cancelarEdicionModal1($bvModal.hide('modal-nivel2'))"> Cerrar </b-button>
+            </b-col>
+        </b-row>        
+    </b-modal>
+
+    <b-modal size="xl" id="modal-elemento" ref="btnproyecto" hide-footer no-close-on-esc hide-header-close>
+        <template v-slot:modal-title>
+            Proyecto a eliminar: <b> {{proyecto.nombre}} </b>
+        </template>
+        <div>
+            <p>No se puede eliminar, está relacionada con los siguientes elementos: </p>
+        </div>
+        <table class="table table-hover">
+            <thead class="thead-light">
+                <tr>
+                    <th class="text-center" scope="col">ELEMENTO</th>
+                    <th class="text-center" scope="col">ELEGIR OTRO PROYECTO: </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(elemento_coincidente, index) in elementos_coincidentes" v-bind:key="index">
+                    <td>{{elemento_coincidente.id}} - {{elemento_coincidente.nombre}}</td>
+                    <td class="text-center">
+                        <b-form-select v-model="elemento_coincidente.proyecto_id" v-on:change="guardarCambiosElementos(elemento_coincidente, index)">
+                            <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto.id">{{proyecto.id}} - {{proyecto.nombre}}</option>
+                        </b-form-select>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <b-row>
+            <b-col>
+                <b-button class="mt-3" block @click="cancelarEdicionModal2($bvModal.hide('modal-elemento'))"> Cerrar </b-button>
+            </b-col>
+        </b-row>        
+    </b-modal>
 </div>
 </template>
 
 <script>
 import Datepicker from 'vue2-datepicker'
+import moment from "moment";
 
 export default {
     name: "ProyectoPadreComponent",
@@ -209,15 +268,45 @@ export default {
                 cantidadTotal: '',
                 Ed_PF: '',
                 ultimaRevision: '',
-                fabricacion: '', //Es la planta
+                fabricacion: '', 
                 proyectoPadre_id: ''
             },
-            plantas: [],
-            planta: 
+            niveles2: [],
+            nivel2: 
             {
                 id: '',
-                nombre: ''
+                nombre: '',
+                descripcion: '',
+                proyecto_id: ''
             },
+            niveles2_coincidentes: [],
+            nivel2_coincidente:
+            {
+                id: '',
+                nombre: '',
+                descripcion: '',
+                proyecto_id: ''
+            },
+            elementos: [],
+            elemento:
+            {
+                id: '',
+                nombre: '',
+                descripcion: '',
+                tipoElemento_id: '',
+                proyecto_id: '',
+                estado: ''
+            },
+            elementos_coincidentes: [],
+            elementos:
+            {
+                id: '',
+                nombre: '',
+                descripcion: '',
+                tipoElemento_id: '',
+                proyecto_id: '',
+                estado: ''
+            }, 
             estado: '',
             total: 0,
             editarActivo: false
@@ -233,161 +322,307 @@ export default {
         axios.get('/admin/proyectos/create')
             .then(res=>{
                 this.proyectos = res.data;
-            })
-            
-        axios.get('/admin/plantas/create')
+            });
+
+        axios.get('/admin/accion2s/create')
             .then(res=>{
-                this.plantas = res.data;
+                this.niveles2 = res.data;
+            });
+
+        axios.get('/admin/elementos/create')
+            .then(res=>{
+                this.elementos = res.data;
             })
     },
     methods:
     {
         agregar()
         {
-            if(this.proyecto.nombre.trim() === '' || this.proyecto.estado === '' || this.proyecto.cantidadActual === '' || this.proyecto.cantidadTotal === '' || 
-                this.proyecto.Ed_PF === '' || this.proyecto.ultimaRevision === '' || this.proyecto.fabricacion === '' || this.proyecto.proyectoPadre_id === '')
+            this.proyecto.ultimaRevision = this.date;
+            if(this.proyecto.nombre.trim() === '' || this.proyecto.estado === '' || this.proyecto.cantidadActual === '' || this.proyecto.cantidadTotal === ''
+                 || this.proyecto.ultimaRevision === '' || this.proyecto.fabricacion === '' || this.proyecto.proyectoPadre_id === '')
             {
                 alert('Debes completar todos los campos antes de guardar');
                 return;
             }
             const params = {
                 nombre: this.proyecto.nombre,
-                descripcion: '',
-                estado: '',
-                cantidadActual: '',
-                cantidadTotal: '',
-                Ed_PF: '',
-                ultimaRevision: '',
-                fabricacion: '',
-                proyectoPadre_id: ''}
+                descripcion: this.proyecto.descripcion,
+                estado: this.proyecto.estado,
+                cantidadActual: this.proyecto.cantidadActual,
+                cantidadTotal: this.proyecto.cantidadTotal,
+                Ed_PF: this.proyecto.Ed_PF,
+                ultimaRevision: this.proyecto.ultimaRevision,
+                fabricacion: this.proyecto.fabricacion,
+                proyectoPadre_id: this.proyecto.proyectoPadre_id}
 
-            this.proyecto_padre.nombre = '',
-            this.proyecto_padre.descripcion = '',
-            this.proyecto_padre.estado = '',
-            this.proyecto_padre.Q_Proyecto = '',
-            this.proyecto_padre.planificacion = '',
-            this.proyecto_padre.safety = '',
-            this.proyecto_padre.homologaciones = '',
-            this.proyecto_padre.tipoProyecto_id = '',
-            this.proyecto_padre.nacion_id = '',
-            this.tipo_proyecto = '',
-            this.nacion = ''
+            this.proyecto.nombre = '',
+            this.proyecto.descripcion = '',
+            this.proyecto.estado = '',
+            this.proyecto.cantidadActual = '',
+            this.proyecto.cantidadTotal = '',
+            this.proyecto.Ed_PF = '',
+            this.proyecto.ultimaRevision = '',
+            this.proyecto.fabricacion = '',
+            this.proyecto.id = '',
+            this.proyecto_padre = '',
+            this.estado = '',
+            this.date = ''
             
-            axios.post('/admin/proyectospadre', params)
+            axios.post('/admin/proyectos', params)
                 .then(res=>{
-                    this.proyecto_padres.push(res.data);
+                    this.proyectos.push(res.data);
                 })
         },
-        editarProyectoPadre(proyecto_padre)
+        editarProyecto(proyecto)
         {
+            this.proyecto.ultimaRevision = this.date;
             const params = {
-                nombre: this.proyecto_padre.nombre, 
-                descripcion: this.proyecto_padre.descripcion, 
-                estado: this.proyecto_padre.estado, 
-                Q_Proyecto: this.proyecto_padre.Q_Proyecto,
-                planificacion: this.proyecto_padre.planificacion,
-                safety: this.proyecto_padre.safety,
-                homologaciones: this.proyecto_padre.homologaciones,
-                tipoProyecto_id: this.proyecto_padre.tipoProyecto_id,
-                nacion_id: this.proyecto_padre.nacion_id,
-                dedicacion_id: this.proyecto_padre.dedicacion_id}
+                nombre: this.proyecto.nombre, 
+                descripcion: this.proyecto.descripcion, 
+                estado: this.proyecto.estado, 
+                cantidadActual: this.proyecto.cantidadActual,
+                cantidadTotal: this.proyecto.cantidadTotal,
+                Ed_PF: this.proyecto.Ed_PF,
+                ultimaRevision: this.proyecto.ultimaRevision,
+                fabricacion: this.proyecto.fabricacion,
+                proyectoPadre_id: this.proyecto.proyectoPadre_id}
 
-            axios.put(`/admin/proyectospadre/${proyecto_padre.id}`, params)
+            axios.put(`/admin/proyectos/${proyecto.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
-                    const index = this.proyecto_padres.findIndex(proyectoPadreBuscar => proyectoPadreBuscar.id === res.data.id)
-                    this.proyecto_padres[index] = res.data;
+                    const index = this.proyectos.findIndex(proyectoBuscar => proyectoBuscar.id === res.data.id)
+                    this.proyectos[index] = res.data;
 
-                    this.proyecto_padre.id = '',
-                    this.proyecto_padre.nombre = '',
-                    this.proyecto_padre.descripcion = '',
-                    this.proyecto_padre.estado = '',
-                    this.proyecto_padre.Q_Proyecto = '',
-                    this.proyecto_padre.planificacion = '',
-                    this.proyecto_padre.safety = '',
-                    this.proyecto_padre.homologaciones = '',
-                    this.proyecto_padre.tipoProyecto_id = '',
-                    this.proyecto_padre.nacion_id = '',
-                    this.nacion = '',
-                    this.tipo_proyecto = '',
+                    this.proyecto.id = '',
+                    this.proyecto.nombre = '',
+                    this.proyecto.descripcion = '',
+                    this.proyecto.estado = '',
+                    this.proyecto.cantidadActual = '',
+                    this.proyecto.cantidadTotal = '',
+                    this.proyecto.Ed_PF = '',
+                    this.proyecto.ultimaRevision = '',
+                    this.proyecto.fabricacion = '',
+                    this.proyecto.proyectoPadre_id = '',
+                    this.proyecto_padre = '',
+                    this.date = '',
                     this.estado = ''
                 })
         },
         cancelarEdicion()
         {
             this.editarActivo = false;
+            this.proyecto = {
+                id: '',
+                nombre: '',
+                descripcion: '',
+                estado: '',
+                cantidadActual: '',
+                cantidadTotal: '',
+                Ed_PF: '',
+                ultimaRevision: '',
+                fabricacion: ''
+            },
+            this.proyecto_padre = '',
+            this.date = ''
         },
-        editarFormulario(proyecto_padre)
+        cancelarEdicionModal1($event)
+        {
+            this.proyecto = {
+                nombre: '',
+                descripcion: '',
+                estado: '',
+                cantidadActual: '',
+                cantidadTotal: '',
+                Ed_PF: '',
+                ultimaRevision: '',
+                fabricacion: ''
+            }
+            this.niveles2_coincidentes = [];
+        },
+        cancelarEdicionModal2($event)
+        {
+            this.proyecto = {
+                nombre: '',
+                descripcion: '',
+                estado: '',
+                cantidadActual: '',
+                cantidadTotal: '',
+                Ed_PF: '',
+                ultimaRevision: '',
+                fabricacion: ''
+            }
+            this.elementos_coincidentes = [];
+        },
+        editarFormulario(proyecto)
         {
             this.editarActivo = true;
-            this.proyecto_padre.nombre = proyecto_padre.nombre;
-            this.proyecto_padre.descripcion = proyecto_padre.descripcion;
-            this.proyecto_padre.id = proyecto_padre.id;
-            this.proyecto_padre.estado = proyecto_padre.estado;
-            this.proyecto_padre.Q_Proyecto = proyecto_padre.Q_Proyecto;
-            this.proyecto_padre.planificacion = proyecto_padre.planificacion;
-            this.proyecto_padre.safety = proyecto_padre.safety;
-            this.proyecto_padre.homologaciones = proyecto_padre.homologaciones;
-            this.estado = proyecto_padre.estado;
+            this.proyecto.nombre = proyecto.nombre;
+            this.proyecto.descripcion = proyecto.descripcion;
+            this.proyecto.id = proyecto.id;
+            this.proyecto.estado = proyecto.estado;
+            this.proyecto.cantidadActual = proyecto.cantidadActual;
+            this.proyecto.cantidadTotal = proyecto.cantidadTotal;
+            this.proyecto.Ed_PF = proyecto.Ed_PF;
+            this.proyecto.ultimaRevision = proyecto.ultimaRevision;
+            this.proyecto.fabricacion = proyecto.fabricacion;
+            this.estado = proyecto.estado;
+            this.date = proyecto.ultimaRevision;
 
-            for(var i=0; i<this.tipo_proyectos.length; i++)
+            for(var i=0; i<this.proyecto_padres.length; i++)
             {
-                if(this.tipo_proyectos[i].id === proyecto_padre.tipoProyecto_id)
+                if(this.proyecto_padres[i].id === proyecto.proyectoPadre_id)
                 {
-                    this.tipo_proyecto = this.tipo_proyectos[i];
-                    this.proyecto_padre.tipoProyecto_id = this.tipo_proyectos[i].id;
-                }
-            }
-            for(var i=0; i<this.naciones.length; i++)
-            {
-                if(this.naciones[i].id === proyecto_padre.nacion_id)
-                {
-                    this.nacion = this.naciones[i];
-                    this.proyecto_padre.nacion_id = this.naciones[i].id;
+                    this.proyecto_padre = this.proyecto_padres[i];
+                    this.proyecto.proyectoPadre_id = this.proyecto_padres[i].id;
                 }
             }
         },
-        eliminarProyectoPadre(proyecto_padre, index)
+        eliminarProyecto(proyecto, index)
         {
-            axios.get(`/admin/proyectos/showProyectoPadre/${proyecto_padre.id}`)
+            axios.get(`/srd_proyectos/showProyecto/${proyecto.id}`)
                 .then(res=>{
                     this.total = res.data;
-                })
-            axios.get(`/admin/proyectospadre/showAvance/${proyecto_padre.id}`)
+                });
+
+            axios.get(`/admin/trabajan/${proyecto.id}`)
+                .then(res=>{
+                    this.total = this.total + res.data;
+                });
+
+            axios.get(`/admin/composicion/${proyecto.id}`)
+                .then(res=>{
+                    this.total = this.total + res.data;
+                });
+
+            axios.get(`/admin/accions2/showProyecto/${proyecto.id}`)
+                .then(res=>{
+                    this.total = this.total + res.data;
+                });
+
+            axios.get(`/admin/elementos/showProyecto/${proyecto.id}`)
                 .then(res=>{
                     this.total = this.total + res.data;
                     if(this.total === 0)
                     {
-                        this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                        this.$bvModal.msgBoxConfirm("¿Quiere eliminar?", {
                             okVariant: 'danger',
                             okTitle: 'Eliminar',
                             cancelTitle: 'Cancelar'
-                    }).then(value=>{
-                        if(value === true)
-                        {
-                            axios.delete(`/admin/proyectospadre/${proyecto_padre.id}`)
-                                .then(()=>{
-                                    this.proyecto_padres.splice(index, 1);
-                                })
-                        }
-                    })
-                }else
-                {
-                    alert("La sección tiene usuarios o proyectos asignados, no se puede eliminar")
-                }
-            })
+                        }).then(value=>{
+                            if(value === true)
+                            {
+                                axios.delete(`/admin/proyectos/${proyecto.id}`)
+                                    .then(()=>{
+                                        this.proyectos.splice(index, 1);
+                                    })
+                            }
+                        })
+                    }else{
+                        alert("El proyecto puede tener: horas de trabajadores asignadas, secciones asignadas, tipos de elementos asignados, acciones de nivel2/elementos asignados. No se puede eliminar")
+                    }
+                })
+            
         },
         asignarEstado(estado)
         {
-            this.proyecto_padre.estado = estado;
+            this.proyecto.estado = estado;
         },
-        mostrarDetalle(proyecto_padre, $event)
+        asignarProyectoPadre(proyecto_padre)
         {
-            this.proyecto_padre = proyecto_padre;
+            this.proyecto.proyectoPadre_id = proyecto_padre.id;
         },
-        asignarFabrican(planta)
+        mostrarDetalle(proyecto, $event)
         {
-            this.proyecto.fabricacion = planta.id;
+            this.proyecto = proyecto;
+        },
+        relacionNivel2(proyecto)
+        {
+            this.proyecto.nombre = proyecto.nombre;
+            this.proyecto.descripcion = proyecto.descripcion;
+            this.proyecto.estado = proyecto.estado;
+            this.proyecto.cantidadActual = proyecto.cantidadActual;
+            this.proyecto.cantidadTotal = proyecto.cantidadTotal;
+            this.proyecto.Ed_PF = proyecto.Ed_PF;
+            this.proyecto.ultimaRevision = this.date;
+            this.proyecto.fabricacion = proyecto.fabricacion;
+            this.proyecto.proyectoPadre_id = proyecto.proyectoPadre_id;
+
+            for(var i=0; i<this.niveles2.length; i++)
+            {
+                if(this.niveles2[i].proyecto_id === proyecto.id)
+                {
+                    this.niveles2_coincidentes.push(this.niveles2[i]);
+                }
+            }
+            this.$root.$emit('bv::show::modal', 'modal-nivel2', '#btnShow')
+        },
+        relacionElementos(proyecto)
+        {
+            this.proyecto.nombre = proyecto.nombre;
+            this.proyecto.descripcion = proyecto.descripcion;
+            this.proyecto.estado = proyecto.estado;
+            this.proyecto.cantidadActual = proyecto.cantidadActual;
+            this.proyecto.cantidadTotal = proyecto.cantidadTotal;
+            this.proyecto.Ed_PF = proyecto.Ed_PF;
+            this.proyecto.ultimaRevision = this.date;
+            this.proyecto.fabricacion = proyecto.fabricacion;
+            this.proyecto.proyectoPadre_id = proyecto.proyectoPadre_id;
+
+            for(var i=0; i<this.elementos.length; i++)
+            {
+                if(this.elementos[i].proyecto_id === proyecto.id)
+                {
+                    this.elementos_coincidentes.push(this.elementos[i]);
+                }
+            }
+            this.$root.$emit('bv::show::modal', 'modal-elemento', '#btnShow')
+        },
+        guardarCambiosNivel2(nivel2, index)
+        {
+            const params = {nombre: nivel2.nombre, descripcion: nivel2.descripcion, proyecto_id: nivel2.proyecto_id, nombre_proyecto: this.proyecto.nombre}
+            
+            axios.put(`/admin/accions2/updateProyecto/${nivel2.id}`, params)
+                .then(res=>{
+                    const index = this.niveles2.findIndex(nivel2Buscar => nivel2Buscar.id === res.data.id)
+                    this.niveles2[index] = res.data;
+                });
+
+            this.$root.$emit('bv::hide::modal', 'modal-nivel2', '#btnShow');
+            this.proyecto = {
+                nombre: '',
+                descripcion: '',
+                estado: '',
+                cantidadActual: '',
+                cantidadTotal: '',
+                Ed_PF: '',
+                ultimaRevision: '',
+                fabricacion: ''
+            }
+            this.niveles2_coincidentes = [];
+        },
+        guardarCambiosElementos(elemento, index)
+        {
+            const params = {nombre: elemento.nombre, descripcion: elemento.descripcion, tipoElemento_id: elemento.tipoElemento_id, proyecto_id: elemento.proyecto_id, estado: elemento.estado}
+
+            axios.put(`/admin/elementos/proyectoUpdate/${elemento.id}`, params)
+                .then(res=>{
+                    const index = this.elementos.findIndex(elementoBuscar => elementoBuscar.id === res.data.id)
+                    this.elementos[index] = res.data;
+                });
+
+            this.$root.$emit('bv::hide::modal', 'modal-elemento', '#btnShow');
+            this.proyecto = {
+                nombre: '',
+                descripcion: '',
+                estado: '',
+                cantidadActual: '',
+                cantidadTotal: '',
+                Ed_PF: '',
+                ultimaRevision: '',
+                fabricacion: ''
+            }
+            this.elementos_coincidentes = [];
         }
     }
 }

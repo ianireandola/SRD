@@ -96,9 +96,7 @@ class SRDLetraController extends Controller
         $srd_letras = srd_letra::select('srd_letras.id')
             ->where('srd_letras.fecha', '=', $fecha)
             ->count();
-
-        
-
+            
         return $srd_letras;
     }
 

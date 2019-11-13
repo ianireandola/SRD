@@ -65,9 +65,12 @@ class TrabajanController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($proyecto_id)
     {
-        //
+        $num = trabajan::select('trabajan.id')
+            ->where('trabajan.proyecto_id', '=', $proyecto_id)
+            ->count();
+        return $num;
     }
 
     /**

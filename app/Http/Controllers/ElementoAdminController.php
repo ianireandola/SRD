@@ -75,6 +75,15 @@ class ElementoAdminController extends Controller
         return $elementos;
     }
 
+    public function showProyecto($proyecto_id)
+    {
+        $num = Elemento::select('elementos.id')
+            ->where('elementos.proyecto_id', '=', $proyecto_id)
+            ->count();
+
+        return $num;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
@@ -90,6 +99,15 @@ class ElementoAdminController extends Controller
     {
         $elemento = Elemento::find($id);
         $elemento->tipoElemento_id = $request->tipoElemento_id;
+        $elemento->save();
+
+        return $elemento;
+    }
+
+    public function proyectoUpdate(Request $request, $id)
+    {
+        $elemento = Elemento::find($id);
+        $elemento->proyecto_id = $request->proyecto_id;
         $elemento->save();
 
         return $elemento;
