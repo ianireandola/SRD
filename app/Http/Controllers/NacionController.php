@@ -34,7 +34,9 @@ class NacionController extends Controller
      */
     public function create()
     {
-        $naciones = Nacion::all();
+        $naciones = Nacion::select('*')
+            ->orderBy('nacions.nombre')
+            ->get();
 
         return $naciones;
     }

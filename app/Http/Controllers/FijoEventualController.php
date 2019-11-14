@@ -34,7 +34,9 @@ class FijoEventualController extends Controller
      */
     public function create()
     {
-        $fijos_eventuales = FijoEventual::all();
+        $fijos_eventuales = FijoEventual::select('*')
+            ->orderBy('fijo_eventuals.nombre')
+            ->get();
 
         return $fijos_eventuales;
     }

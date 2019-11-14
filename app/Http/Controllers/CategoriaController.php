@@ -34,7 +34,9 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        $categorias = Categoria::all();
+        $categorias = Categoria::select('*')
+            ->orderBy('categorias.nombre')
+            ->get();
 
         return $categorias;
     }

@@ -34,7 +34,9 @@ class DedicacionController extends Controller
      */
     public function create()
     {
-        $dedicaciones = Dedicacion::all();
+        $dedicaciones = Dedicacion::select('*')
+            ->orderBy('dedicacions.nombre')
+            ->get();
 
         return $dedicaciones;
     }

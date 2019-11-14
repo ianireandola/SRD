@@ -34,7 +34,9 @@ class AreaController extends Controller
      */
     public function create()
     {
-        $areas = Area::all();
+        $areas = Area::select('*')
+            ->orderBy('areas.nombre')
+            ->get();
 
         return $areas;
     }

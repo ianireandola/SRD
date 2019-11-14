@@ -34,7 +34,9 @@ class TipoProyectoController extends Controller
      */
     public function create()
     {
-        $tipos_proyecto = TipoProyecto::all();
+        $tipos_proyecto = TipoProyecto::select('*')
+            ->orderBy('tipo_proyectos.nombre')
+            ->get();
 
         return $tipos_proyecto;
     }
