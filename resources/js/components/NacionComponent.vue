@@ -128,7 +128,14 @@ export default {
             axios.post(`/admin/naciones`, params)
                 .then(res=>{
                     this.naciones.push(res.data);
-                })
+                });
+            
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarNacion(item)
         {
@@ -140,7 +147,13 @@ export default {
                     this.naciones[index] = res.data;
 
                     this.nacion = {nombre:''};
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         relacionProyectosPadre(item)
         {
@@ -172,7 +185,13 @@ export default {
                                 axios.delete(`/admin/naciones/${nacion.id}`)
                                     .then(()=>{
                                         this.naciones.splice(index, 1);
-                                    })
+                                    });
+                                this.$swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'Eliminado',
+                                    showConfirmButton: false,
+                                    timer: 1300})
                             }
                         })
                     }else{

@@ -28,7 +28,11 @@ class Accion2Controller extends Controller
      */
     public function create()
     {
-        //
+        $acciones2 = Accion2::select('*')
+            ->orderBy('accion2s.nombre')
+            ->get();
+
+        return $acciones2;
     }
 
     /**

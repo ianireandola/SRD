@@ -110,7 +110,14 @@ export default {
             axios.post(`/admin/hitos`, params)
                 .then(res=>{
                     this.hitos.push(res.data);
-                })
+                });
+
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarHito(item)
         {
@@ -125,7 +132,13 @@ export default {
                     this.hito.descripcion = '';
                     this.hito.fase_id = '';
                     this.fase = ''
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         cancelarEdicion()
         {
@@ -169,7 +182,13 @@ export default {
                             axios.delete(`/admin/hitos/${hito.id}`)
                                 .then(()=>{
                                     this.hitos.splice(index, 1);
-                                })
+                                });
+                            this.$swal.fire({
+                                position: 'top-end',
+                                type: 'success',
+                                title: 'Registro realizado',
+                                showConfirmButton: false,
+                                timer: 1300})
                         }
                     })
                 }else

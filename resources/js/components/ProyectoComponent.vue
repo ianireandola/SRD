@@ -377,7 +377,13 @@ export default {
             axios.post('/admin/proyectos', params)
                 .then(res=>{
                     this.proyectos.push(res.data);
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarProyecto(proyecto)
         {
@@ -412,7 +418,13 @@ export default {
                     this.proyecto_padre = '',
                     this.date = '',
                     this.estado = ''
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         cancelarEdicion()
         {
@@ -520,7 +532,13 @@ export default {
                                 axios.delete(`/admin/proyectos/${proyecto.id}`)
                                     .then(()=>{
                                         this.proyectos.splice(index, 1);
-                                    })
+                                    });
+                                this.$swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'Eliminado',
+                                    showConfirmButton: false,
+                                    timer: 1300})
                             }
                         })
                     }else{

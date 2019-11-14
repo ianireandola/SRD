@@ -100,6 +100,7 @@ class UserAdminController extends Controller
 
         return $num;
     }
+    
 
     /**
      * Show the form for editing the specified resource.

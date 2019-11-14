@@ -105,6 +105,7 @@ export default {
                 .then(res=>{
                     this.accion2s.push(res.data);
                 });
+                
 
             this.accion2.nombre = '';
             this.accion2.descripcion = '';
@@ -115,9 +116,9 @@ export default {
             this.$swal.fire({
                 position: 'top-end',
                 type: 'success',
-                title: 'Registro realizado!',
+                title: 'Registro realizado',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1300
             })
         },
         editarAccion2(item)
@@ -131,7 +132,14 @@ export default {
 
                     this.accion2 = {nombre:'', descripcion:'', proyecto_id: '', nombre_proyecto: ''};
                     this.proyecto = '';
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modifiación realizada',
+                showConfirmButton: false,
+                timer: 1300
+            })
         },
         eliminarAccion2(accion2, index)
         {
@@ -150,6 +158,13 @@ export default {
                                     .then(()=>{
                                         this.accion2s.splice(index, 1);
                                     })
+                                this.$swal.fire({
+                                position: 'top-end',
+                                type: 'success',
+                                title: 'Eliminado',
+                                showConfirmButton: false,
+                                timer: 1300
+                                })
                             }
                         })
                     }else{
@@ -165,7 +180,6 @@ export default {
         },
         editarFormulario(item)
         {
-            console.log('entro' + item.nombre_proyecto);
             this.editarActivo = true;
             this.accion2.nombre = item.nombre;
             this.accion2.descripcion = item.descripcion;

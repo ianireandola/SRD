@@ -372,6 +372,12 @@ export default {
                         this.usuario.CPUportatil_nombre = '',
                         this.usuario.fechaCPUportatil = ''
                     });
+                this.$swal.fire({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'Registro realizado',
+                    showConfirmButton: false,
+                    timer: 1300});
                 axios.get('/admin/usuarios/create')
                     .then(res=>{
                         this.usuarios = res.data;
@@ -383,7 +389,13 @@ export default {
             axios.delete(`/admin/usuarios/${usuario.id}`)
                 .then(()=>{
                     this.usuarios.splice(index, 1);
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Eliminado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarUsuario(item)
         {
@@ -420,7 +432,13 @@ export default {
                         CPUportatil_nombre: '',
                         fechaCPUportatil: ''
                     }
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarFormulario(item)
         {

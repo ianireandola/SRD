@@ -133,7 +133,13 @@ export default {
             axios.post(`/admin/tipo_elementos`, params)
                 .then(res=>{
                     this.tipo_elementos.push(res.data);
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300});
         },
         editarTipoElemento(tipo_elemento)
         {
@@ -145,7 +151,13 @@ export default {
                     this.tipo_elementos[index] = res.data;
 
                     this.tipo_elemento = {nombre:''};
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         relacionElementos(tipo_elemento)
         {
@@ -182,7 +194,13 @@ export default {
                             axios.delete(`/admin/tipo_elementos/${tipo_elemento.id}`)
                                 .then(()=>{
                                     this.tipo_elementos.splice(index, 1);
-                                })
+                                });
+                            this.$swal.fire({
+                                position: 'top-end',
+                                type: 'success',
+                                title: 'Eliminado',
+                                showConfirmButton: false,
+                                timer: 1300})
                         }
                     })
                 }else

@@ -119,6 +119,15 @@ class ProyectoAdminController extends Controller
         return $proyecto;
     }
 
+    public function proyectoPadreUpdate(Request $request, $id)
+    {
+        $proyecto = Proyecto::find($id);
+        $proyecto->proyectoPadre_id = $request->proyectoPadre_id;
+        $proyecto->save();
+
+        return $proyecto;
+    }
+
     /**
      * Remove the specified resource from storage.
      *

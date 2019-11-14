@@ -126,7 +126,13 @@
                 axios.post(`/admin/composicion`, params)
                     .then(res=>{
                         this.composiciones.push(res.data);
-                    })
+                    });
+                this.$swal.fire({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'Registro realizado',
+                    showConfirmButton: false,
+                    timer: 1300})
             },
             asignarProyecto(proyecto)
             {
@@ -178,7 +184,13 @@
                         this.composicion.proyecto_id = '',
                         this.proyecto = '',
                         this.tipo_elemento = ''
-                    })
+                    });
+                this.$swal.fire({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'Modificación realizada',
+                    showConfirmButton: false,
+                    timer: 1300})
             },
             cancelarEdicion()
             {
@@ -203,7 +215,13 @@
                             .then(()=>
                             {
                                 this.composiciones.splice(index, 1);
-                            })
+                            });
+                        this.$swal.fire({
+                            position: 'top-end',
+                            type: 'success',
+                            title: 'Eliminado',
+                            showConfirmButton: false,
+                            timer: 1300})
                     }
                 })
                 

@@ -129,7 +129,13 @@ export default {
             axios.post(`/admin/categorias`, params)
                 .then(res=>{
                     this.categorias.push(res.data);
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarCategoria(item)
         {
@@ -141,7 +147,13 @@ export default {
                     this.categorias[index] = res.data;
 
                     this.categoria = {nombre:''};
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         relacionUsuarios(item)
         {
@@ -173,7 +185,13 @@ export default {
                                 axios.delete(`/admin/categorias/${item.id}`)
                                     .then(()=>{
                                         this.categorias.splice(index, 1);
-                                    })
+                                    });
+                                this.$swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'Eliminado',
+                                    showConfirmButton: false,
+                                    timer: 1300});
                             }
                         })
                     }else

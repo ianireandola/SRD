@@ -24,7 +24,6 @@ class HomeController extends Controller
      */
     public function index()
     {
-
         $seccion = Seccion::select('seccions.id', 'seccions.nombre', 'seccions.nivel2')
             ->join('users', 'users.seccion_id', '=', 'seccions.id')
             ->where('users.id', '=', auth()->user()->id)

@@ -99,7 +99,13 @@ export default {
             axios.post(`/admin/letras`, params)
                 .then(res=>{
                     this.letras.push(res.data);
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarLetra(item)
         {
@@ -115,7 +121,13 @@ export default {
                     this.letra.dedicación_id = '';
                     this.no_presencia = false;
                     this.gasto_general = false;
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         cancelarEdicion()
         {
@@ -161,7 +173,13 @@ export default {
                             axios.delete(`/admin/letras/${letra.id}`)
                                 .then(()=>{
                                     this.letras.splice(index, 1);
-                                })
+                                });
+                            this.$swal.fire({
+                                position: 'top-end',
+                                type: 'success',
+                                title: 'Eliminado',
+                                showConfirmButton: false,
+                                timer: 1300})
                         }
                     })
                 }else

@@ -17,7 +17,7 @@ Vue.use(BootstrapVue)
 Vue.use(VueSweetalert2)
 Vue.use(Popover)
 Vue.component('example-component', require('./components/ExampleComponent.vue').default);
-Vue.component('srd-component', require('./components/srdComponent.vue').default);
+Vue.component('registro-horas-viejo-component', require('./components/RegistroHorasViejo.vue').default);
 Vue.component('registrar-horas-component', require('./components/RegistroHorasComponent.vue').default);
 Vue.component('registrar-horas2-component', require('./components/RegistroHoras2Component.vue').default);
 Vue.component('area-component', require('./components/AreaComponent.vue').default);
@@ -43,6 +43,7 @@ Vue.component('trabajan-component', require('./components/TrabajanComponent.vue'
 Vue.component('proyecto-padre-component', require('./components/ProyectoPadreComponent.vue').default);
 Vue.component('proyecto-component', require('./components/ProyectoComponent.vue').default);
 Vue.component('composicion-component', require('./components/ComposicionComponent.vue').default);
+Vue.component('srd-component', require('./components/SRDComponent.vue').default);
 Vue.component('font-awesome-icon', FontAwesomeIcon)
 
 Vue.config.productionTip = false

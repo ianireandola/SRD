@@ -71,6 +71,7 @@ Route::prefix('admin')->group(function()
     Route::match(['get', 'head'], '/usuarios/showSeccion/{seccion_id}', 'UserAdminController@showSeccion');
     Route::resource('/usuarios', 'UserAdminController');
     Route::match(['get', 'head'], '/proyectos/showProyectoPadre/{proyectoPadre_id}', 'ProyectoAdminController@showProyectoPadre');
+    Route::match(['put', 'patch'], '/proyectos/proyectoPadreUpdate/{proyecto_id}', 'ProyectoAdminController@proyectoPadreUpdate');
     Route::resource('/proyectos', 'ProyectoAdminController');
     Route::match(['put', 'patch'], '/proyectospadre/nacionUpdate/{resource}', 'ProyectoPadreController@nacionUpdate');
     Route::match(['put', 'patch'], '/proyectospadre/tipoProyectoUpdate/{resource}', 'ProyectoPadreController@tipoProyectoUpdate');
@@ -86,4 +87,10 @@ Route::prefix('admin')->group(function()
     Route::resource('/avance_proyectos', 'AvanceProyectoController');
     Route::resource('/trabajan', 'TrabajanController');
     Route::resource('/composicion', 'ComposicionController');
+    Route::match(['get', 'head'], '/srd/createLetras', 'SRDAdminController@createletras');
+    Route::match(['get', 'head'], '/srd/createProyectos', 'SRDAdminController@createProyectos');
+    Route::match(['get', 'head'], '/srd/createProyectos2', 'SRDAdminController@createProyectos2');
+    Route::match(['get', 'head'], '/srd/createUsers', 'SRDAdminController@createUsers');
+    Route::match(['get', 'head'], '/srd/createNivel2', 'SRDAdminController@createNivel2');
+    Route::resource('/srd', 'SRDAdminController');
 });

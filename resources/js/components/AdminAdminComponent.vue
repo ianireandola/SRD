@@ -87,14 +87,14 @@ export default {
             this.admin.chapa = '',
             this.admin.nombre = '',
             this.admin.password_confirmation = '',
-            this.admin.password = 
+            this.admin.password = '',
 
             this.$swal.fire({
                 position: 'top-end',
                 type: 'success',
-                title: 'Registro realizado!',
+                title: 'Registro realizado',
                 showConfirmButton: false,
-                timer: 1500
+                timer: 1300
             })
         },
         eliminarAdmin(admin, index)
@@ -115,8 +115,14 @@ export default {
                         .then(()=>{
                             this.admins.splice(index, 1);
                         })
+                    this.$swal.fire({
+                        position: 'top-end',
+                        type: 'success',
+                        title: 'Eliminado',
+                        showConfirmButton: false,
+                        timer: 1300})
                 }
-            })  
+            })
             }
         },
         editarFormulario(item)
@@ -137,6 +143,12 @@ export default {
 
                     this.admin = {nombre: '', password_confirmation: ''};
                 })
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         cancelarEdicion()
         {

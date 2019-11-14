@@ -134,7 +134,14 @@ export default {
             axios.post(`/admin/fases`, params)
                 .then(res=>{
                     this.fases.push(res.data);
-                })
+                });
+
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarFase(item)
         {
@@ -146,7 +153,13 @@ export default {
                     this.fases[index] = res.data;
 
                     this.fase = {nombre:'', descripcion:''};
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         relacionHitos(item)
         {
@@ -179,7 +192,13 @@ export default {
                                 axios.delete(`/admin/fases/${fase.id}`)
                                     .then(()=>{
                                         this.fases.splice(index, 1);
-                                    })
+                                    });
+                                this.$swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'Eliminado',
+                                    showConfirmButton: false,
+                                    timer: 1300})
                             }
                         })
                     }else{

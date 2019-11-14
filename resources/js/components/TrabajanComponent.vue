@@ -165,7 +165,13 @@
                 axios.post('/admin/trabajan', params)
                     .then(res=>{
                         this.trabajans.push(res.data);
-                    })
+                    });
+                this.$swal.fire({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'Registro realizado',
+                    showConfirmButton: false,
+                    timer: 1300})
             },
             editarFormulario(trabajan)
             {
@@ -211,7 +217,13 @@
                         this.trabajan = { id: '', proyecto_id: '', seccion_id: '', horasEstimadas: '', presupuesto: ''}
                         this.proyecto = '',
                         this.seccion = ''
-                    })
+                    });
+                this.$swal.fire({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'Modificación realizada',
+                    showConfirmButton: false,
+                    timer: 1300})
             },
             cancelarEdicion()
             {
@@ -243,7 +255,13 @@
                             .then(()=>
                             {
                                 this.trabajans.splice(index, 1);
-                            })
+                            });
+                        this.$swal.fire({
+                            position: 'top-end',
+                            type: 'success',
+                            title: 'Eliminado',
+                            showConfirmButton: false,
+                            timer: 1300})
                     }
                 })
             }

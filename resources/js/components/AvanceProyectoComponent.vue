@@ -141,7 +141,13 @@
                 axios.post(`/admin/avance_proyectos`, params)
                     .then(res=>{
                         this.avances.push(res.data);
-                    })
+                    });
+                this.$swal.fire({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'Registro realizado',
+                    showConfirmButton: false,
+                    timer: 1300})
             },
             asignarProyectoPadre(proyecto_padre)
             {
@@ -196,7 +202,13 @@
                         this.avance.NTP = '',
                         this.proyecto_padre = '',
                         this.hito = ''
-                    })
+                    });
+                this.$swal.fire({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'Modificación realizada',
+                    showConfirmButton: false,
+                    timer: 1300})
             },
             cancelarEdicion()
             {
@@ -222,7 +234,13 @@
                             .then(()=>
                             {
                                 this.avances.splice(index, 1);
-                            })
+                            });
+                        this.$swal.fire({
+                            position: 'top-end',
+                            type: 'success',
+                            title: 'Eliminado',
+                            showConfirmButton: false,
+                            timer: 1300})
                     }
                 })
                 

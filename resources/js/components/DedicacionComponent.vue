@@ -76,7 +76,13 @@ export default {
             axios.post(`/admin/dedicaciones`, params)
                 .then(res=>{
                     this.dedicaciones.push(res.data);
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300});
         },
         editarDedicacion(item)
         {
@@ -88,14 +94,26 @@ export default {
                     this.dedicaciones[index] = res.data;
 
                     this.dedicacion = {nombre:''};
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         eliminarDedicacion(dedicacion, index)
         {
             axios.delete(`/admin/dedicaciones/${dedicacion.id}`)
                 .then(()=>{
                     this.dedicaciones.splice(index, 1);
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Eliminado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         cancelarEdicion()
         {

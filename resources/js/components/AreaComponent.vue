@@ -152,6 +152,12 @@ export default {
                 .then(res=>{
                     this.areas.push(res.data);
                 })
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarArea(item)
         {
@@ -163,7 +169,13 @@ export default {
                     this.areas[index] = res.data;
 
                     this.area = {nombre:'', Q_Ind:''};
-                })
+                });
+                this.$swal.fire({
+                    position: 'top-end',
+                    type: 'success',
+                    title: 'Modificación realizada',
+                    showConfirmButton: false,
+                    timer: 1300})
         },
         relacionSecciones(item)
         {
@@ -196,7 +208,13 @@ export default {
                                 axios.delete(`/admin/areas/${area.id}`)
                                     .then(()=>{
                                         this.areas.splice(index, 1);
-                                    })
+                                    });
+                                this.$swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'Eliminado',
+                                    showConfirmButton: false,
+                                    timer: 1300})
                             }
                         })
                     }else

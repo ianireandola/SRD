@@ -135,7 +135,13 @@ export default {
             axios.post(`/admin/plantas`, params)
                 .then(res=>{
                     this.plantas.push(res.data);
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarPlanta(item)
         {
@@ -147,7 +153,13 @@ export default {
                     this.plantas[index] = res.data;
 
                     this.planta = {nombre:''};
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         relacionSecciones(item)
         {
@@ -179,7 +191,13 @@ export default {
                                 axios.delete(`/admin/plantas/${item.id}`)
                                     .then(()=>{
                                         this.plantas.splice(index, 1);
-                                    })
+                                    });
+                                this.$swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'Eliminado',
+                                    showConfirmButton: false,
+                                    timer: 1300})
                             }
                         })
                     }else

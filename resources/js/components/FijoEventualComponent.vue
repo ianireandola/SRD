@@ -128,7 +128,14 @@ export default {
             axios.post(`/admin/fijos_eventuales`, params)
                 .then(res=>{
                     this.fijos_eventuales.push(res.data);
-                })
+                });
+
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarFijoEventual(item)
         {
@@ -140,7 +147,14 @@ export default {
                     this.fijos_eventuales[index] = res.data;
 
                     this.fijo_eventual = {nombre:''};
-                })
+                });
+
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         relacionUsuarios(item)
         {
@@ -173,7 +187,13 @@ export default {
                                 axios.delete(`/admin/fijos_eventuales/${item.id}`)
                                     .then(()=>{
                                         this.fijos_eventuales.splice(index, 1);
-                                    })
+                                    });
+                                this.$swal.fire({
+                                    position: 'top-end',
+                                    type: 'success',
+                                    title: 'Eliminado',
+                                    showConfirmButton: false,
+                                    timer: 1300})
                             }
                         })
                     }else

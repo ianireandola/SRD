@@ -150,7 +150,13 @@ export default {
             axios.post('/admin/secciones', params)
                 .then(res=>{
                     this.secciones.push(res.data);
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Registro realizado',
+                showConfirmButton: false,
+                timer: 1300})
         },
         editarSeccion(seccion)
         {
@@ -175,7 +181,13 @@ export default {
                     this.checkbox_nivel2 = false,
                     this.area = '',
                     this.planta = ''
-                })
+                });
+            this.$swal.fire({
+                position: 'top-end',
+                type: 'success',
+                title: 'Modificación realizada',
+                showConfirmButton: false,
+                timer: 1300})
         },
         areaElegida(item)
         {
@@ -248,7 +260,13 @@ export default {
                             axios.delete(`/admin/secciones/${seccion.id}`)
                                 .then(()=>{
                                     this.secciones.splice(index, 1);
-                                })
+                                });
+                            this.$swal.fire({
+                                position: 'top-end',
+                                type: 'success',
+                                title: 'Eliminado',
+                                showConfirmButton: false,
+                                timer: 1300})
                         }
                     })
                 }else
