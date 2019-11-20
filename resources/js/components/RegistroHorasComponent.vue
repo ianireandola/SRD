@@ -104,8 +104,8 @@
                 <thead class="thead-light">
                     <th scope="col">HABITUALES</th>
                     <th class="text-center" scope="col">CANTIDAD HORAS</th>
-                    <th class="text-center" scop e="col">SERVICIO OFICIAL</th>
-                    <th class="text-center" scop e="col">ELIMINAR</th>
+                    <th class="text-center" scope="col">SERVICIO OFICIAL</th>
+                    <th class="text-center" scope="col">ELIMINAR</th>
                 </thead>
                 <tbody>
                     <tr v-for="(srd_letra_coincidente, index) in srd_letra_coincidentes" v-bind:key="index">

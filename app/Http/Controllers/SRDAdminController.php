@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\srd_letra;
 use App\srd_proyecto;
-use App\User;
+use App\Proyecto;
 use Illuminate\Http\Request;
 
 class SRDAdminController extends Controller
@@ -44,49 +44,25 @@ class SRDAdminController extends Controller
      */
     public function createProyectos()
     {
-        $srd_proyectos = srd_proyecto::selectRaw('srd_proyectos.id, srd_proyectos.fecha, srd_proyectos.us_id, users.nombre AS "user_nombre", srd_proyectos.proy_id, 
-            proyectos.nombre AS "proyecto_nombre", srd_proyectos.acc_id, accion2s.nombre AS "accion2_nombre", srd_proyectos.el_id, elementos.nombre AS "elemento_nombre", 
-            srd_proyectos.fecha, srd_proyectos.cantidadHoras, srd_proyectos.viaje')
-            ->join('users', 'srd_proyectos.us_id', '=', 'users.id')
-            ->join('proyectos', 'srd_proyectos.proy_id', '=', 'proyectos.id')
-            ->join('accion2s', 'srd_proyectos.acc_id', '=', 'accion2s.id')
-            ->join('elementos', 'srd_proyectos.el_id', '=', 'elementos.id')
-            ->orderBy('srd_proyectos.fecha')
+        $srd_proyectos = srd_proyecto::select('srd_proyectos.id', 'srd_proyectos.nivel2 AS nivel2')
+            ->orderBy('srd_proyectos.nivel2')
             ->get();
 
         return $srd_proyectos;
     }
 
-    public function createProyectos2()
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function Proyectos()
     {
-        $srd_proyectos = srd_proyecto::selectRaw('srd_proyectos.id, srd_proyectos.fecha, srd_proyectos.us_id, users.nombre AS "user_nombre", srd_proyectos.proy_id, 
-            proyectos.nombre AS "proyecto_nombre", srd_proyectos.fecha, srd_proyectos.cantidadHoras, srd_proyectos.viaje')
-            ->join('users', 'srd_proyectos.us_id', '=', 'users.id')
-            ->join('proyectos', 'srd_proyectos.proy_id', '=', 'proyectos.id')
-            ->orderBy('srd_proyectos.fecha')
+        $srd_proyectos = srd_proyecto::select('srd_proyectos.id', 'srd_proyectos.nivel2 AS nivel2')
+            ->orderBy('srd_proyectos.nivel2')
             ->get();
 
         return $srd_proyectos;
-    }
-
-    public function createUsers()
-    {
-        $srd_proyectos = srd_proyecto::select('srd_proyectos.us_id')
-            ->groupBy('srd_proyectos.us_id')
-            ->get();
-
-        return $srd_proyectos;
-    }
-
-    public function createNivel2()
-    {
-        $usuarios = User::selectRaw('users.id AS "id", seccions.nivel2 AS "nivel2"')
-            ->join('seccions', 'seccions.id', '=', 'users.seccion_id')
-            ->join('srd_proyectos', 'us_id', '=', 'users.id')
-            ->groupBy('users.id', 'seccions.nivel2')
-            ->get();
-
-        return $usuarios;
     }
 
     /**
@@ -106,14 +82,33 @@ class SRDAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($user_id)
+    public function show($id)
     {
-        $seccion = Seccion::select('seccions.nivel2')
-            ->join('users', 'users.seccion_id', '=', 'seccions.id')
-            ->where('users.id', '=', auth()->user()->id)
+        $srd_proyecto = srd_proyecto::select('srd_proyectos.id', 'srd_proyectos.fecha', 'srd_proyectos.us_id', 'users.nombre AS user_nombre', 'srd_proyectos.proy_id', 
+            'proyectos.nombre AS proyecto_nombre', 'srd_proyectos.cantidadHoras', 'srd_proyectos.viaje')
+            ->where('srd_proyectos.id', '=', $id)
+            ->join('users', 'srd_proyectos.us_id', '=', 'users.id')
+            ->join('proyectos', 'srd_proyectos.proy_id', '=', 'proyectos.id')
+            ->orderBy('srd_proyectos.fecha')
             ->get();
 
-        return $seccion;
+        return $srd_proyecto;
+    }
+
+    public function showProyecto2($id)
+    {
+        $srd_proyecto = srd_proyecto::select('srd_proyectos.id', 'srd_proyectos.proy_id', 'proyectos.nombre AS proyecto_nombre', 'srd_proyectos.us_id', 'users.nombre AS user_nombre', 
+            'srd_proyectos.acc_id', 'accion2s.nombre AS accion2_nombre', 'srd_proyectos.el_id', 'elementos.nombre AS elemento_nombre', 'srd_proyectos.fecha',
+            'srd_proyectos.cantidadHoras', 'srd_proyectos.viaje')
+            ->where('srd_proyectos.id', '=', $id)
+            ->join('users', 'srd_proyectos.us_id', '=', 'users.id')
+            ->join('proyectos', 'srd_proyectos.proy_id', '=', 'proyectos.id')
+            ->join('accion2s', 'srd_proyectos.acc_id', '=', 'accion2s.id')
+            ->join('elementos', 'srd_proyectos.el_id', '=', 'elementos.id')
+            ->orderBy('srd_proyectos.fecha')
+            ->get();
+
+        return $srd_proyecto;
     }
 
     /**

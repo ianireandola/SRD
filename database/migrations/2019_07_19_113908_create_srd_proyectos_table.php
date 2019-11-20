@@ -22,6 +22,7 @@ class CreateSrdProyectosTable extends Migration
             $table->date('fecha');
             $table->float('cantidadHoras');
             $table->boolean('viaje')->nullable();
+            $table->boolean('nivel2');
 
             $table->unique(['proy_id', 'us_id', 'fecha', 'acc_id', 'el_id']);
 

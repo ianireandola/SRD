@@ -1,11 +1,7 @@
 <template>
 <div>
-    <template v-for="user in users">
-        <td v-bind:key="`B-${user.id}`">
-            {{user.id}} - {{user.nivel2}}
-        </td>
-    </template>
     <form class="mb-3">
+
         <table class="table table-hover table-responsive overflow-auto">
             <thead class="thead-light">
                 <tr>
@@ -28,12 +24,21 @@
                     <td class="text-center">{{srd_letra.cantidadHoras}}</td>
                     <td class="text-center">{{srd_letra.viaje}}</td>                
                 </tr>
-                <tr v-for="(srd_proyecto, index) in srd_proyectos" v-bind:key="`A-${index}`">
+                <tr v-for="(srd_todoproyecto, index) in srd_todoproyectos" v-bind:key="`A-${index}`">
+                    <td class="text-center">{{srd_todoproyecto.fecha}}</td>
+                    <td>{{srd_todoproyecto.us_id}}</td>
+                    <td>{{srd_todoproyecto.proy_id}}</td>
+                    <td>{{srd_todoproyecto.acc_id}}</td>
+                    <td>{{srd_todoproyecto.el_id}}</td>
+                    <td class="text-center">{{srd_todoproyecto.cantidadHoras}}</td>
+                    <td class="text-center">{{srd_todoproyecto.viaje}}</td>                
+                </tr>
+                <!--<tr v-for="(srd_proyecto, index) in srd_proyectos" v-bind:key="`A-${index}`">
                     <td class="text-center">{{srd_proyecto.fecha}}</td>
                     <td>{{srd_proyecto.user_nombre}}</td>
                     <td>{{srd_proyecto.proyecto_nombre}}</td>
-                    <td>{{srd_proyecto.accion2_nombre}}</td>
-                    <td>{{srd_proyecto.elemento_nombre}}</td>
+                    <td></td>
+                    <td></td>
                     <td class="text-center">{{srd_proyecto.cantidadHoras}}</td>
                     <td class="text-center">{{srd_proyecto.viaje}}</td>
                 </tr>
@@ -41,11 +46,11 @@
                     <td class="text-center">{{srd_proyecto2.fecha}}</td>
                     <td>{{srd_proyecto2.user_nombre}}</td>
                     <td>{{srd_proyecto2.proyecto_nombre}}</td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-center">{{srd_letra.cantidadHoras}}</td>
-                    <td class="text-center">{{srd_letra.viaje}}</td>                
-                </tr>
+                    <td>{{srd_proyecto2.accion2_nombre}}</td>
+                    <td>{{srd_proyecto2.elemento_nombre}}</td>
+                    <td class="text-center">{{srd_proyectos2.cantidadHoras}}</td>
+                    <td class="text-center">{{srd_proyectos2.viaje}}</td>                
+                </tr>-->
             </tbody>
         </table>
     </form>
@@ -58,12 +63,6 @@ export default {
     data()
     {
         return{
-            users: [],
-            user:
-            {
-                id: '',
-                nivel2: ''
-            },
             srd_letras: [],
             srd_letra:
             {
@@ -76,19 +75,28 @@ export default {
                 cantidadHoras: '',
                 viaje: ''
             },
+            srd_todoproyectos: [],
+            srd_todoproyecto: 
+            {
+                id: '',
+                proy_id: '',
+                us_id: '',
+                acc_id: '',
+                el_id: '',
+                fecha: '',
+                cantidadHoras: '',
+                viaje: '',
+                nivel2: ''
+            },
             srd_proyectos: [],
             srd_proyecto:
             {
                 id: '',
+                fecha: '',
                 us_id: '',
                 user_nombre: '',
                 proy_id: '',
                 proyecto_nombre: '',
-                acc_id: '',
-                accion2_nombre: '',
-                el_id: '',
-                elemento_nombre: '',
-                fecha: '',
                 cantidadHoras: '',
                 viaje: ''
             },
@@ -96,10 +104,14 @@ export default {
             srd_proyecto2:
             {
                 id: '',
-                us_id: '',
-                user_nombre: '',
                 proy_id: '',
                 proyecto_nombre: '',
+                us_id: '',
+                user_nombre: '',
+                acc_id: '',
+                accion2_nombre: '',
+                el_id: '',
+                elemento_nombre: '',
                 fecha: '',
                 cantidadHoras: '',
                 viaje: ''
@@ -108,35 +120,37 @@ export default {
     },
     created()
     {
-        axios.get('/admin/srd/createNivel2')
-            .then(res=>{
-                this.users = res.data;
-            });
-
         axios.get('/admin/srd/createLetras')
             .then(res=>{
                 this.srd_letras = res.data;
             });
-        console.log(this.users.length); 
 
-        for(var i=0; i<this.users.length; i++)
-        {
-            console.log("Entro");
-            if(this.users[i].nivel2 === 0)
-            {
-                axios.get('/admin/srd/createProyectos2')
-                    .then(res=>{
-                        this.srd_proyectos2[i] = res.data;
-                    });
-            }else{
-                axios.get('/admin/srd/createProyectos')
-                    .then(res=>{
-                        this.srd_proyectos[i] = res.data;
-                    });
-            }
-        }
-     
+        axios.get('/admin/srd/proyectos')
+            .then(res=>{
+                this.srd_todoproyectos = res.data;
+            })
 
+        axios.get('/admin/srd/createProyectos')
+            .then(res=>{
+                console.log(res.data.length);
+                for(var i=0; i<res.data.length; i++)
+                {
+                    console.log("Item  " + i + ": ID - " + res.data[i].id + ", Nivel2 - " + res.data[i].nivel2);
+                    for(var j=0; j<this.srd_todoproyectos.length; j++)
+                    {
+                        if(res.data[i].id === this.srd_todoproyectos[j].id && res.data[i].nivel2 === 1)
+                        {
+                            console.log("Entro en nivel 2, id: " + res.data[i].id);
+                        }
+                        if(res.data[i].id === this.srd_todoproyectos[j].id && res.data[i].nivel2 === 0)
+                        {
+                            console.log("Entro en nivel 1, id: " + res.data[i].id);
+                        }
+                    }
+                }
+            });
+
+        
     }
 }
 </script>

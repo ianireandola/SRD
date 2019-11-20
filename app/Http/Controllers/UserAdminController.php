@@ -70,7 +70,7 @@ class UserAdminController extends Controller
         $user->categoria_id = $request->categoria_id;
         $user->fijoeventual_id = $request->fijoeventual_id;
         $user->CPUportatil = $request->CPUportatil;
-        $user->fechaCPUportatil = $fechabien;
+        $user->fechaCPUportatil = $request->fechaCPUportatil;
         $user->save();
 
         return $user;
@@ -136,67 +136,6 @@ class UserAdminController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $fechaLarga = $request->input('fechaCPUportatil');
-
-        $fecha = substr($fechaLarga, 0, 10);
-        echo("Fecha por defecto: ".$fecha."\n");
-        $año = substr($fecha, 0, -6);
-        $mes = substr($fecha, 5, -3);
-        $diaint = (int) substr($fecha, -2);
-        $fechabien = '';
-        if($diaint === 30)
-        {
-            if($mes === '04' || $mes === '06' || $mes === '09' || $mes === '11')
-            {
-                $dia = '01';
-                $mesint = (int) substr($fecha, 5, -3);
-                $mesint = $mesint + 1;
-                $mes = (string) $mesint;
-                $fechabien = $año."-".$mes."-".$dia;
-                echo("Fecha modificada: ".$fechabien."\n");
-            }
-        }
-        else if($diaint === 31)
-        {
-            echo("Entro en día === 31 \n");
-            if($mes === '01' || $mes === '03' || $mes === '05' || $mes === '07' || $mes === '08' || $mes === '10' )
-            {
-                $dia = '01';
-                $mesint = (int) substr($fecha, 5, -3);
-                $mesint = $mesint + 1;
-                $mes = (string) $mesint;
-                $fechabien = $año."-".$mes."-".$dia;
-                echo("Fecha modificada: ".$fechabien."\n");
-            }
-            if($mes === '12')
-            {
-                $dia = '01';
-                $mesint = (int) substr($fecha, 5, -3);
-                $mesint = $mesint + 1;
-                $mes = (string) $mesint;
-                $añoint = (int) substr($fecha, 5, -3);
-                $añoint = $añoint + 1;
-                $año = (string) $añoint;
-                $fechabien = $año."-".$mes."-".$dia;
-                echo("Fecha modificada: ".$fechabien."\n");
-            }
-        }else
-        {
-            if($diaint === 28  && $mes === '02')
-            {
-                $dia = '01';
-                $mes = '03';
-                $fechabien = $año."-".$mes."-".$dia;
-                echo("Fecha modificada: ".$fechabien."\n");
-            }else
-            {
-                $diaint = $diaint + 1;
-                $dia = (string) $diaint;
-                $fechabien = $año."-".$mes."-".$dia;
-                echo("Fecha modificada: ".$fechabien."\n");
-            }
-        }
-
         $usuario = User::find($id);
         $usuario->chapa = $request->chapa;
         $usuario->nombre = $request->nombre;
@@ -208,7 +147,7 @@ class UserAdminController extends Controller
         $usuario->categoria_id = $request->categoria_id;
         $usuario->fijoeventual_id = $request->fijoeventual_id;
         $usuario->CPUportatil = $request->CPUportatil;
-        $usuario->fechaCPUportatil = $fechabien;
+        $usuario->fechaCPUportatil = $request->fechaCPUportatil;
         $usuario->save();
 
         return $usuario;

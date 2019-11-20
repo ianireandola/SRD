@@ -89,8 +89,7 @@ Route::prefix('admin')->group(function()
     Route::resource('/composicion', 'ComposicionController');
     Route::match(['get', 'head'], '/srd/createLetras', 'SRDAdminController@createletras');
     Route::match(['get', 'head'], '/srd/createProyectos', 'SRDAdminController@createProyectos');
-    Route::match(['get', 'head'], '/srd/createProyectos2', 'SRDAdminController@createProyectos2');
-    Route::match(['get', 'head'], '/srd/createUsers', 'SRDAdminController@createUsers');
-    Route::match(['get', 'head'], '/srd/createNivel2', 'SRDAdminController@createNivel2');
+    Route::match(['get', 'head'], '/srd/proyectos', 'SRDAdminController@Proyectos');
+    Route::match(['get', 'head'], '/srd/showProyecto2/{srd_proyecto}', 'SRDAdminController@showProyecto2');
     Route::resource('/srd', 'SRDAdminController');
 });

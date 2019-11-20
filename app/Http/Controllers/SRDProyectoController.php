@@ -66,6 +66,7 @@ class SRDProyectoController extends Controller
             $srd_proyecto->fecha = $request->fecha;
             $srd_proyecto->cantidadHoras = $request->cantidadHoras;
             $srd_proyecto->viaje = $request->viaje;
+            $srd_proyecto->nivel2 = 1;
 
             $srd_proyecto->save();
         }else{
@@ -75,6 +76,7 @@ class SRDProyectoController extends Controller
             $srd_proyecto->fecha = $request->fecha;
             $srd_proyecto->cantidadHoras = $request->cantidadHoras;
             $srd_proyecto->viaje = $request->viaje;
+            $srd_proyecto->nivel2 = 0;
 
             $srd_proyecto->save();
         }

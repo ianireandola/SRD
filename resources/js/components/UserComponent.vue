@@ -187,7 +187,17 @@
                         <label for="input-none">Fecha CPU/Portatil:</label>
                     </b-col>
                     <b-col sm="9">
-                        <date-picker class="mb-4" format="YYYY-MM-DD" dateFormat="YYYY-MM-DD" :first-day-of-week= "1" v-model="usuario.fechaCPUportatil" lang="es"/> 
+                        <b-form-group label="Última revisión:">
+                            <date-picker 
+                                class="mb-4 inline p-2"
+                                ref="datepicker"
+                                format="YYYY-MM-DD" 
+                                :value-type="valueType"
+                                dateFormat="YYYY-MM-DD"
+                                :first-day-of-week= "1"
+                                v-model="date"
+                                lang="es"/>  
+                        </b-form-group> 
                     </b-col>
                 </b-row>
             </b-container>
@@ -241,12 +251,23 @@
 
 <script>
 import Datepicker from 'vue2-datepicker'
+import moment from "moment";
 
 export default {
     name: "UserComponent",
     components: {Datepicker},
     data(){
+        const valueType = {
+            value2date: value => {
+                return value ? moment(new Date(value), "YYYY-MM-DD").toDate() : null;
+            },
+            date2value: date => {
+                return date ? moment(date).format("YYYY-MM-DD") : null;
+            }
+        };
         return{
+            valueType,
+            date: null,
             usuarios: [],
             usuario:
             {
@@ -301,6 +322,7 @@ export default {
     {
         mostrarDetalle(item, $event)
         {
+            this.usuario.fechaCPUportatil = this.date;
             this.usuario = item;
             axios.get(`/admin/fijos_eventuales/${this.usuario.fijoeventual_id}`)
                 .then(res =>{
@@ -330,6 +352,7 @@ export default {
         },
         agregarUsuario()
         {
+            this.usuario.fechaCPUportatil = this.date;
             if(this.usuario.chapa === '' || this.usuario.nombre.trim() === '' || this.usuario.email.trim() === '' || this.usuario.password_confirmation.trim() === '' ||
                 this.usuario.categoria_id === '' || this.usuario.fijoeventual_id === '' || this.usuario.fechaCPUportatil === '')
             {
@@ -399,6 +422,7 @@ export default {
         },
         editarUsuario(item)
         {
+            this.usuario.fechaCPUportatil = this.date;
              const params ={
                 chapa: this.usuario.chapa,
                 nombre: this.usuario.nombre,
