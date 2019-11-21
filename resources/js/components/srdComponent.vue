@@ -1,7 +1,17 @@
 <template>
 <div>
-    <form class="mb-3">
+    <date-picker 
+        class="mb-4 "
+        v-model="date" 
+        type="month"
+        format="YYYYMMDD"
+        value-type="format"
+        v-on:change="gestionarFecha()" 
+        placeholder="Elegir mes"
+        lang="es">
+    </date-picker>
 
+    <form class="mb-3">
         <table class="table table-hover table-responsive overflow-auto">
             <thead class="thead-light">
                 <tr>
@@ -15,42 +25,49 @@
                 </tr>
             </thead>
             <tbody>
+                <tr class="warning">
+                    <td class="text-center" colspan="7"><b>LETRAS</b></td>
+                </tr>
+
                 <tr v-for="(srd_letra, index) in srd_letras" v-bind:key="index">
                     <td class="text-center">{{srd_letra.fecha}}</td>
                     <td>{{srd_letra.user_nombre}}</td>
                     <td>{{srd_letra.letra_nombre}}</td>
                     <td></td>
                     <td></td>
-                    <td class="text-center">{{srd_letra.cantidadHoras}}</td>
-                    <td class="text-center">{{srd_letra.viaje}}</td>                
+                    <td class="text-center">{{srd_letra.cantidadHoras}}</td>  
+                    <td class="text-center">
+                        <input class="form-check-input" type="checkbox" v-model="srd_letra.viaje" disabled>
+                    </td>           
                 </tr>
+
+                <tr class="warning">
+                    <td class="text-center" colspan="7"><b>PROYECTOS</b></td>
+                </tr>
+                
                 <tr v-for="(srd_todoproyecto, index) in srd_todoproyectos" v-bind:key="`A-${index}`">
                     <td class="text-center">{{srd_todoproyecto.fecha}}</td>
-                    <td>{{srd_todoproyecto.us_id}}</td>
-                    <td>{{srd_todoproyecto.proy_id}}</td>
-                    <td>{{srd_todoproyecto.acc_id}}</td>
-                    <td>{{srd_todoproyecto.el_id}}</td>
-                    <td class="text-center">{{srd_todoproyecto.cantidadHoras}}</td>
-                    <td class="text-center">{{srd_todoproyecto.viaje}}</td>                
+                    <td>{{srd_todoproyecto.user_nombre}}</td>
+                    <td>{{srd_todoproyecto.proyecto_nombre}}</td>
+                    <td>
+                        <template v-for="accion2 in acciones2">
+                            <td v-if="accion2.id === srd_todoproyecto.acc_id" v-bind:key="`B-${accion2.id}`">
+                                {{accion2.nombre}}
+                            </td>
+                        </template>
+                    </td>
+                    <td>
+                        <template v-for="elemento in elementos">
+                            <td v-if="elemento.id === srd_todoproyecto.el_id"  v-bind:key="`C-${elemento.id}`">
+                                {{elemento.nombre}}
+                            </td>
+                        </template>
+                    </td>
+                    <td class="text-center">{{srd_todoproyecto.cantidadHoras}}</td>  
+                    <td class="text-center">
+                        <input class="form-check-input" type="checkbox" v-model="srd_todoproyecto.viaje" disabled>
+                    </td>             
                 </tr>
-                <!--<tr v-for="(srd_proyecto, index) in srd_proyectos" v-bind:key="`A-${index}`">
-                    <td class="text-center">{{srd_proyecto.fecha}}</td>
-                    <td>{{srd_proyecto.user_nombre}}</td>
-                    <td>{{srd_proyecto.proyecto_nombre}}</td>
-                    <td></td>
-                    <td></td>
-                    <td class="text-center">{{srd_proyecto.cantidadHoras}}</td>
-                    <td class="text-center">{{srd_proyecto.viaje}}</td>
-                </tr>
-                <tr v-for="(srd_proyecto2, index) in srd_proyectos2" v-bind:key="`B-${index}`">
-                    <td class="text-center">{{srd_proyecto2.fecha}}</td>
-                    <td>{{srd_proyecto2.user_nombre}}</td>
-                    <td>{{srd_proyecto2.proyecto_nombre}}</td>
-                    <td>{{srd_proyecto2.accion2_nombre}}</td>
-                    <td>{{srd_proyecto2.elemento_nombre}}</td>
-                    <td class="text-center">{{srd_proyectos2.cantidadHoras}}</td>
-                    <td class="text-center">{{srd_proyectos2.viaje}}</td>                
-                </tr>-->
             </tbody>
         </table>
     </form>
@@ -58,11 +75,22 @@
 </template>
 
 <script>
+import Datepicker from 'vue2-datepicker'
 export default {
     name: 'SRDComponent',
+    components: {Datepicker},
     data()
     {
+        const valueType = {
+            value2date: value => {
+                return value ? moment(new Date(value), "MM").toDate() : null;
+            },
+            date2value: date => {
+                return date ? moment(date).format("MM") : null;
+            }
+        };
         return{
+            date: null,
             srd_letras: [],
             srd_letra:
             {
@@ -79,42 +107,28 @@ export default {
             srd_todoproyecto: 
             {
                 id: '',
-                proy_id: '',
+                fecha: '',
                 us_id: '',
+                user_nombre: '',
+                proy_id: '',
+                proyecto_nombre: '',
                 acc_id: '',
                 el_id: '',
-                fecha: '',
                 cantidadHoras: '',
                 viaje: '',
                 nivel2: ''
             },
-            srd_proyectos: [],
-            srd_proyecto:
+            acciones2: [],
+            accion2: 
             {
                 id: '',
-                fecha: '',
-                us_id: '',
-                user_nombre: '',
-                proy_id: '',
-                proyecto_nombre: '',
-                cantidadHoras: '',
-                viaje: ''
+                nombre: ''
             },
-            srd_proyectos2: [],
-            srd_proyecto2:
+            elementos: [],
+            elemento: 
             {
                 id: '',
-                proy_id: '',
-                proyecto_nombre: '',
-                us_id: '',
-                user_nombre: '',
-                acc_id: '',
-                accion2_nombre: '',
-                el_id: '',
-                elemento_nombre: '',
-                fecha: '',
-                cantidadHoras: '',
-                viaje: ''
+                nombre: ''
             }
         }
     },
@@ -125,32 +139,38 @@ export default {
                 this.srd_letras = res.data;
             });
 
-        axios.get('/admin/srd/proyectos')
-            .then(res=>{
-                this.srd_todoproyectos = res.data;
-            })
-
         axios.get('/admin/srd/createProyectos')
             .then(res=>{
-                console.log(res.data.length);
-                for(var i=0; i<res.data.length; i++)
-                {
-                    console.log("Item  " + i + ": ID - " + res.data[i].id + ", Nivel2 - " + res.data[i].nivel2);
-                    for(var j=0; j<this.srd_todoproyectos.length; j++)
-                    {
-                        if(res.data[i].id === this.srd_todoproyectos[j].id && res.data[i].nivel2 === 1)
-                        {
-                            console.log("Entro en nivel 2, id: " + res.data[i].id);
-                        }
-                        if(res.data[i].id === this.srd_todoproyectos[j].id && res.data[i].nivel2 === 0)
-                        {
-                            console.log("Entro en nivel 1, id: " + res.data[i].id);
-                        }
-                    }
-                }
+                this.srd_todoproyectos = res.data;
             });
 
-        
+        axios.get('/acciones2')
+            .then(res=>{
+                this.acciones2 = res.data;
+            });  
+
+        axios.get('/elementos')
+            .then(res=>{
+                this.elementos = res.data;
+            });        
+    },
+    methods:
+    {
+        gestionarFecha()
+        {
+            console.log(this.date);
+            this.srd_letras = [];
+            this.srd_todoproyectos = [];
+            axios.get(`/admin/srd/${this.date}`)
+                .then(res=>{
+                    this.srd_todoproyectos = res.data;
+                });
+
+            axios.get(`/admin/srd/showLetras/${this.date}`)
+                .then(res=>{
+                    this.srd_letras = res.data;
+                })
+        }
     }
 }
 </script>

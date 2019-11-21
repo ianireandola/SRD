@@ -11,11 +11,13 @@
 |
 */
 
+use App\Exports\SRDExport;
 use App\Http\Controllers\UserAdminController;
 
 Route::get('/', function () {
     return view('principal');
 });
+
 
 Route::get('/historial', 'HistorialController@index')->name('historial');
 
@@ -89,7 +91,9 @@ Route::prefix('admin')->group(function()
     Route::resource('/composicion', 'ComposicionController');
     Route::match(['get', 'head'], '/srd/createLetras', 'SRDAdminController@createletras');
     Route::match(['get', 'head'], '/srd/createProyectos', 'SRDAdminController@createProyectos');
-    Route::match(['get', 'head'], '/srd/proyectos', 'SRDAdminController@Proyectos');
-    Route::match(['get', 'head'], '/srd/showProyecto2/{srd_proyecto}', 'SRDAdminController@showProyecto2');
+    Route::match(['get', 'head'], '/srd/showLetras/{fecha}', 'SRDAdminController@showLetras');
     Route::resource('/srd', 'SRDAdminController');
+    Route::get('/descarga', function () {
+        return (new SRDExport)->download('horasRegistradas.xlsx');
+    });
 });

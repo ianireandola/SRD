@@ -329,7 +329,7 @@ export default {
                     this.usuario.fijoeventual_nombre = res.data;
                 });
             axios.get(`/admin/categorias/${this.usuario.categoria_id}`)
-                .then(res =>{  ``
+                .then(res =>{  
                     this.usuario.categoria_nombre = res.data;
                 })
             if(this.usuario.CPUportatil === 0 )

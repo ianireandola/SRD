@@ -27,7 +27,7 @@ class SRDAdminController extends Controller
     public function createLetras()
     {
         $srd_letras = srd_letra::selectRaw(
-                'srd_letras.id, srd_letras.fecha, srd_letras.user_id, users.nombre AS "user_nombre", 
+                'srd_letras.id, srd_letras.fecha, srd_letras.user_id, users.chapa AS "user_nombre", 
                 srd_letras.letra_id, letras.nombre AS "letra_nombre", srd_letras.cantidadHoras, srd_letras.viaje')
             ->join('letras', 'srd_letras.letra_id', '=', 'letras.id')
             ->join('users', 'srd_letras.user_id', '=', 'users.id')
@@ -44,22 +44,11 @@ class SRDAdminController extends Controller
      */
     public function createProyectos()
     {
-        $srd_proyectos = srd_proyecto::select('srd_proyectos.id', 'srd_proyectos.nivel2 AS nivel2')
-            ->orderBy('srd_proyectos.nivel2')
-            ->get();
-
-        return $srd_proyectos;
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function Proyectos()
-    {
-        $srd_proyectos = srd_proyecto::select('srd_proyectos.id', 'srd_proyectos.nivel2 AS nivel2')
-            ->orderBy('srd_proyectos.nivel2')
+        $srd_proyectos = srd_proyecto::select('srd_proyectos.id', 'srd_proyectos.fecha', 'srd_proyectos.us_id', 'users.chapa AS user_nombre', 'srd_proyectos.proy_id', 
+        'proyectos.nombre AS proyecto_nombre', 'srd_proyectos.acc_id', 'srd_proyectos.el_id', 'srd_proyectos.cantidadHoras', 'srd_proyectos.viaje', 'srd_proyectos.nivel2')
+            ->join('users', 'srd_proyectos.us_id', '=', 'users.id')
+            ->join('proyectos', 'srd_proyectos.proy_id', '=', 'proyectos.id')
+            ->orderBy('srd_proyectos.fecha')
             ->get();
 
         return $srd_proyectos;
@@ -82,33 +71,50 @@ class SRDAdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($date)
     {
-        $srd_proyecto = srd_proyecto::select('srd_proyectos.id', 'srd_proyectos.fecha', 'srd_proyectos.us_id', 'users.nombre AS user_nombre', 'srd_proyectos.proy_id', 
-            'proyectos.nombre AS proyecto_nombre', 'srd_proyectos.cantidadHoras', 'srd_proyectos.viaje')
-            ->where('srd_proyectos.id', '=', $id)
+        $mes = substr($date, -4, 2);
+        if($mes == 12)
+        {
+            $año = substr($date, -8, 4);
+            $año = $año + 1;
+            $tope = $año."01"."01";
+        }else{
+            $tope = $date + 100;
+        }
+
+        $srd_proyectos = srd_proyecto::select('srd_proyectos.id', 'srd_proyectos.fecha', 'srd_proyectos.us_id', 'users.chapa AS user_nombre', 'srd_proyectos.proy_id', 
+        'proyectos.nombre AS proyecto_nombre', 'srd_proyectos.acc_id', 'srd_proyectos.el_id', 'srd_proyectos.cantidadHoras', 'srd_proyectos.viaje', 'srd_proyectos.nivel2')
             ->join('users', 'srd_proyectos.us_id', '=', 'users.id')
             ->join('proyectos', 'srd_proyectos.proy_id', '=', 'proyectos.id')
+            ->whereBetween('srd_proyectos.fecha', [$date, $tope])
             ->orderBy('srd_proyectos.fecha')
             ->get();
 
-        return $srd_proyecto;
+        return $srd_proyectos;
     }
 
-    public function showProyecto2($id)
+    public function showLetras($date)
     {
-        $srd_proyecto = srd_proyecto::select('srd_proyectos.id', 'srd_proyectos.proy_id', 'proyectos.nombre AS proyecto_nombre', 'srd_proyectos.us_id', 'users.nombre AS user_nombre', 
-            'srd_proyectos.acc_id', 'accion2s.nombre AS accion2_nombre', 'srd_proyectos.el_id', 'elementos.nombre AS elemento_nombre', 'srd_proyectos.fecha',
-            'srd_proyectos.cantidadHoras', 'srd_proyectos.viaje')
-            ->where('srd_proyectos.id', '=', $id)
-            ->join('users', 'srd_proyectos.us_id', '=', 'users.id')
-            ->join('proyectos', 'srd_proyectos.proy_id', '=', 'proyectos.id')
-            ->join('accion2s', 'srd_proyectos.acc_id', '=', 'accion2s.id')
-            ->join('elementos', 'srd_proyectos.el_id', '=', 'elementos.id')
-            ->orderBy('srd_proyectos.fecha')
+        $mes = substr($date, -4, 2);
+        if($mes == 12)
+        {
+            $año = substr($date, -8, 4);
+            $año = $año + 1;
+            $tope = $año."01"."01";
+        }else{
+            $tope = $date + 100;
+        }
+
+        $srd_letras = srd_letra::select('srd_letras.id', 'srd_letras.fecha', 'srd_letras.user_id', 'users.chapa AS user_nombre', 'srd_letras.letra_id', 
+            'letras.nombre AS letra_nombre', 'srd_letras.cantidadHoras', 'srd_letras.viaje')
+            ->join('letras', 'srd_letras.letra_id', '=', 'letras.id')
+            ->join('users', 'srd_letras.user_id', '=', 'users.id')
+            ->whereBetween('srd_letras.fecha', [$date, $tope])
+            ->orderBy('srd_letras.fecha')
             ->get();
 
-        return $srd_proyecto;
+        return $srd_letras;
     }
 
     /**
