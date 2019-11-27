@@ -6,7 +6,7 @@
     <form @submit.prevent="editarLetra(letra)" v-if="editarActivo" class="mb-5">
         <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="letra.nombre">
         <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="letra.descripcion"/>
-        <b-form-group label="IMPORTANTE: Escoger solamente UNA opción: ">
+        <b-form-group label="IMPORTANTE: Escoger solamente UNA opción: (Primero, desmarcar. Después, elegir)">
             <b-form-checkbox v-model="no_presencia" v-on:change="cambiarDedicacion(3)">No presencia</b-form-checkbox>
             <b-form-checkbox v-model="gasto_general" v-on:change="cambiarDedicacion(2)">Gasto General</b-form-checkbox>
         </b-form-group>
@@ -18,7 +18,7 @@
     <form @submit.prevent="agregar" v-else class="mb-5">
         <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="letra.nombre">
         <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="letra.descripcion"/>
-        <b-form-group label="IMPORTANTE: Escoger solamente UNA opción: ">
+        <b-form-group label="IMPORTANTE: Escoger solamente UNA opción: (Primero, desmarcar. Después, elegir)">
             <b-form-checkbox v-model="no_presencia" v-on:change="cambiarDedicacion(3)">No presencia</b-form-checkbox>
             <b-form-checkbox v-model="gasto_general" v-on:change="cambiarDedicacion(2)">Gasto General</b-form-checkbox>
         </b-form-group>
@@ -82,7 +82,7 @@ export default {
     {
         agregar()
         {
-            if(this.letra.nombre.trim() === '' || this.dedicacion === '')
+            if(this.letra.nombre.trim() === '' || (this.no_presencia === false && this.gasto_general === false))
             {
                 alert('Debes completar todos los campos antes de guardar');
                 return;
@@ -155,7 +155,6 @@ export default {
         cambiarDedicacion(valor)
         {
             this.dedicacion = valor;
-            console.log("Valor de dedicacion: " + this.dedicacion)
         },
         eliminarLetra(letra, index)
         {

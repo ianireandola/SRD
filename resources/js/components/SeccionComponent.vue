@@ -43,8 +43,8 @@
                 <th class="text-center" scope="col">ID</th>
                 <th class="text-center" scope="col">NOMBRE</th>
                 <th class="text-center" scope="col">NIVEL 2</th>
-                <th class="text-center" scope="col">ÁREA PERTENECIENTE</th>
-                <th class="text-center" scope="col">PLANTA PERTENECIENTE</th>
+                <th scope="col">ÁREA PERTENECIENTE</th>
+                <th scope="col">PLANTA PERTENECIENTE</th>
                 <th class="text-center" scope="col">OPCIONES</th>
             </tr>
         </thead>
@@ -52,7 +52,9 @@
             <tr v-for="(seccion, index) in secciones" v-bind:key="index">
                 <td class="text-center">{{seccion.id}}</td>
                 <td class="text-center">{{seccion.nombre}}</td>
-                <td class="text-center">{{seccion.nivel2}}</td>
+                <td class="text-center">
+                    <input class="form-check-input" type="checkbox" v-model="seccion.nivel2" disabled>
+                </td>
                 <template v-for="area in areas">
                     <td v-if="area.id === seccion.area_id" v-bind:key="`A-${area.id}`">
                         {{area.nombre}}

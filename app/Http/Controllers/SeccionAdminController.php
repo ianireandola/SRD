@@ -74,6 +74,15 @@ class SeccionAdminController extends Controller
         return $secciones;
     }
 
+    public function showSeccion($seccion_id)
+    {
+        $secciones = Seccion::select('*')
+            ->where('seccions.id', '=', $seccion_id)
+            ->get();
+    
+        return $secciones;
+    }
+
     public function showTrabajan($seccion_id)
     {
         $num = Seccion::select('seccions.id')

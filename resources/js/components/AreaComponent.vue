@@ -9,8 +9,7 @@
                 <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="area.nombre">
             </div>
             <div class="col">
-                <input class="form-check-input" type="checkbox" v-model="area.Q_Ind">
-                <label for="checkbox"> Q_Ind </label>
+                <b-form-checkbox v-model="area.Q_Ind">Q_Ind</b-form-checkbox>
             </div>
         </div>
         <button type="submit" class="btn btn-success btn-block">Guardar</button>
@@ -24,8 +23,7 @@
                 <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="area.nombre">
             </div>
             <div class="col">
-                <input class="form-check-input" type="checkbox" v-model="area.Q_Ind">
-                <label for="checkbox"> Q_Ind </label>
+                <b-form-checkbox v-model="area.Q_Ind">Q_Ind</b-form-checkbox>
             </div>
         </div>
         <button type="submit" class="btn btn-success btn-block mb-7">Agregar</button>
@@ -44,7 +42,9 @@
             <tr v-for="(item, index) in areas" v-bind:key="index">
                 <td class="text-center">{{item.id}}</td>
                 <td class="text-center">{{item.nombre}}</td>
-                <td class="text-center">{{item.Q_Ind}}</td>
+                <td class="text-center">
+                    <input class="form-check-input" type="checkbox" v-model="item.Q_Ind" disabled>
+                </td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
                     <button type="button" @click="relacionSecciones(item)" class="btn btn-info">Relación con secciones</button>
@@ -138,7 +138,7 @@ export default {
     {
         agregar()
         {
-            if(this.area.nombre.trim() === '' || this.area.Q_Ind === '')
+            if(this.area.nombre.trim() === '')
             {
                 alert('Debes completar todos los campos antes de guardar');
                 return;

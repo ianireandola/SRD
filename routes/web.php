@@ -47,6 +47,7 @@ Route::prefix('admin')->group(function()
     Route::get('/', 'AdminController@index')->name('admin.dashboard');
     Route::resource('/areas', 'AreaController');
     Route::match(['get', 'head'], '/secciones/showTrabajan/{seccion_id}', 'SeccionAdminController@showTrabajan');
+    Route::match(['get', 'head'], '/secciones/showSeccion/{seccion_id}', 'SeccionAdminController@showSeccion');
     Route::resource('/secciones', 'SeccionAdminController');
     Route::resource('/plantas', 'PlantaController');
     Route::resource('/categorias', 'CategoriaController');

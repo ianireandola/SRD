@@ -65,9 +65,6 @@
         </table>
         <b-row>
             <b-col>
-                <b-button class="mt-3" variant="primary" block>Guardar cambios</b-button>
-            </b-col>
-            <b-col>
                 <b-button class="mt-3" block @click="cancelarEdicionModal($bvModal.hide('modal-planta'))">Cerrar</b-button>
             </b-col>
         </b-row>

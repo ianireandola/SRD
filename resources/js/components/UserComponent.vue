@@ -12,7 +12,7 @@
                         <label for="chapa">Chapa:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="chapa" :state="null" v-model="usuario.chapa" type="number"/>
+                        <input class="form-control mb-2" type="number" id="chapa" v-model="usuario.chapa"/>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -20,7 +20,7 @@
                         <label for="input-none">Nombre:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="nombre" :state="null" v-model="usuario.nombre" type="text"/>
+                        <input class="form-control mb-2" id="nombre" v-model="usuario.nombre" type="text"/>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -28,7 +28,7 @@
                         <label for="input-none">Email:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="email" :state="null" v-model="usuario.email" type="email"/>
+                        <input class="form-control mb-2" id="email" v-model="usuario.email" type="email"/>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -36,7 +36,7 @@
                         <label for="input-none">Contraseña:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="password" :state="null" v-model="usuario.password_confirmation"/>
+                        <input class="form-control mb-2" id="password" :state="null" v-model="usuario.password_confirmation"/>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -44,7 +44,7 @@
                         <label for="input-none">Función:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="función" :state="null" v-model="usuario.funcion"/>
+                        <input class="form-control mb-2" id="función" :state="null" v-model="usuario.funcion"/>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -52,7 +52,17 @@
                         <label for="input-none">Comentario:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="comentario" :state="null" v-model="usuario.comentario"/>
+                        <input class="form-control mb-2" id="comentario" :state="null" v-model="usuario.comentario"/>
+                    </b-col>
+                </b-row>
+                 <b-row class="my-1">
+                    <b-col sm="3">
+                        <label for="input-none">Sección:</label>
+                    </b-col>
+                    <b-col sm="9">
+                        <b-form-select class="form-control" v-model="seccion" v-on:change="seccionElegida(seccion)">
+                            <option v-for="seccion in secciones" v-bind:key="seccion.id" :value="seccion">{{seccion.nombre}}</option>
+                        </b-form-select>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -95,6 +105,7 @@
                 </b-row>
             </b-container>
             <b-button v-b-toggle.collapse-1 class="btn-block" variant="success" type="submit">Guardar modificado</b-button>
+            <b-button v-b-toggle.collapse-1 class="btn-block" variant="danger" @click="cancelarEdicion()">Cancelar</b-button>
         </b-collapse>
     </form>
 
@@ -109,7 +120,7 @@
                         <label for="chapa">Chapa:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="chapa" :state="null" v-model="usuario.chapa" type="number"/>
+                        <input id="chapa" class="form-control mb-2" v-model="usuario.chapa" type="number"/>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -117,7 +128,7 @@
                         <label for="input-none">Nombre:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="nombre" :state="null" v-model="usuario.nombre" type="text"/>
+                        <input id="nombre" class="form-control mb-2" v-model="usuario.nombre" type="text"/>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -125,7 +136,7 @@
                         <label for="input-none">Email:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="email" :state="null" v-model="usuario.email" type="email"/>
+                        <input id="email" class="form-control mb-2" v-model="usuario.email" type="email"/>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -133,7 +144,7 @@
                         <label for="input-none">Contraseña:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="password" :state="null" v-model="usuario.password_confirmation"/>
+                        <input id="password" class="form-control mb-2" v-model="usuario.password_confirmation"/>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -141,7 +152,7 @@
                         <label for="input-none">Función:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="función" :state="null" v-model="usuario.funcion"/>
+                        <input id="función" class="form-control mb-2" v-model="usuario.funcion"/>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -149,7 +160,17 @@
                         <label for="input-none">Comentario:</label>
                     </b-col>
                     <b-col sm="9">
-                        <b-form-input id="comentario" :state="null" v-model="usuario.comentario"/>
+                        <input id="comentario" class="form-control mb-2" v-model="usuario.comentario"/>
+                    </b-col>
+                </b-row>
+                <b-row class="my-1">
+                    <b-col sm="3">
+                        <label for="input-none">Sección:</label>
+                    </b-col>
+                    <b-col sm="9">
+                        <b-form-select class="form-control" v-model="seccion" v-on:change="seccionElegida(seccion)">
+                            <option v-for="seccion in secciones" v-bind:key="seccion.id" :value="seccion">{{seccion.nombre}}</option>
+                        </b-form-select>
                     </b-col>
                 </b-row>
                 <b-row class="my-1">
@@ -202,6 +223,7 @@
                 </b-row>
             </b-container>
             <b-button v-b-toggle.collapse-1 class="btn-block" variant="success" type="submit">Agregar</b-button>
+            <b-button v-b-toggle.collapse-1 class="btn-block" variant="danger" @click="cancelarEdicion()">Cancelar</b-button>
         </b-collapse>
     </form>
 
@@ -220,7 +242,7 @@
                 <td class="text-center">{{item.nombre}}</td>
                 <td class="text-center">{{item.password_confirmation}}</td>
                 <td class="text-center">
-                    <b-button v-b-modal.center @click="mostrarDetalle(item, $bvModal.show('modal-center'))">Detalle</b-button>
+                    <b-button v-b-modal.center @click="mostrarDetalle(item)">Detalle</b-button>
                     <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
                     <button type="button" @click="eliminarUsuario(item, index)" class="btn btn-secondary">Eliminar</button>
                 </td>
@@ -239,8 +261,9 @@
             <p><b>Contraseña:</b> {{usuario.password_confirmation}}</p>
             <p><b>Funcion:</b> {{usuario.funcion}}</p>
             <p><b>Comentario:</b> {{usuario.comentario}}</p>
+            <p><b>Sección:</b> {{usuario.seccion_id}} - {{usuario.seccion_nombre}}</p>
             <p><b>Categoria:</b> {{usuario.categoria_id}} - {{usuario.categoria_nombre}}</p>
-            <p><b>Fijo/Eventual:</b> {{usuario.fijoeventual_id}} - {{usuario.fijoeventual_nombre}}</p>
+            <p><b>Fijo/Eventual:</b> {{usuario.fijoeventual_id}} - {{fijo_eventual.nombre}}</p>
             <p><b>CPU/Portatil:</b> {{usuario.CPUportatil_nombre}}</p>
             <p><b>Fecha CPU/Portatil:</b> {{usuario.fechaCPUportatil}}</p>
         </div>
@@ -279,6 +302,8 @@ export default {
                 password_confirmation: '', 
                 funcion: '',
                 comentario: '',
+                seccion_id: '',
+                seccion_nombre: '',
                 categoria_id: '', 
                 categoria_nombre: '',
                 fijoeventual_id: '',
@@ -299,12 +324,18 @@ export default {
             {
                 id:'',
                 nombre:''
+            },
+            secciones: [],
+            seccion:
+            {
+                id: '',
+                nombre: ''
             }
+
         }
     },
     created()
     {
-        console.log('UsuarioComponent created')
         axios.get('/admin/usuarios/create')
             .then(res=>{
                 this.usuarios = res.data;
@@ -316,22 +347,28 @@ export default {
         axios.get('/admin/fijos_eventuales/create')
             .then(res=>{
                 this.fijos_eventuales = res.data;
+            });
+        axios.get('/admin/secciones/create')
+            .then(res=>{
+                this.secciones = res.data;
             })
     },
     methods:
     {
-        mostrarDetalle(item, $event)
+        mostrarDetalle(item)
         {
             this.usuario.fechaCPUportatil = this.date;
             this.usuario = item;
-            axios.get(`/admin/fijos_eventuales/${this.usuario.fijoeventual_id}`)
-                .then(res =>{
-                    this.usuario.fijoeventual_nombre = res.data;
-                });
-            axios.get(`/admin/categorias/${this.usuario.categoria_id}`)
-                .then(res =>{  
-                    this.usuario.categoria_nombre = res.data;
-                })
+
+            for(var i=0; i<this.secciones.length; i++)
+            {
+                if(this.usuario.seccion_id === this.secciones[i].id)
+                {
+                    this.usuario.seccion_nombre = this.secciones[i].nombre;
+                    console.log("seccion nombre: " + this.usuario.seccion_nombre);
+                    this.seccion = this.secciones[i];
+                }
+            }
             if(this.usuario.CPUportatil === 0 )
             {
                 this.usuario.CPUportatil_nombre = 'CPU'
@@ -339,6 +376,11 @@ export default {
             {
                 this.usuario.CPUportatil_nombre = 'Portatil'
             }
+            this.$root.$emit('bv::show::modal', 'modal-center', '#btnShow')
+        },
+        cancelarEdicion()
+        {
+            this.editarActivo = false
         },
         fijoEventualElegido(item)
         {
@@ -350,11 +392,16 @@ export default {
             this.usuario.categoria_id = item.id;
             this.usuario.categoria_nombre = item.nombre;
         },
+        seccionElegida(item)
+        {
+            this.usuario.seccion_id = item.id;
+            this.usuario.seccion_nombre = item.nombre;
+        },
         agregarUsuario()
         {
             this.usuario.fechaCPUportatil = this.date;
             if(this.usuario.chapa === '' || this.usuario.nombre.trim() === '' || this.usuario.email.trim() === '' || this.usuario.password_confirmation.trim() === '' ||
-                this.usuario.categoria_id === '' || this.usuario.fijoeventual_id === '' || this.usuario.fechaCPUportatil === '')
+                this.usuario.categoria_id === '' || this.usuario.seccion_id === '' || this.usuario.fijoeventual_id === '' || this.usuario.fechaCPUportatil === '')
             {
                 alert("Comprueba que los campos necesarios estan llenos");
                 return
@@ -374,6 +421,7 @@ export default {
                     password_confirmation: this.usuario.password_confirmation,
                     funcion: this.usuario.funcion,
                     comentario: this.usuario.comentario,
+                    seccion_id: this.usuario.seccion_id,
                     categoria_id: this.usuario.categoria_id,
                     fijoeventual_id: this.usuario.fijoeventual_id,
                     CPUportatil: this.usuario.CPUportatil,
@@ -393,7 +441,11 @@ export default {
                         this.usuario.fijoeventual_nombre = '',
                         this.usuario.CPUportatil = '',
                         this.usuario.CPUportatil_nombre = '',
-                        this.usuario.fechaCPUportatil = ''
+                        this.usuario.fechaCPUportatil = '',
+                        this.seccion = '',
+                        this.fijo_eventual = '',
+                        this.categoria = '',
+                        this.date = ''
                     });
                 this.$swal.fire({
                     position: 'top-end',
@@ -430,6 +482,7 @@ export default {
                 password_confirmation: this.usuario.password_confirmation,
                 funcion: this.usuario.funcion,
                 comentario: this.usuario.comentario,
+                seccion_id: this.usuario.seccion_id,
                 categoria_id: this.usuario.categoria_id,
                 fijoeventual_id: this.usuario.fijoeventual_id,
                 CPUportatil: this.usuario.CPUportatil,
@@ -448,6 +501,8 @@ export default {
                         password_confirmation: '',
                         funcion: '',
                         comentario: '',
+                        seccion_id: '',
+                        seccion_nombre: '',
                         categoria_id: '',
                         categoria_nombre: '',
                         fijoeventual_id: '',
@@ -468,6 +523,7 @@ export default {
         {
             this.editarActivo = true;
             this.usuario = item;
+            this.date = this.usuario.fechaCPUportatil;
 
             if(this.usuario.CPUportatil === 0 )
             {
@@ -475,6 +531,15 @@ export default {
             }else
             {
                 this.usuario.CPUportatil_nombre = 'Portatil'
+            }
+
+            for(var i=0; i<this.secciones.length; i++)
+            {
+                if(this.usuario.seccion_id === this.secciones[i].id)
+                {
+                    this.usuario.seccion_nombre = this.secciones[i].nombre;
+                    this.seccion = this.secciones[i];
+                }
             }
 
             for(var i=0; i<this.categorias.length; i++)

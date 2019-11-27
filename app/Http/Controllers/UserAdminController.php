@@ -67,6 +67,7 @@ class UserAdminController extends Controller
         $user->password_confirmation = $request->password_confirmation;
         $user->funcion = $request->funcion;
         $user->comentario = $request->comentario;
+        $user->seccion_id = $request->seccion_id;
         $user->categoria_id = $request->categoria_id;
         $user->fijoeventual_id = $request->fijoeventual_id;
         $user->CPUportatil = $request->CPUportatil;
@@ -144,6 +145,7 @@ class UserAdminController extends Controller
         $usuario->password_confirmation = $request->password_confirmation;
         $usuario->funcion = $request->funcion;
         $usuario->comentario = $request->comentario;
+        $usuario->seccion_id = $request->seccion_id;
         $usuario->categoria_id = $request->categoria_id;
         $usuario->fijoeventual_id = $request->fijoeventual_id;
         $usuario->CPUportatil = $request->CPUportatil;

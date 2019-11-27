@@ -64,11 +64,11 @@ class FijoEventualController extends Controller
      */
     public function show($id)
     {
-        $fijos_eventuales = FijoEventual::select('fijo_eventuals.nombre')
+        $fijos_eventual = FijoEventual::select('*')
             ->where('fijo_eventuals.id', '=', $id)
             ->get();
     
-        return $fijos_eventuales;
+        return $fijos_eventual;
     }
 
     /**
