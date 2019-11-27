@@ -92,8 +92,9 @@ Route::prefix('admin')->group(function()
     Route::match(['get', 'head'], '/srd/createLetras', 'SRDAdminController@createletras');
     Route::match(['get', 'head'], '/srd/createProyectos', 'SRDAdminController@createProyectos');
     Route::match(['get', 'head'], '/srd/showLetras/{fecha}', 'SRDAdminController@showLetras');
+    Route::get('/srd/descarga', 'SRDAdminController@descarga');
     Route::resource('/srd', 'SRDAdminController');
-    Route::get('/descarga', function () {
+    /*Route::get('/descarga', function () {
         return (new SRDExport)->download('horasRegistradas.xlsx');
-    });
+    });*/
 });

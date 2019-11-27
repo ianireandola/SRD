@@ -6,9 +6,16 @@ use App\srd_letra;
 use App\srd_proyecto;
 use App\Proyecto;
 use Illuminate\Http\Request;
+use App\Exports\SRDExport;
 
 class SRDAdminController extends Controller
 {
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    
     /**
      * Display a listing of the resource.
      *
@@ -52,6 +59,11 @@ class SRDAdminController extends Controller
             ->get();
 
         return $srd_proyectos;
+    }
+
+    public function descarga()
+    {
+        return (new SRDExport)->download('horasRegistradas.xlsx');
     }
 
     /**
