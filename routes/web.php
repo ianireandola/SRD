@@ -11,9 +11,6 @@
 |
 */
 
-use App\Exports\SRDExport;
-use App\Http\Controllers\UserAdminController;
-
 Route::get('/', function () {
     return view('principal');
 });
@@ -41,11 +38,6 @@ Route::resource('/acciones2', 'Accion2Controller');
 Route::resource('/elementos', 'ElementoController');
 Route::delete('/proyecto_user/{proyecto_id}/{user_id}', 'ProyectoUserController@destroy');
 Route::resource('/proyecto_user', 'ProyectoUserController');
-
-
-Route::get('/test/datepicker', function () {
-    return view('datepicker');
-});
 
 
 Route::prefix('admin')->group(function()

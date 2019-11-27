@@ -16,8 +16,7 @@ use Maatwebsite\Excel\Concerns\FromView;
 
 class SRDExport implements FromView
 {
-    use Exportable;
-  
+    use Exportable;  
 
     /**
     * @return \Illuminate\Support\Collection
