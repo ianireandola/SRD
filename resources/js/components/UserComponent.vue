@@ -365,9 +365,20 @@ export default {
                 if(this.usuario.seccion_id === this.secciones[i].id)
                 {
                     this.usuario.seccion_nombre = this.secciones[i].nombre;
-                    console.log("seccion nombre: " + this.usuario.seccion_nombre);
                     this.seccion = this.secciones[i];
                 }
+            }
+
+            for(var i=0; i<this.categorias.length; i++)
+            {
+                this.usuario.categoria_nombre = this.categorias[i].nombre;
+                this.categoria = this.categorias[i];
+            }
+
+            for(var i=0; i<this.fijos_eventuales.length; i++)
+            {
+                this.usuario.fijoeventual_nombre = this.fijos_eventuales[i].nombre;
+                this.fijo_eventual = this.fijos_eventuales[i];
             }
             if(this.usuario.CPUportatil === 0 )
             {
@@ -461,16 +472,41 @@ export default {
         },
         eliminarUsuario(usuario, index)
         {
-            axios.delete(`/admin/usuarios/${usuario.id}`)
-                .then(()=>{
-                    this.usuarios.splice(index, 1);
-                });
-            this.$swal.fire({
-                position: 'top-end',
-                type: 'success',
-                title: 'Eliminado',
-                showConfirmButton: false,
-                timer: 1300})
+            this.$bvModal.msgBoxConfirm("¿Quiere eliminar el usuario y todas las horas que haya registrado?", {
+                okVariant: 'danger',
+                okTitle: 'Eliminar',
+                cancelTitle: 'Cancelar'
+            }).then(value=>{
+                if(value === true)
+                {
+                    //Se buscan separadamente las horas a proyectos y letras dedicadas de cada usuario y se devuelven los ids. Esos ids estan en res y se borran en el for
+                    axios.get(`/srd_proyectos/showUsuario/${usuario.id}`)
+                        .then(res =>{
+                            for(var i=0; i<res.length; i++)
+                            {
+                                axios.delete(`/srd_proyectos/${res[i]}`)
+                            }
+                        });
+                    axios.get(`/srd_letras/showUsuario/${usuario.id}`)
+                        .then(res=>{
+                            for(var i=0; i<res.length; i++)
+                            {
+                                axios.delete(`/srd_letras/${res[i]}`)
+                            }
+                        })
+                    axios.delete(`/admin/usuarios/${usuario.id}`)
+                        .then(()=>{
+                            this.usuarios.splice(index, 1);
+                        });
+                    this.$swal.fire({
+                        position: 'top-end',
+                        type: 'success',
+                        title: 'Eliminado',
+                        showConfirmButton: false,
+                        timer: 1300})
+                }
+            })
+            
         },
         editarUsuario(item)
         {

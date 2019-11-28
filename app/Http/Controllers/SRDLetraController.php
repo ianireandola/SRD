@@ -85,6 +85,15 @@ class SRDLetraController extends Controller
         return $total;   
     }
 
+    public function showUsuario($user_id)
+    {
+        $ids = srd_letra::select('srd_letras.id')
+            ->where('srd_letras.user_id', '=', $user_id)
+            ->get();
+
+        return $ids;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *

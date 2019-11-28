@@ -126,6 +126,15 @@ class SRDProyectoController extends Controller
         return $num;
     }
 
+    public function showUsuario($user_id)
+    {
+        $ids = srd_proyecto::select('srd_proyectos.id')
+            ->where('srd_proyectos.us_id', '=', $user_id)
+            ->get();
+
+        return $ids;
+    }
+
     /**
      * Show the form for editing the specified resource.
      *
