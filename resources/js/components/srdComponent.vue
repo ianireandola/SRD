@@ -1,16 +1,23 @@
 <template>
 <div>
-    <date-picker 
-        class="mb-4 "
-        v-model="date" 
-        type="month"
-        format="YYYYMMDD"
-        value-type="format"
-        v-on:change="gestionarFecha()" 
-        placeholder="Elegir mes"
-        lang="es">
-    </date-picker>
-
+    <b-row>
+        <b-col>
+            <date-picker 
+                class="mb-4 "
+                v-model="date" 
+                type="month"
+                format="YYYYMMDD"
+                value-type="format"
+                v-on:change="gestionarFecha()" 
+                placeholder="Elegir mes"
+                lang="es">
+            </date-picker>
+        </b-col>
+        <b-col>
+            <b-button @click="llevarA()" variant="info">Descargar horas a Hoja Excel</b-button>
+        </b-col>
+    </b-row>
+    
     <form class="mb-3">
         <table class="table table-hover table-responsive overflow-auto">
             <thead class="thead-light">
@@ -170,6 +177,10 @@ export default {
                 .then(res=>{
                     this.srd_letras = res.data;
                 })
+        },
+        llevarA()
+        {
+            window.location.href = '/admin/srd/descarga';
         }
     }
 }
