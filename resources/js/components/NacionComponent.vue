@@ -48,7 +48,7 @@
             <thead class="thead-light">
                 <tr>
                     <th class="text-center" scope="col">PROYECTO PADRE</th>
-                    <th class="text-center" scope="col">ELEGIR OTRO PROYECTO PADRE</th>
+                    <th class="text-center" scope="col">ELEGIR OTRA NACIÓN</th>
                 </tr>
             </thead>
             <tbody>
@@ -56,7 +56,7 @@
                     <td>{{proyectopadre_coincidente.id}} - {{proyectopadre_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="proyectopadre_coincidente.nacion_id" v-on:change="guardarCambios(proyectopadre_coincidente, index)">
-                            <option v-for="proyectopadre in proyectospadre" v-bind:key="proyectopadre.id" :value="proyectopadre.id">{{proyectopadre.id}} - {{proyectopadre.nombre}}</option>
+                            <option v-for="nacion in naciones" v-bind:key="nacion.id" :value="nacion.id">{{nacion.id}} - {{nacion.nombre}}</option>
                         </b-form-select>
                     </td>
                 </tr>

@@ -47,7 +47,7 @@
             <thead class="thead-light">
                 <tr>
                     <th class="text-center" scope="col">PROYECTO PADRE</th>
-                    <th class="text-center" scope="col">ELEGIR OTRO PROYECTO PADRE</th>
+                    <th class="text-center" scope="col">ELEGIR OTRO TIPO DE PROYECTO</th>
                 </tr>
             </thead>
             <tbody>
@@ -55,7 +55,7 @@
                     <td>{{proyectopadre_coincidente.id}} - {{proyectopadre_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="proyectopadre_coincidente.tipoProyecto_id" v-on:change="guardarCambios(proyectopadre_coincidente, index)">
-                            <option v-for="proyectopadre in proyectospadre" v-bind:key="proyectopadre.id" :value="proyectopadre.id">{{proyectopadre.id}} - {{proyectopadre.nombre}}</option>
+                            <option v-for="tipo_proyecto in tipos_proyecto" v-bind:key="tipo_proyecto.id" :value="tipo_proyecto.id">{{tipo_proyecto.id}} - {{tipo_proyecto.nombre}}</option>
                         </b-form-select>
                     </td>
                 </tr>

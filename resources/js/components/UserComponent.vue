@@ -482,16 +482,16 @@ export default {
                     //Se buscan separadamente las horas a proyectos y letras dedicadas de cada usuario y se devuelven los ids. Esos ids estan en res y se borran en el for
                     axios.get(`/srd_proyectos/showUsuario/${usuario.id}`)
                         .then(res =>{
-                            for(var i=0; i<res.length; i++)
+                            for(var i=0; i<res.data.length; i++)
                             {
-                                axios.delete(`/srd_proyectos/${res[i]}`)
+                                axios.delete(`/srd_proyectos/${res.data[i].id}`)
                             }
                         });
                     axios.get(`/srd_letras/showUsuario/${usuario.id}`)
                         .then(res=>{
-                            for(var i=0; i<res.length; i++)
+                            for(var i=0; i<res.data.length; i++)
                             {
-                                axios.delete(`/srd_letras/${res[i]}`)
+                                axios.delete(`/srd_letras/${res.data[i].id}`)
                             }
                         })
                     axios.delete(`/admin/usuarios/${usuario.id}`)

@@ -31,9 +31,9 @@
         <thead class="thead-light">
             <tr>
                 <th class="text-center" scope="col" width="3%">ID</th>
-                <th scope="col" width="25%">NOMBRE</th>
-                <th scope="col" width="30%">PROYECTO PERTENECIENTE</th>
-                <th class="text-center" scope="col" width="10%">DESCRIPCION</th>
+                <th scope="col" width="15%">NOMBRE</th>
+                <th  class="text-center" scope="col" width="20%">PROYECTO PERTENECIENTE</th>
+                <th scope="col" width="30%">DESCRIPCION</th>
                 <th class="text-center" scope="col" width="32%" >OPCIONES</th>
             </tr>
         </thead>
@@ -42,7 +42,7 @@
                 <td class="text-center">{{accion2.id}}</td>
                 <td>{{accion2.nombre}}</td>
                 <td>{{accion2.nombre_proyecto}}</td>
-                <td class="text-center">{{accion2.descripcion}}</td>
+                <td>{{accion2.descripcion}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(accion2)" class="btn btn-primary">Modificar</button>
                     <button type="button" @click="eliminarAccion2(accion2, index)" class="btn btn-secondary">Eliminar</button>
@@ -127,8 +127,6 @@ export default {
             axios.put(`/admin/accion2s/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
-                    const index = this.accion2s.findIndex(accion2Buscar => accion2Buscar.id === res.data.id)
-                    this.accion2s[index] = res.data;
 
                     this.accion2 = {nombre:'', descripcion:'', proyecto_id: '', nombre_proyecto: ''};
                     this.proyecto = '';
@@ -139,7 +137,11 @@ export default {
                 title: 'Modifiación realizada',
                 showConfirmButton: false,
                 timer: 1300
-            })
+            });
+            axios.get('/admin/accion2s/create')
+                .then(res=>{
+                    this.accion2s = res.data;
+                });
         },
         eliminarAccion2(accion2, index)
         {
@@ -184,6 +186,8 @@ export default {
             this.accion2.nombre = item.nombre;
             this.accion2.descripcion = item.descripcion;
             this.accion2.id = item.id;
+            this.proyecto = item.proyecto_id;
+            this.accion2.proyecto_id = item.proyecto_id;
 
             for(var i=0; i<this.proyectos.length; i++)
             {

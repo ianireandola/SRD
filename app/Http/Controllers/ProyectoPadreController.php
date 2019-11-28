@@ -119,7 +119,7 @@ class ProyectoPadreController extends Controller
         $proyecto_padre->homologaciones = $request->homologaciones;
         $proyecto_padre->tipoProyecto_id = $request->tipoProyecto_id;
         $proyecto_padre->nacion_id = $request->nacion_id;
-        $proyecto_padre->dedicacion_id = $request->dedicacion_id;
+        $proyecto_padre->dedicacion_id = '1';
         $proyecto_padre->save();
 
         return $proyecto_padre;
