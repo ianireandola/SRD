@@ -13,10 +13,18 @@ class AdminSeeder extends Seeder
     public function run()
     {
         DB::table('admins')->insert([
-            'chapa' => '64267',
-            'nombre' => 'Admin',
-            'password' => bcrypt('admin'),
-            'password_confirmation' => 'admin'
+            [
+                'chapa' => '14036',
+                'nombre' => 'Amondarain Martinez, Ainara',
+                'password' => bcrypt('14036'),
+                'password_confirmation' => '14036'
+            ],
+            [
+                'chapa' => '13418',
+                'nombre' => 'Iturrioz Mendizabal, Xabier',
+                'password' => bcrypt('13418'),
+                'password_confirmation' => '13418'
+            ]           
         ]);
     }
 }
