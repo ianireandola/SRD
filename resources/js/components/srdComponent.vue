@@ -29,6 +29,7 @@
                     <th class="text-center" scope="col"> ACCIÓN NIVEL 2 </th>
                     <th class="text-center" scope="col"> CANTIDAD HORAS </th>
                     <th class="text-center" scope="col"> VIAJE </th>
+                    <th class="text-center" scope="col"></th>
                 </tr>
             </thead>
             <tbody>
@@ -45,7 +46,8 @@
                     <td class="text-center">{{srd_letra.cantidadHoras}}</td>  
                     <td class="text-center">
                         <input class="form-check-input" type="checkbox" v-model="srd_letra.viaje" disabled>
-                    </td>           
+                    </td> 
+                    <td class="text-center"><b-button block variant="secondary" @click="eliminarSRDLetra(srd_letra, index)">Eliminar</b-button></td>          
                 </tr>
 
                 <tr class="warning">
@@ -73,7 +75,8 @@
                     <td class="text-center">{{srd_todoproyecto.cantidadHoras}}</td>  
                     <td class="text-center">
                         <input class="form-check-input" type="checkbox" v-model="srd_todoproyecto.viaje" disabled>
-                    </td>             
+                    </td> 
+                    <td class="text-center"><b-button block variant="secondary" @click="eliminarSRDProyecto(srd_todoproyecto, index)">Eliminar</b-button></td>            
                 </tr>
             </tbody>
         </table>
@@ -165,7 +168,6 @@ export default {
     {
         gestionarFecha()
         {
-            console.log(this.date);
             this.srd_letras = [];
             this.srd_todoproyectos = [];
             axios.get(`/admin/srd/${this.date}`)
@@ -180,7 +182,39 @@ export default {
         },
         llevarA()
         {
-            window.location.href = '/admin/srd/descarga';
+            //window.location.href = '/admin/srd/descarga';
+        },
+        eliminarSRDProyecto(srd_todoproyecto, index)
+        {
+            this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                    okVariant: 'danger',
+                    okTitle: 'Eliminar',
+                    cancelTitle: 'Cancelar'
+                }).then(value=> {
+                    if( value === true )
+                    {
+                        axios.delete(`/srd_proyectos/${srd_todoproyecto.id}`)
+                            .then(()=>{
+                                this.srd_todoproyectos.splice(index, 1);
+                            }); 
+                    }
+                })
+        },
+        eliminarSRDLetra(srd_letra, index)
+        {
+            this.$bvModal.msgBoxConfirm("¿Quiere eliminar?",{
+                    okVariant: 'danger',
+                    okTitle: 'Eliminar',
+                    cancelTitle: 'Cancelar'
+                }).then(value=> {
+                    if( value === true )
+                    {
+                        axios.delete(`/srd_letras/${srd_letra.id}`)
+                            .then(()=>{
+                                this.srd_letras.splice(index, 1);
+                            });
+                    }
+                })
         }
     }
 }
