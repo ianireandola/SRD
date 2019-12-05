@@ -353,6 +353,21 @@ export default {
         cancelarEdicion()
         {
             this.editarActivo = false;
+            this.proyecto_padre = {
+                id: '',
+                nombre: '',
+                descripcion: '',
+                estado: '',
+                Q_Proyecto: '',
+                planificacion: '',
+                safety: '',
+                homologaciones: '',
+                tipoProyecto_id: '',
+                nacion_id: '',
+                dedicacion_id: '1'
+            },
+            this.proyecto = '',
+            this.tipo_proyecto = ''
         },
         editarFormulario(proyecto_padre)
         {

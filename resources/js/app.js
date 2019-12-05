@@ -16,7 +16,6 @@ library.add(faTimesCircle)
 Vue.use(BootstrapVue)
 Vue.use(VueSweetalert2)
 Vue.use(Popover)
-Vue.component('example-component', require('./components/ExampleComponent.vue').default);
 Vue.component('registro-horas-viejo-component', require('./components/RegistroHorasViejo.vue').default);
 Vue.component('registrar-horas-component', require('./components/RegistroHorasComponent.vue').default);
 Vue.component('registrar-horas2-component', require('./components/RegistroHoras2Component.vue').default);
