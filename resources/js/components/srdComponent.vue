@@ -182,7 +182,7 @@ export default {
         },
         llevarA()
         {
-            //window.location.href = '/admin/srd/descarga';
+            window.location.href = '/admin/srd/descarga';
         },
         eliminarSRDProyecto(srd_todoproyecto, index)
         {
