@@ -100,7 +100,7 @@
                         <label for="input-none">Fecha CPU/Portatil:</label>
                     </b-col>
                     <b-col sm="9">
-                        <date-picker class="mb-4" format="YYYY-MM-DD" dateFormat="YYYY-MM-DD" :first-day-of-week= "1" v-model="usuario.fechaCPUportatil" lang="es"/> 
+                        <date-picker class="mb-4" format="YYYY-MM-DD" type="year" dateFormat="YYYY-MM-DD" :first-day-of-week= "1" v-model="usuario.fechaCPUportatil" lang="es"/> 
                     </b-col>
                 </b-row>
             </b-container>
@@ -212,6 +212,7 @@
                             <date-picker 
                                 class="mb-4 inline p-2"
                                 ref="datepicker"
+                                type="year"
                                 format="YYYY-MM-DD" 
                                 :value-type="valueType"
                                 dateFormat="YYYY-MM-DD"

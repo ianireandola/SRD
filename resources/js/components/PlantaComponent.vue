@@ -199,7 +199,7 @@ export default {
                         })
                     }else
                     {
-                        alert("La categoría tiene usuarios relacionados, no se puede eliminar")
+                        alert("La planta tiene secciones relacionadas, no se puede eliminar")
                     }
                 })
         },

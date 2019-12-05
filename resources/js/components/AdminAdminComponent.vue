@@ -130,6 +130,7 @@ export default {
             this.editarActivo = true;
             this.admin.nombre = item.nombre;
             this.admin.password_confirmation = item.password_confirmation;
+            this.admin.chapa = item.chapa;
             this.admin.id = item.id;
         },
         editarAdmin(item)

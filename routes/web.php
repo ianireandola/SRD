@@ -61,7 +61,7 @@ Route::prefix('admin')->group(function()
     Route::resource('/fases', 'FaseController');
     Route::match(['put', 'patch'], '/accions2/updateProyecto/{resource}', 'Accion2AdminController@updateProyecto');
     Route::match(['get', 'head'], '/accions2/showProyecto/{resource}', 'Accion2AdminController@showProyecto');
-    Route::resource('/accion2s', 'Accion2AdminController');
+    Route::resource('accion2s', 'Accion2AdminController');
     Route::resource('/admins', 'AdminAdminController');
     Route::match(['put', 'patch'], '/usuarios/categoriaUpdate/{resource}', 'UserAdminController@categoriaUpdate');
     Route::get('/usuarios/{usuario_id}/buscarFE', 'UserAdminController@FEcoincidentes');

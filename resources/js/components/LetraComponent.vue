@@ -18,7 +18,7 @@
     <form @submit.prevent="agregar" v-else class="mb-5">
         <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="letra.nombre">
         <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="letra.descripcion"/>
-        <b-form-group label="IMPORTANTE: Escoger solamente UNA opción: (Primero, desmarcar. Después, elegir)">
+        <b-form-group label="IMPORTANTE: Escoger solamente UNA opción:">
             <b-form-checkbox v-model="no_presencia" v-on:change="cambiarDedicacion(3)">No presencia</b-form-checkbox>
             <b-form-checkbox v-model="gasto_general" v-on:change="cambiarDedicacion(2)">Gasto General</b-form-checkbox>
         </b-form-group>

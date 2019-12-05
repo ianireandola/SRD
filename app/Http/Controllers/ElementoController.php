@@ -6,12 +6,7 @@ use Illuminate\Http\Request;
 use App\Elemento;
 
 class ElementoController extends Controller
-{
-    public function __construct()
-    {
-        $this->middleware('auth:admin');
-    }
-    
+{    
     /**
      * Display a listing of the resource.
      *

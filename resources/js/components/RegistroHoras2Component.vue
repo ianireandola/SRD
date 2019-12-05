@@ -285,7 +285,7 @@ export default {
             .then(res=>{
                 this.todoLetras = res.data;
             });
-        axios.get(`/proyectos/${this.seccionId}`)
+        axios.get(`proyectos/${this.seccionId}`)
             .then(res=>{
                 this.todoProyectos = res.data;
             });
