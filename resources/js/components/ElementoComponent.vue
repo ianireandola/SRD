@@ -4,8 +4,8 @@
 
     <!--Cuando "editarActivo=true" EDITAR-->
     <form @submit.prevent="editarElemento(elemento)" v-if="editarActivo" class="mb-5">
-        <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="elemento.nombre">
-        <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="elemento.descripcion"/>
+        <input type="text" class="form-control mb-2" placeholder="Identificador" v-model="elemento.identificador">
+        <input class="form-control mb-2" placeholder="Nombre" v-model="elemento.nombre"/>
         <b-form-group label="Tipo de Elemento relacionado:">
             <b-form-select v-model="tipo_elemento" v-on:change="asignarTipoElemento(tipo_elemento)">
                 <option v-for="tipo_elemento in tipo_elementos" v-bind:key="tipo_elemento.id" :value="tipo_elemento">{{tipo_elemento.id}} - {{tipo_elemento.nombre}}</option>
@@ -29,16 +29,16 @@
 
     <!--Cuando "editarActivo=false" AGREGAR -->
     <form @submit.prevent="agregar" v-else class="mb-5">
-        <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="elemento.nombre">
-        <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="elemento.descripcion"/>
+        <input type="text" class="form-control mb-2" placeholder="Identificador" v-model="elemento.identificador">
+        <input class="form-control mb-2" placeholder="Nombre" v-model="elemento.nombre"/>
         <b-form-group label="Tipo de Elemento relacionado:">
             <b-form-select v-model="tipo_elemento" v-on:change="asignarTipoElemento(tipo_elemento)">
-                <option v-for="tipo_elemento in tipo_elementos" v-bind:key="tipo_elemento.id" :value="tipo_elemento">{{tipo_elemento.id}} - {{tipo_elemento.nombre}}</option>
+                <option v-for="tipo_elemento in tipo_elementos" v-bind:key="tipo_elemento.id" :value="tipo_elemento">{{tipo_elemento.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <b-form-group label="Proyecto relacionado:">
             <b-form-select v-model="proyecto" v-on:change="asignarProyecto(proyecto)">
-                <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.id}} - {{proyecto.nombre}}</option>
+                <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.identificador}} - {{proyecto.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <b-form-group label="Estado:">
@@ -55,19 +55,17 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col" width="3%">ID</th>
-                <th scope="col" width="15%">NOMBRE</th>
-                <th scope="col" width="15%">DESCRIPCIÓN</th>
+                <th scope="col" width="5%">IDENTIFICADOR</th>
+                <th scope="col" width="18%">NOMBRE</th>
                 <th scope="col" width="15%">TIPO ELEMENTO</th>
                 <th scope="col" width="35%">PROYECTO</th>
-                <th class="text-center" scope="col" width="17%" >OPCIONES</th>
+                <th class="text-center" scope="col" width="27%" >OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(elemento, index) in elementos" v-bind:key="elemento.id">
-                <td class="text-center">{{elemento.id}}</td>
-                <td >{{elemento.nombre}}</td>
-                <td>{{elemento.descripcion}}</td>
+                <td >{{elemento.identificador}}</td>
+                <td>{{elemento.nombre}}</td>
                 <template v-for="tipo_elemento in tipo_elementos">
                     <td v-if="tipo_elemento.id === elemento.tipoElemento_id" v-bind:key="`A-${tipo_elemento.id}`">
                         {{tipo_elemento.nombre}}
@@ -75,7 +73,7 @@
                 </template>
                 <template v-for="proyecto in proyectos">
                     <td v-if="proyecto.id === elemento.proyecto_id" v-bind:key="`B-${proyecto.id}`">
-                        {{proyecto.nombre}}
+                        {{proyecto.identificador}} - {{proyecto.nombre}}
                     </td>
                 </template>
                 <td class="text-center">
@@ -100,8 +98,8 @@ export default {
                 id: '',
                 tipoElemento_id: '',
                 proyecto_id: '',
+                identificador: '',
                 nombre: '',
-                descripcion: '',
                 estado: ''
             },
             proyectos: [],
@@ -109,8 +107,8 @@ export default {
             {
                 id: '',
                 proyectoPadre_id: '',
+                identificador: '',
                 nombre: '',
-                descripcion: '',
                 estado: '',
                 cantidadActual: '',
                 cantidadTotal: '',
@@ -148,20 +146,20 @@ export default {
     {
         agregar()
         {
-            if(this.elemento.nombre.trim() === '' || this.elemento.tipoElemento_id === '' || this.elemento.proyecto_id === '' || this.elemento.estado === '')
+            if(this.elemento.identificador.trim() === '' || this.elemento.nombre.trim() === '' || this.elemento.tipoElemento_id === '' || this.elemento.proyecto_id === '' || this.elemento.estado === '')
             {
                 alert('Debes completar todos los campos antes de guardar');
                 return;
             }
             const params = {
+                identificador: this.elemento.identificador, 
                 nombre: this.elemento.nombre, 
-                descripcion: this.elemento.descripcion, 
                 estado: this.elemento.estado, 
                 tipoElemento_id: this.elemento.tipoElemento_id,
                 proyecto_id: this.elemento.proyecto_id}
 
             this.elemento.nombre = '',
-            this.elemento.descripcion = '',
+            this.elemento.identificador = '',
             this.elemento.estado = '',
             this.elemento.tipoElemento_id = '',
             this.elemento.proyecto_id = '',
@@ -197,7 +195,7 @@ export default {
         {
             const params = {
                 nombre: this.elemento.nombre, 
-                descripcion: this.elemento.descripcion, 
+                identificador: this.elemento.identificador, 
                 estado: this.elemento.estado, 
                 tipoElemento_id: this.elemento.tipoElemento_id,
                 proyecto_id: this.elemento.proyecto_id}
@@ -210,7 +208,7 @@ export default {
 
                     this.elemento.id = '',
                     this.elemento.nombre = '',
-                    this.elemento.descripcion = '',
+                    this.elemento.identificador = '',
                     this.elemento.estado = '',
                     this.elemento.tipoElemento_id = '',
                     this.elemento.proyecto_id = '',
@@ -259,7 +257,7 @@ export default {
         cancelarEdicion()
         {
             this.editarActivo = false;
-            this.elemento = {id: '', nombre: '', tipoElemento_id: '', proyecto_id: '', estado: ''}
+            this.elemento = {id: '', nombre: '', identificador: '', tipoElemento_id: '', proyecto_id: '', estado: ''}
             this.proyecto = '',
             this.estado = '',
             this.tipo_elemento = ''
@@ -269,7 +267,7 @@ export default {
             this.editarActivo = true;
             this.elemento.nombre = elemento.nombre;
             this.elemento.id = elemento.id;
-            this.elemento.descripcion = elemento.descripcion;
+            this.elemento.identificador = elemento.identificador;
             this.elemento.estado = elemento.estado;
             this.estado = elemento.estado;
 

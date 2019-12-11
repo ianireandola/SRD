@@ -34,9 +34,9 @@ class Accion2AdminController extends Controller
      */
     public function create()
     {
-        $accion2s = Accion2::selectRaw('accion2s.id, accion2s.nombre, accion2s.proyecto_id, accion2s.descripcion, proyectos.nombre AS "nombre_proyecto"')
+        $accion2s = Accion2::selectRaw('accion2s.id, accion2s.identificador, accion2s.proyecto_id, accion2s.nombre, proyectos.nombre AS "nombre_proyecto", proyectos.identificador AS "identificador_proyecto"')
             ->join('proyectos', 'proyectos.id', '=', 'accion2s.proyecto_id')
-            ->orderBy('accion2s.nombre')
+            ->orderBy('accion2s.identificador')
             ->get();
 
         return $accion2s;
@@ -51,8 +51,8 @@ class Accion2AdminController extends Controller
     public function store(Request $request)
     {
         $accion2 = new Accion2();
+        $accion2->identificador = $request->identificador;
         $accion2->nombre = $request->nombre;
-        $accion2->descripcion = $request->descripcion;
         $accion2->proyecto_id = $request->proyecto_id;
         $accion2->save();
 
@@ -69,7 +69,7 @@ class Accion2AdminController extends Controller
      */
     public function show($id)
     {
-        $accion2 = Accion2::select('accion2s.nombre')
+        $accion2 = Accion2::select('accion2s.identificador', 'accion2s.nombre')
             ->where('accion2s.id', '=', $id)
             ->get();
     
@@ -104,8 +104,8 @@ class Accion2AdminController extends Controller
     public function update(Request $request, $id)
     {
         $accion2 = Accion2::find($id);
+        $accion2->identificador = $request->identificador;
         $accion2->nombre = $request->nombre;
-        $accion2->descripcion = $request->descripcion;
         $accion2->proyecto_id = $request->proyecto_id;
         $accion2->save();
 

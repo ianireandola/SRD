@@ -18,14 +18,12 @@
     <table class="table table-hover">
         <thead>
             <tr>
-                <th class="text-center" scope="col">ID</th>
-                <th class="text-center" scope="col">NOMBRE</th>
-                <th class="text-center" scope="col">OPCIONES</th>
+                <th class="text-center" scope="col" width="50%">NOMBRE</th>
+                <th class="text-center" scope="col" width="50%">OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(item, index) in plantas" v-bind:key="index">
-                <td class="text-center">{{item.id}}</td>
                 <td class="text-center">{{item.nombre}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
@@ -38,7 +36,7 @@
 
     <b-modal size="xl" id="modal-planta" hide-footer no-close-on-esc hide-header-close>
         <template v-slot:modal-title>
-            Planta a eliminar: <b> {{planta.id}} - {{planta.nombre}}</b>
+            Planta a eliminar: <b>{{planta.nombre}}</b>
         </template>
         <div>
             <p>No se puede eliminar, está relacionada con los siguientes atributos: </p>
@@ -46,16 +44,16 @@
         <table class="table table-hover">
             <thead class="thead-light">
                 <tr>
-                    <th class="text-center" scope="col">SECCIÓN</th>
-                    <th class="text-center" scope="col">ELEGIR OTRA PLANTA</th>
+                    <th class="text-center" scope="col" width="50%">SECCIÓN</th>
+                    <th class="text-center" scope="col" width="50%">ELEGIR OTRA PLANTA</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(seccion_coincidente, index) in secciones_coincidentes" v-bind:key="index">
-                    <td>{{seccion_coincidente.id}} - {{seccion_coincidente.nombre}}</td>
+                    <td>{{seccion_coincidente.identificador}} - {{seccion_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="seccion_coincidente.planta_id" v-on:change="guardarCambios(seccion_coincidente, index)">
-                            <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta.id">{{planta.id}} - {{planta.nombre}}</option>
+                            <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta.id">{{planta.nombre}}</option>
                         </b-form-select>
                     </td>
                 </tr>
@@ -87,6 +85,7 @@ export default {
             seccion:
             {
                 id: '',
+                identificador: '',
                 nombre: '',
                 nivel2: '',
                 area_id: '',
@@ -96,6 +95,7 @@ export default {
             seccion_coincidente:
             {
                 id: '',
+                identificador: '',
                 nombre: '',
                 nivel2: '',
                 area_id: '',

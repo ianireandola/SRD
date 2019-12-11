@@ -6,12 +6,12 @@
         <form @submit.prevent="editarTrabajan()" v-if="editarActivo" class="mb-5">
             <b-form-group label="Proyecto:">
                 <b-form-select v-model="proyecto" v-on:change="asignarProyecto(proyecto)">
-                    <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.id}} - {{proyecto.nombre}}</option>
+                    <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.identificador}} - {{proyecto.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <b-form-group label="Sección:">
                 <b-form-select class="form-control" v-model="seccion" v-on:change="asignarSeccion(seccion)">
-                    <option v-for="seccion in secciones" v-bind:key="seccion.id" :value="seccion">{{seccion.id}} - {{seccion.nombre}}</option>
+                    <option v-for="seccion in secciones" v-bind:key="seccion.id" :value="seccion">{{seccion.identificador}} - {{seccion.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <div class="row">
@@ -30,12 +30,12 @@
         <form @submit.prevent="agregar()" v-else class="mb-5">
             <b-form-group label="Proyecto:">
                 <b-form-select v-model="proyecto" v-on:change="asignarProyecto(proyecto)">
-                    <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.id}} - {{proyecto.nombre}}</option>
+                    <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.identificador}} - {{proyecto.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <b-form-group label="Sección:">
                 <b-form-select class="form-control" v-model="seccion" v-on:change="asignarSeccion(seccion)">
-                    <option v-for="seccion in secciones" v-bind:key="seccion.id" :value="seccion">{{seccion.id}} - {{seccion.nombre}}</option>
+                    <option v-for="seccion in secciones" v-bind:key="seccion.id" :value="seccion">{{seccion.identificador}} - {{seccion.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <div class="row">
@@ -52,8 +52,8 @@
         <table class="table table-hover">
             <thead class="thead-light">
                 <tr>
-                    <th scope="col" width="30%">PROYECTO</th>
-                    <th scope="col" width="37,5%">SECCIÓN</th>
+                    <th class="text-center" scope="col" width="30%">PROYECTO</th>
+                    <th class="text-center" scope="col" width="37,5%">SECCIÓN</th>
                     <th class="text-center" scope="col" width="5%">HORAS ESTIMADAS</th>
                     <th class="text-center" scope="col" width="5%">PRESUPUESTO</th>
                     <th class="text-center" scope="col" width="20%">OPCIONES</th>
@@ -63,12 +63,12 @@
                 <tr v-for="(trabajan, index) in trabajans" v-bind:key="index">
                     <template v-for="proyecto in proyectos">
                         <td v-if="proyecto.id === trabajan.proyecto_id" v-bind:key="`A-${proyecto.id}`">
-                            {{proyecto.nombre}}
+                            {{proyecto.identificador}} - {{proyecto.nombre}}
                         </td>
                     </template>
                     <template v-for="seccion in secciones">
                         <td v-if="seccion.id === trabajan.seccion_id" v-bind:key="`B-${seccion.id}`">
-                            {{seccion.nombre}}
+                            {{seccion.identificador}} - {{seccion.nombre}}
                         </td>
                     </template>
                     <td>{{trabajan.horasEstimadas}}</td>
@@ -104,7 +104,7 @@
                     id: '', 
                     proyectoPadre: '',
                     nombre: '',
-                    descripcion: '',
+                    identificador: '',
                     estado: '',
                     cantidadActual: '',
                     cantidadTotal: '',
@@ -117,6 +117,7 @@
                 {
                     id: '',
                     nombre: '',
+                    identificador: '',
                     nivel2: '',
                     area_id: '',
                     planta_id: ''

@@ -32,16 +32,14 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col">ID</th>
-                <th class="text-center" scope="col">NOMBRE</th>
-                <th class="text-center" scope="col">Q_IND</th>
-                <th class="text-center" scope="col">OPCIONES</th>
+                <th class="text-center" scope="col" width="25%">NOMBRE</th>
+                <th class="text-center" scope="col" width="25%">Q_IND</th>
+                <th class="text-center" scope="col" width="50%">OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(item, index) in areas" v-bind:key="index">
-                <td class="text-center">{{item.id}}</td>
-                <td class="text-center">{{item.nombre}}</td>
+                <td>{{item.nombre}}</td>
                 <td class="text-center">
                     <input class="form-check-input" type="checkbox" v-model="item.Q_Ind" disabled>
                 </td>
@@ -56,7 +54,7 @@
 
     <b-modal size="xl" id="modal-seccion" ref="btnArea" hide-footer no-close-on-esc hide-header-close>
         <template v-slot:modal-title>
-            Área a eliminar: <b> {{area.id}} - {{area.nombre}} </b>
+            Área a eliminar: <b> {{area.nombre}} </b>
         </template>
         <div>
             <p>No se puede eliminar, está relacionada con las siguientes secciones: </p>
@@ -70,10 +68,10 @@
             </thead>
             <tbody>
                 <tr v-for="(seccion_coincidente, index) in secciones_coincidentes" v-bind:key="index">
-                    <td>{{seccion_coincidente.id}} - {{seccion_coincidente.nombre}}</td>
+                    <td>{{seccion_coincidente.identificador}} - {{seccion_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="seccion_coincidente.area_id" v-on:change="guardarCambios(seccion_coincidente, index)">
-                            <option v-for="area in areas" v-bind:key="area.id" :value="area.id">{{area.id}} - {{area.nombre}}</option>
+                            <option v-for="area in areas" v-bind:key="area.id" :value="area.id">{{area.nombre}}</option>
                         </b-form-select>
                     </td>
                 </tr>
@@ -106,6 +104,7 @@ export default {
             seccion:
             {
                 id: '',
+                identificador: '',
                 nombre: '',
                 nivel2: '',
                 area_id: '',
@@ -115,6 +114,7 @@ export default {
             seccion_coincidente:
             {
                 id: '',
+                identificador: '',
                 nombre: '',
                 nivel2: '',
                 area_id: '',

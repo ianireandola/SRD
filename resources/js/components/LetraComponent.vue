@@ -4,8 +4,8 @@
 
     <!--Cuando "editarActivo=true" EDITAR-->
     <form @submit.prevent="editarLetra(letra)" v-if="editarActivo" class="mb-5">
-        <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="letra.nombre">
-        <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="letra.descripcion"/>
+        <input type="text" class="form-control mb-2" placeholder="Identificador" v-model="letra.identificador">
+        <input class="form-control mb-2" placeholder="Nombre" v-model="letra.nombre"/>
         <b-form-group label="IMPORTANTE: Escoger solamente UNA opción: (Primero, desmarcar. Después, elegir)">
             <b-form-checkbox v-model="no_presencia" v-on:change="cambiarDedicacion(3)">No presencia</b-form-checkbox>
             <b-form-checkbox v-model="gasto_general" v-on:change="cambiarDedicacion(2)">Gasto General</b-form-checkbox>
@@ -16,8 +16,8 @@
 
     <!--Cuando "editarActivo=false" AGREGAR -->
     <form @submit.prevent="agregar" v-else class="mb-5">
-        <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="letra.nombre">
-        <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="letra.descripcion"/>
+        <input type="text" class="form-control mb-2" placeholder="Identificador" v-model="letra.identificador">
+        <input class="form-control mb-2" placeholder="Nombre" v-model="letra.nombre"/>
         <b-form-group label="IMPORTANTE: Escoger solamente UNA opción:">
             <b-form-checkbox v-model="no_presencia" v-on:change="cambiarDedicacion(3)">No presencia</b-form-checkbox>
             <b-form-checkbox v-model="gasto_general" v-on:change="cambiarDedicacion(2)">Gasto General</b-form-checkbox>
@@ -28,18 +28,16 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col">ID</th>
+                <th class="text-center" scope="col">IDENTIFICADOR</th>
                 <th class="text-center" scope="col">NOMBRE</th>
-                <th class="text-center" scope="col">DESCRIPCIÓN</th>
                 <th class="text-center" scope="col">DEDICACIÓN</th>
                 <th class="text-center" scope="col">OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(letra, index) in letras" v-bind:key="letra.id">
-                <td class="text-center">{{letra.id}}</td>
+                <td class="text-center">{{letra.identificador}}</td>
                 <td >{{letra.nombre}}</td>
-                <td>{{letra.descripcion}}</td>
                 <td v-if="letra.dedicacion_id === 2">Gasto General</td>
                 <td v-else>No presencia</td>
                 <td class="text-center">
@@ -64,6 +62,7 @@ export default {
             letra:
             {
                 id: '',
+                identificador: '',
                 nombre: '',
                 descripcion: '',
                 dedicación_id: ''
@@ -82,16 +81,18 @@ export default {
     {
         agregar()
         {
-            if(this.letra.nombre.trim() === '' || (this.no_presencia === false && this.gasto_general === false))
+            if(this.letra.nombre.trim() === '' || this.letra.nombre.trim() === '' || (this.no_presencia === false && this.gasto_general === false))
             {
                 alert('Debes completar todos los campos antes de guardar');
                 return;
             }
             this.letra.dedicación_id = this.dedicacion;
-            const params = {nombre: this.letra.nombre, descripcion: this.letra.descripcion, dedicacion_id: this.letra.dedicación_id};
+            const params = {nombre: this.letra.nombre,
+                identificador: this.letra.identificador, 
+                dedicacion_id: this.letra.dedicación_id};
 
             this.letra.nombre = '';
-            this.letra.descripcion = '';
+            this.letra.identificador = '';
             this.letra.dedicación_id = '';
             this.no_presencia = false;
             this.gasto_general = false;
@@ -109,7 +110,9 @@ export default {
         },
         editarLetra(item)
         {
-            const params = {nombre: item.nombre, descripcion: item.descripcion, dedicacion_id: this.dedicacion}
+            const params = {nombre: item.nombre, 
+                identificador: item.identificador, 
+                dedicacion_id: this.dedicacion}
             axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/letras/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
@@ -117,7 +120,7 @@ export default {
                     this.letras[index] = res.data;
 
                     this.letra.nombre = '';
-                    this.letra.descripcion = '';
+                    this.letra.identificador = '';
                     this.letra.dedicación_id = '';
                     this.no_presencia = false;
                     this.gasto_general = false;
@@ -132,7 +135,7 @@ export default {
         cancelarEdicion()
         {
             this.editarActivo = false;
-            this.letra = {nombre: '', descripcion: '', dedicacion_id: ''};
+            this.letra = {identificador: '', nombre: '', dedicacion_id: ''};
             this.gasto_general = false;
             this.no_presencia = false;
         },
@@ -143,7 +146,7 @@ export default {
 
             this.editarActivo = true;
             this.letra.nombre = item.nombre;
-            this.letra.descripcion = item.descripcion;
+            this.letra.identificador = item.identificador;
             this.letra.id = item.id;
             if(item.dedicacion_id === 2)
             {

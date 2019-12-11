@@ -36,7 +36,7 @@ class LetraAdminController extends Controller
     public function create()
     {
         $letras = Letra::select('*')
-            ->orderBy('letras.nombre')
+            ->orderBy('letras.identificador')
             ->get();
 
         return $letras;
@@ -52,7 +52,7 @@ class LetraAdminController extends Controller
     {
         $letra = new Letra();
         $letra->nombre = $request->nombre;
-        $letra->descripcion = $request->descripcion;
+        $letra->identificador = $request->identificador;
         $letra->dedicacion_id = $request->dedicacion_id;
         $letra->save();
 
@@ -70,7 +70,7 @@ class LetraAdminController extends Controller
     {
         $letra = Letra::find($id);
         $letra->nombre = $request->nombre;
-        $letra->descripcion = $request->descripcion;
+        $letra->identificador = $request->identificador;
         $letra->dedicacion_id = $request->dedicacion_id;
         $letra->save();
 

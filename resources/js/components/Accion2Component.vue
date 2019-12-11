@@ -4,11 +4,11 @@
 
     <!--Cuando "editarActivo=true" EDITAR-->
     <form @submit.prevent="editarAccion2(accion2)" v-if="editarActivo" class="mb-5">
-        <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="accion2.nombre">
-        <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="accion2.descripcion"/>
+        <input type="text" class="form-control mb-2" placeholder="Identificador" v-model="accion2.identificador">
+        <input class="form-control mb-2" placeholder="Nombre" v-model="accion2.nombre"/>
         <b-form-group label="Proyecto relacionado:">
             <b-form-select v-model="proyecto" v-on:change="asignarProyecto(proyecto)">
-                <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.id}} - {{proyecto.nombre}}</option>
+                <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.identificador}} - {{proyecto.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <button type="submit" class="btn btn-success btn-block">Guardar</button>
@@ -17,11 +17,11 @@
 
     <!--Cuando "editarActivo=false" AGREGAR -->
     <form @submit.prevent="agregar" v-else class="mb-5">
-        <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="accion2.nombre">
-        <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="accion2.descripcion"/>
+        <input type="text" class="form-control mb-2" placeholder="Identificador" v-model="accion2.identificador">
+        <input class="form-control mb-2" placeholder="Nombre" v-model="accion2.nombre"/>
         <b-form-group label="Proyecto relacionado:">
             <b-form-select v-model="proyecto" v-on:change="asignarProyecto(proyecto)">
-                <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.nombre}}</option>
+                <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.identificador}} - {{proyecto.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <button type="submit" class="btn btn-success btn-block mb-7 md-2">Agregar</button>
@@ -30,19 +30,17 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col" width="3%">ID</th>
-                <th scope="col" width="15%">NOMBRE</th>
-                <th  class="text-center" scope="col" width="20%">PROYECTO PERTENECIENTE</th>
-                <th scope="col" width="30%">DESCRIPCION</th>
-                <th class="text-center" scope="col" width="32%" >OPCIONES</th>
+                <th scope="col" width="8%">IDENTIFICADOR</th>
+                <th scope="col" width="22%">NOMBRE</th>
+                <th  class="text-center" scope="col" width="40%">PROYECTO PERTENECIENTE</th>
+                <th class="text-center" scope="col" width="30%" >OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(accion2, index) in accion2s" v-bind:key="index">
-                <td class="text-center">{{accion2.id}}</td>
+                <td>{{accion2.identificador}}</td>
                 <td>{{accion2.nombre}}</td>
-                <td>{{accion2.nombre_proyecto}}</td>
-                <td>{{accion2.descripcion}}</td>
+                <td>{{accion2.identificador_proyecto}} - {{accion2.nombre_proyecto}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(accion2)" class="btn btn-primary">Modificar</button>
                     <button type="button" @click="eliminarAccion2(accion2, index)" class="btn btn-secondary">Eliminar</button>
@@ -63,15 +61,18 @@ export default {
             accion2:
             {
                 id: '',
+                identificador: '',
                 nombre: '',
                 descripcion: '',
                 proyecto_id: '',
-                nombre_proyecto: ''
+                nombre_proyecto: '',
+                identificador_proyecto: ''
             },
             proyectos: [],
             proyecto:
             {
                 id: '',
+                identificador: '',
                 nombre: '',
                 descripcion: ''
             },
@@ -94,12 +95,15 @@ export default {
     {
         agregar()
         {
-            if(this.accion2.nombre.trim() === '' || this.accion2.proyecto_id === '')
+            if(this.accion2.identificador.trim() === '' || this.accion2.nombre.trim() === '' || this.accion2.proyecto_id === '')
             {
                 alert('Debes completar todos los campos antes de guardar');
                 return;
             }
-            const params = {nombre: this.accion2.nombre, descripcion: this.accion2.descripcion, proyecto_id: this.accion2.proyecto_id, nombre_proyecto: this.accion2.nombre_proyecto};
+            const params = {identificador: this.accion2.identificador, 
+                nombre: this.accion2.nombre,
+                proyecto_id: this.accion2.proyecto_id, 
+                nombre_proyecto: this.accion2.nombre_proyecto};
 
             axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/accion2s`, params)
                 .then(res=>{
@@ -107,8 +111,8 @@ export default {
                 });
                 
 
+            this.accion2.identificador = '';
             this.accion2.nombre = '';
-            this.accion2.descripcion = '';
             this.accion2.proyecto_id = '';
             this.accion2.nombre_proyecto = '';
             this.proyecto = '';
@@ -123,12 +127,12 @@ export default {
         },
         editarAccion2(item)
         {
-            const params = {nombre: item.nombre, descripcion: item.descripcion, proyecto_id: this.accion2.proyecto_id}
+            const params = {identificador: item.identificador, nombre: item.nombre, proyecto_id: this.accion2.proyecto_id}
             axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/accion2s/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
 
-                    this.accion2 = {nombre:'', descripcion:'', proyecto_id: '', nombre_proyecto: ''};
+                    this.accion2 = {nombre:'', identificador:'', proyecto_id: '', nombre_proyecto: ''};
                     this.proyecto = '';
                 });
             this.$swal.fire({
@@ -177,14 +181,14 @@ export default {
         cancelarEdicion()
         {
             this.editarActivo = false;
-            this.accion2 = {nombre: '', descripcion: '', proyecto_id: ''};
+            this.accion2 = {nombre: '', identificador: '', proyecto_id: ''};
             this.proyecto = ''
         },
         editarFormulario(item)
         {
             this.editarActivo = true;
             this.accion2.nombre = item.nombre;
-            this.accion2.descripcion = item.descripcion;
+            this.accion2.identificador = item.identificador;
             this.accion2.id = item.id;
             this.proyecto = item.proyecto_id;
             this.accion2.proyecto_id = item.proyecto_id;
@@ -203,6 +207,7 @@ export default {
         {
             this.accion2.proyecto_id = item.id;
             this.accion2.nombre_proyecto = item.nombre;
+            this.accion2.identificador_proyecto = item.identificador;
         }
     }
 }

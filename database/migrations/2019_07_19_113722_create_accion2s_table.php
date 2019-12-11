@@ -15,8 +15,8 @@ class CreateAccion2sTable extends Migration
     {
         Schema::create('accion2s', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre');
-            $table->text('descripcion')->nullable();
+            $table->string('identificador');
+            $table->text('nombre');
             $table->bigInteger('proyecto_id')->unsigned();
 
             $table->foreign('proyecto_id')->references('id')->on('proyectos');

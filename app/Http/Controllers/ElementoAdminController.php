@@ -35,7 +35,7 @@ class ElementoAdminController extends Controller
     public function create()
     {
         $elementos = Elemento::select('*')
-            ->orderBy('elementos.nombre')
+            ->orderBy('elementos.identificador')
             ->get();
 
         return $elementos;
@@ -51,7 +51,7 @@ class ElementoAdminController extends Controller
     {
         $elemento = new Elemento();
         $elemento->nombre = $request->nombre;
-        $elemento->descripcion = $request->descripcion;
+        $elemento->identificador = $request->identificador;
         $elemento->estado= $request->estado;
         $elemento->tipoElemento_id = $request->tipoElemento_id;
         $elemento->proyecto_id = $request->proyecto_id;
@@ -113,7 +113,7 @@ class ElementoAdminController extends Controller
     {
         $elemento = Elemento::find($id);
         $elemento->nombre = $request->nombre;
-        $elemento->descripcion = $request->descripcion;
+        $elemento->identificador = $request->identificador;
         $elemento->estado = $request->estado;
         $elemento->tipoElemento_id = $request->tipoElemento_id;
         $elemento->proyecto_id = $request->proyecto_id;

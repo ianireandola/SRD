@@ -15,8 +15,8 @@ class CreateElementosTable extends Migration
     {
         Schema::create('elementos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre');
-            $table->text('descripcion')->nullable();
+            $table->string('identificador');
+            $table->text('nombre')->nullable();
             $table->bigInteger('tipoElemento_id')->unsigned();
             $table->bigInteger('proyecto_id')->unsigned();
             $table->enum('estado', ['Activo', 'Cerrado', 'Bloqueado']);

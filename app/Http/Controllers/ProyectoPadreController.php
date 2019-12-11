@@ -30,7 +30,7 @@ class ProyectoPadreController extends Controller
     public function create()
     {
         $proyectospadre = ProyectoPadre::select('*')
-            ->orderBy('proyecto_padres.nombre')
+            ->orderBy('proyecto_padres.identificador')
             ->get();
 
         return $proyectospadre;
@@ -46,7 +46,7 @@ class ProyectoPadreController extends Controller
     {
         $proyecto_padre = new ProyectoPadre();
         $proyecto_padre->nombre = $request->nombre;
-        $proyecto_padre->descripcion = $request->descripcion;
+        $proyecto_padre->identificador = $request->identificador;
         $proyecto_padre->estado = $request->estado;
         $proyecto_padre->Q_Proyecto = $request->Q_Proyecto;
         $proyecto_padre->planificacion = $request->planificacion;
@@ -111,7 +111,7 @@ class ProyectoPadreController extends Controller
     {
         $proyecto_padre = ProyectoPadre::find($id);
         $proyecto_padre->nombre = $request->nombre;
-        $proyecto_padre->descripcion = $request->descripcion;
+        $proyecto_padre->identificador = $request->identificador;
         $proyecto_padre->estado = $request->estado;
         $proyecto_padre->Q_Proyecto = $request->Q_Proyecto;
         $proyecto_padre->planificacion = $request->planificacion;

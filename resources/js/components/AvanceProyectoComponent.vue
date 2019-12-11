@@ -6,12 +6,12 @@
         <form @submit.prevent="editarAvance()" v-if="editarActivo" class="mb-5">
             <b-form-group label="Proyecto Padre:">
                 <b-form-select v-model="proyecto_padre" v-on:change="asignarProyectoPadre(proyecto_padre)">
-                    <option v-for="proyecto_padre in proyectos_padre" v-bind:key="proyecto_padre.id" :value="proyecto_padre">{{proyecto_padre.id}} - {{proyecto_padre.nombre}}</option>
+                    <option v-for="proyecto_padre in proyectos_padre" v-bind:key="proyecto_padre.id" :value="proyecto_padre">{{proyecto_padre.identificador}} - {{proyecto_padre.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <b-form-group label="Hito:">
                 <b-form-select class="form-control" v-model="hito" v-on:change="asignarHito(hito)">
-                    <option v-for="hito in hitos" v-bind:key="hito.id" :value="hito">{{hito.id}} - {{hito.nombre}}</option>
+                    <option v-for="hito in hitos" v-bind:key="hito.id" :value="hito">{{hito.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <b-form-input class="mb-4" type="number" v-model="avance.NTP" placeholder="NTP"/>
@@ -23,12 +23,12 @@
         <form @submit.prevent="agregar" v-else class="mb-5">
             <b-form-group label="Proyecto Padre:">
                 <b-form-select v-model="proyecto_padre" v-on:change="asignarProyectoPadre(proyecto_padre)">
-                    <option v-for="proyecto_padre in proyectos_padre" v-bind:key="proyecto_padre.id" :value="proyecto_padre">{{proyecto_padre.id}} - {{proyecto_padre.nombre}}</option>
+                    <option v-for="proyecto_padre in proyectos_padre" v-bind:key="proyecto_padre.id" :value="proyecto_padre">{{proyecto_padre.identificador}} - {{proyecto_padre.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <b-form-group label="Hito:">
                 <b-form-select class="form-control" v-model="hito" v-on:change="asignarHito(hito)">
-                    <option v-for="hito in hitos" v-bind:key="hito.id" :value="hito">{{hito.id}} - {{hito.nombre}}</option>
+                    <option v-for="hito in hitos" v-bind:key="hito.id" :value="hito">{{hito.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <b-form-input class="mb-4" type="number" v-model="avance.NTP" placeholder="NTP"/>
@@ -47,7 +47,7 @@
                 <tr v-for="(avance, index) in avances" v-bind:key="index">
                     <template v-for="proyecto_padre in proyectos_padre">
                         <td v-if="proyecto_padre.id === avance.proyectoPadre_id" v-bind:key="`B-${proyecto_padre.id}`">
-                            {{proyecto_padre.nombre}}
+                            {{proyecto_padre.identificador}} - {{proyecto_padre.nombre}}
                         </td>
                     </template>
                     <template v-for="hito in hitos">
@@ -92,8 +92,8 @@
                 proyecto_padre:
                 {
                     id: '',
+                    identificador: '', 
                     nombre: '', 
-                    descripcion: '', 
                     estado: '',
                     Q_Proyecto: '',
                     planificacion: '',

@@ -8,7 +8,7 @@
         <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="hito.descripcion"/>
         <b-form-group label="Fase relacionada:">
             <b-form-select class="form-control mb-2" v-model="fase" v-on:change="faseElegida(fase)">
-                <option v-for="fase in fases" v-bind:key="fase.id" :value="fase">{{fase.id}} - {{fase.nombre}}</option>
+                <option v-for="fase in fases" v-bind:key="fase.id" :value="fase">{{fase.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <button type="submit" class="btn btn-success btn-block">Guardar</button>
@@ -21,7 +21,7 @@
         <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="hito.descripcion"/>
         <b-form-group label="Fase relacionada:">
             <b-form-select class="form-control mb-2" v-model="fase" v-on:change="faseElegida(fase)">
-                <option v-for="fase in fases" v-bind:key="fase.id" :value="fase">{{fase.id}} - {{fase.nombre}}</option>
+                <option v-for="fase in fases" v-bind:key="fase.id" :value="fase">{{fase.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <button type="submit" class="btn btn-success btn-block">Agregar</button>
@@ -30,16 +30,14 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col" width="3%">ID</th>
                 <th class="text-center" scope="col" width="15%">NOMBRE</th>
-                <th class="text-center" scope="col" width="35%">DESCRIPCIÓN</th>
+                <th class="text-center" scope="col" width="38%">DESCRIPCIÓN</th>
                 <th class="text-center" scope="col" width="25%">FASE PERTENECIENTE</th>
                 <th class="text-center" scope="col" width="25%">OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(hito, index) in hitos" v-bind:key="hito.id">
-                <td class="text-center">{{hito.id}}</td>
                 <td >{{hito.nombre}}</td>
                 <td>{{hito.descripcion}}</td>
                 <template v-for="fase in fases">

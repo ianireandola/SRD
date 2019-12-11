@@ -247,7 +247,7 @@ export default {
             {
                 id: '',
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 estado: '',
                 Q_Proyecto: '',
                 planificacion: '',
@@ -262,7 +262,7 @@ export default {
             {
                 id: '',
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 estado: '',
                 cantidadActual: '',
                 cantidadTotal: '',
@@ -276,7 +276,7 @@ export default {
             {
                 id: '',
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 proyecto_id: ''
             },
             niveles2_coincidentes: [],
@@ -284,7 +284,7 @@ export default {
             {
                 id: '',
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 proyecto_id: ''
             },
             elementos: [],
@@ -292,7 +292,7 @@ export default {
             {
                 id: '',
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 tipoElemento_id: '',
                 proyecto_id: '',
                 estado: ''
@@ -302,7 +302,7 @@ export default {
             {
                 id: '',
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 tipoElemento_id: '',
                 proyecto_id: '',
                 estado: ''

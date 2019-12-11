@@ -18,14 +18,12 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col">ID</th>
-                <th class="text-center" scope="col">NOMBRE</th>
-                <th class="text-center" scope="col">OPCIONES</th>
+                <th class="text-center" scope="col" width="50%">NOMBRE</th>
+                <th class="text-center" scope="col" width="50%">OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(item, index) in fijos_eventuales" v-bind:key="index">
-                <td class="text-center">{{item.id}}</td>
                 <td class="text-center">{{item.nombre}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
@@ -38,7 +36,7 @@
 
     <b-modal size="xl" id="modal-fijoeventual" hide-footer no-close-on-esc hide-header-close>
         <template v-slot:modal-title>
-            Fijo/Eventual a eliminar: <b> {{fijo_eventual.id}} - {{fijo_eventual.nombre}}</b>
+            Fijo/Eventual a eliminar: <b> {{fijo_eventual.nombre}}</b>
         </template>
         <div>
             <p>No se puede eliminar, está relacionado con los siguientes atributos: </p>
@@ -52,10 +50,10 @@
             </thead>
             <tbody>
                 <tr v-for="(usuario_coincidente, index) in usuarios_coincidentes" v-bind:key="index">
-                    <td>{{usuario_coincidente.id}} - {{usuario_coincidente.nombre}}</td>
+                    <td>{{usuario_coincidente.chapa}} - {{usuario_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="usuario_coincidente.fijoeventual_id" v-on:change="guardarCambios(usuario_coincidente, index)">
-                            <option v-for="fijo_eventual in fijos_eventuales" v-bind:key="fijo_eventual.id" :value="fijo_eventual.id">{{fijo_eventual.id}} - {{fijo_eventual.nombre}}</option>
+                            <option v-for="fijo_eventual in fijos_eventuales" v-bind:key="fijo_eventual.id" :value="fijo_eventual.id">{{fijo_eventual.nombre}}</option>
                         </b-form-select>
                     </td>
                 </tr>

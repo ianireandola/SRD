@@ -20,15 +20,13 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col" width="5%">ID</th>
                 <th class="text-center" scope="col" width="20%">NOMBRE</th>
-                <th class="text-center" scope="col" width="30%">DESCRIPCION</th>
+                <th class="text-center" scope="col" width="35%">DESCRIPCION</th>
                 <th class="text-center" scope="col" width="35%">OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(item, index) in fases" v-bind:key="index">
-                <td class="text-center">{{item.id}}</td>
                 <td>{{item.nombre}}</td>
                 <td>{{item.descripcion}}</td>
                 <td class="text-center">
@@ -42,7 +40,7 @@
 
     <b-modal size="xl" id="modal-hitos" ref="btnFase" hide-footer no-close-on-esc hide-header-close>
         <template v-slot:modal-title>
-            Fase a eliminar: <b> {{fase.id}} - {{fase.nombre}} </b>
+            Fase a eliminar: <b> {{fase.nombre}} </b>
         </template>
         <div>
             <p>No se puede eliminar, está relacionada con los siguientes atributos: </p>
@@ -56,10 +54,10 @@
             </thead>
             <tbody>
                 <tr v-for="(hito_coincidente, index) in hito_coincidentes" v-bind:key="index">
-                    <td>{{hito_coincidente.id}} - {{hito_coincidente.nombre}}</td>
+                    <td>{{hito_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="hito_coincidente.fase_id" v-on:change="guardarCambios(hito_coincidente, index)">
-                            <option v-for="fase in fases" v-bind:key="fase.id" :value="fase.id">{{fase.id}} - {{fase.nombre}}</option>
+                            <option v-for="fase in fases" v-bind:key="fase.id" :value="fase.id">{{fase.nombre}}</option>
                         </b-form-select>
                     </td>
                 </tr>
