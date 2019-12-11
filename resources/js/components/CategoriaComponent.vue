@@ -104,11 +104,11 @@ export default {
     },
     created()
     {
-        axios.get('/admin/categorias/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/categorias/create')
             .then(res=>{
                 this.categorias = res.data;
             });
-        axios.get(`/admin/usuarios/create`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios/create`)
             .then(res=>{
                 this.usuarios = res.data;
             })
@@ -126,7 +126,7 @@ export default {
 
             this.categoria.nombre = '';
 
-            axios.post(`/admin/categorias`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/categorias`, params)
                 .then(res=>{
                     this.categorias.push(res.data);
                 });
@@ -140,7 +140,7 @@ export default {
         editarCategoria(item)
         {
             const params = {nombre: item.nombre}
-            axios.put(`/admin/categorias/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/categorias/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.categorias.findIndex(categoriaBuscar => categoriaBuscar.id === res.data.id)
@@ -171,7 +171,7 @@ export default {
         },
         eliminarCategoria(item, index)
         {
-            axios.get(`/admin/usuarios/${item.id}/edit`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios/${item.id}/edit`)
                 .then(res=>{
                     if (res.data === 0 )
                     {
@@ -182,7 +182,7 @@ export default {
                         }).then(value=>{
                             if(value === true)
                             {
-                                axios.delete(`/admin/categorias/${item.id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/categorias/${item.id}`)
                                     .then(()=>{
                                         this.categorias.splice(index, 1);
                                     });
@@ -219,7 +219,7 @@ export default {
         guardarCambios(item, index)
         {
             const params = {categoria_id: item.categoria_id}
-            axios.put(`/admin/usuarios/categoriaUpdate/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios/categoriaUpdate/${item.id}`, params)
                 .then(res=>{
                     const index = this.usuarios.findIndex(usuarioBuscar => usuarioBuscar.id === res.data.id)
                     this.usuarios[index] = res.data;

@@ -314,22 +314,22 @@ export default {
     },
     created()
     {
-        axios.get('/admin/proyectospadre/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/create')
             .then(res=>{
                 this.proyecto_padres = res.data;
             });
 
-        axios.get('/admin/proyectos/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectos/create')
             .then(res=>{
                 this.proyectos = res.data;
             });
 
-        axios.get('/admin/accion2s/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/accion2s/create')
             .then(res=>{
                 this.niveles2 = res.data;
             });
 
-        axios.get('/admin/elementos/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/elementos/create')
             .then(res=>{
                 this.elementos = res.data;
             })
@@ -369,7 +369,7 @@ export default {
             this.estado = '',
             this.date = ''
             
-            axios.post('/admin/proyectos', params)
+            axios.post('http://localhost/laravel/prueba4/public/index.php/admin/proyectos', params)
                 .then(res=>{
                     this.proyectos.push(res.data);
                 });
@@ -394,7 +394,7 @@ export default {
                 fabricacion: this.proyecto.fabricacion,
                 proyectoPadre_id: this.proyecto.proyectoPadre_id}
 
-            axios.put(`/admin/proyectos/${proyecto.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/proyectos/${proyecto.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.proyectos.findIndex(proyectoBuscar => proyectoBuscar.id === res.data.id)
@@ -492,27 +492,27 @@ export default {
         },
         eliminarProyecto(proyecto, index)
         {
-            axios.get(`/srd_proyectos/showProyecto/${proyecto.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos/showProyecto/${proyecto.id}`)
                 .then(res=>{
                     this.total = res.data;
                 });
 
-            axios.get(`/admin/trabajan/${proyecto.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/trabajan/${proyecto.id}`)
                 .then(res=>{
                     this.total = this.total + res.data;
                 });
 
-            axios.get(`/admin/composicion/${proyecto.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/composicion/${proyecto.id}`)
                 .then(res=>{
                     this.total = this.total + res.data;
                 });
 
-            axios.get(`/admin/accions2/showProyecto/${proyecto.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/accions2/showProyecto/${proyecto.id}`)
                 .then(res=>{
                     this.total = this.total + res.data;
                 });
 
-            axios.get(`/admin/elementos/showProyecto/${proyecto.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/elementos/showProyecto/${proyecto.id}`)
                 .then(res=>{
                     this.total = this.total + res.data;
                     if(this.total === 0)
@@ -524,7 +524,7 @@ export default {
                         }).then(value=>{
                             if(value === true)
                             {
-                                axios.delete(`/admin/proyectos/${proyecto.id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/proyectos/${proyecto.id}`)
                                     .then(()=>{
                                         this.proyectos.splice(index, 1);
                                     });
@@ -600,7 +600,7 @@ export default {
         {
             const params = {nombre: nivel2.nombre, descripcion: nivel2.descripcion, proyecto_id: nivel2.proyecto_id, nombre_proyecto: this.proyecto.nombre}
             
-            axios.put(`/admin/accions2/updateProyecto/${nivel2.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/accions2/updateProyecto/${nivel2.id}`, params)
                 .then(res=>{
                     const index = this.niveles2.findIndex(nivel2Buscar => nivel2Buscar.id === res.data.id)
                     this.niveles2[index] = res.data;
@@ -623,7 +623,7 @@ export default {
         {
             const params = {nombre: elemento.nombre, descripcion: elemento.descripcion, tipoElemento_id: elemento.tipoElemento_id, proyecto_id: elemento.proyecto_id, estado: elemento.estado}
 
-            axios.put(`/admin/elementos/proyectoUpdate/${elemento.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/elementos/proyectoUpdate/${elemento.id}`, params)
                 .then(res=>{
                     const index = this.elementos.findIndex(elementoBuscar => elementoBuscar.id === res.data.id)
                     this.elementos[index] = res.data;

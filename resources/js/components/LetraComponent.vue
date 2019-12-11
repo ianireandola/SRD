@@ -73,7 +73,7 @@ export default {
     },
     created()
     {
-        axios.get('/admin/letras/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/letras/create')
             .then(res=>{
                 this.letras = res.data;
             })
@@ -96,7 +96,7 @@ export default {
             this.no_presencia = false;
             this.gasto_general = false;
 
-            axios.post(`/admin/letras`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/letras`, params)
                 .then(res=>{
                     this.letras.push(res.data);
                 });
@@ -110,7 +110,7 @@ export default {
         editarLetra(item)
         {
             const params = {nombre: item.nombre, descripcion: item.descripcion, dedicacion_id: this.dedicacion}
-            axios.put(`/admin/letras/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/letras/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.letras.findIndex(letraBuscar => letraBuscar.id === res.data.id)
@@ -158,7 +158,7 @@ export default {
         },
         eliminarLetra(letra, index)
         {
-            axios.get(`/srd_letras/showLetra/${letra.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/srd_letras/showLetra/${letra.id}`)
                 .then(res=>{
                     if(res.data === 0)
                     {
@@ -169,7 +169,7 @@ export default {
                     }).then(value=>{
                         if(value === true)
                         {
-                            axios.delete(`/admin/letras/${letra.id}`)
+                            axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/letras/${letra.id}`)
                                 .then(()=>{
                                     this.letras.splice(index, 1);
                                 });

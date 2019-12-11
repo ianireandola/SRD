@@ -202,19 +202,19 @@ export default {
     created()
     {
         console.log('Component created') 
-        axios.get('/letras')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/letras')
             .then(res=>{
                 this.letras = res.data;
             });
-        axios.get(`/letras_todo`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/letras_todo`)
             .then(res =>{
                 this.todoLetras = res.data;
             });
-        axios.get(`/secciones`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/secciones`)
             .then(res=>{
                 this.seccions_user = res.data;
             });
-        axios.get(`/acciones2`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/acciones2`)
             .then(res=>{
                 this.acciones2 = res.data;
             });
@@ -249,7 +249,7 @@ export default {
                         cantidadHoras: this.cantidadHoras, 
                         viaje: this.srd_proyecto.viaje}
 
-                    axios.post(`/srd_proyectos`, params)
+                    axios.post(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos`, params)
                         .then(
                             this.seleccionado = '',
                             this.cantidadHoras = '',
@@ -269,7 +269,7 @@ export default {
                         cantidadHoras: this.cantidadHoras, 
                         viaje: this.srd_proyecto.viaje}
 
-                    axios.post(`/srd_proyectos`, params)
+                    axios.post(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos`, params)
                         .then(
                             this.seleccionado = '',
                             this.cantidadHoras = '',
@@ -282,7 +282,7 @@ export default {
             }else{
                 console.log('Soy una letra, voy a guardarme')
                 const params = {letra_id: this.srd_letra.letra_id, user_id: this.currentUser, fecha: this.date, cantidadHoras: this.cantidadHoras}
-                axios.post(`/srd_letras`, params)
+                axios.post(`http://localhost/laravel/prueba4/public/index.php/srd_letras`, params)
                     .then(
                         this.seleccionado = '',
                         this.cantidadHoras = '',
@@ -296,7 +296,7 @@ export default {
         seccionElegida(item)
         {
             this.seccion_user = item;
-            axios.get(`/proyectos/${this.seccion_user.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/proyectos/${this.seccion_user.id}`)
                     .then(res=>{
                         this.proyectos = res.data;
                     })
@@ -318,7 +318,7 @@ export default {
                 this.srd_letra.letra_id = ''; //Cuando asigno alguno del otro grupo elimino el srd anterior
                 this.srd_proyecto.proyecto_id = item.id;
                 this.seleccionado = item.nombre;
-                axios.get(`/elementos/${this.srd_proyecto.proyecto_id}`)
+                axios.get(`http://localhost/laravel/prueba4/public/index.php/elementos/${this.srd_proyecto.proyecto_id}`)
                     .then(res=>{
                         this.elementos = res.data;
                     })
@@ -360,8 +360,8 @@ export default {
             }
             console.log("He entrado a añadir una nueva letra");
             const params = {letra_id: item.id, user_id: this.currentUser}
-            axios.post(`/letras`, params)
-            axios.get('/letras')
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/letras`, params)
+            axios.get('http://localhost/laravel/prueba4/public/index.php/letras')
                 .then(res=>{
                     this.letras = null;
                     this.letras = res.data;
@@ -370,8 +370,8 @@ export default {
         eliminar(item) //False=letra
         {
             console.log("Se procede a eliminar letraUser")
-            axios.delete(`/letras/${item.id}/${this.currentUser}`)
-            axios.get(`/letras`)
+            axios.delete(`http://localhost/laravel/prueba4/public/index.php/letras/${item.id}/${this.currentUser}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/letras`)
                 .then(res=>{
                     this.letras = null;
                     this.letras = res.data;

@@ -102,12 +102,12 @@ export default {
     },
     created()
     {
-        axios.get('/admin/naciones/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/naciones/create')
             .then(res=>{
                 this.naciones = res.data;
             });
 
-        axios.get('/admin/proyectospadre/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/create')
             .then(res=>{
                 this.proyectospadre = res.data;
             })
@@ -125,7 +125,7 @@ export default {
 
             this.nacion.nombre = '';
 
-            axios.post(`/admin/naciones`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/naciones`, params)
                 .then(res=>{
                     this.naciones.push(res.data);
                 });
@@ -140,7 +140,7 @@ export default {
         editarNacion(item)
         {
             const params = {nombre: item.nombre}
-            axios.put(`/admin/naciones/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/naciones/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.naciones.findIndex(nacionBuscar => nacionBuscar.id === res.data.id)
@@ -171,7 +171,7 @@ export default {
         },
         eliminarNacion(nacion, index)
         {
-            axios.get(`/admin/proyectospadre/${nacion.id}/edit`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/${nacion.id}/edit`)
                 .then(res=>{
                     if(res.data === 0)
                     {
@@ -182,7 +182,7 @@ export default {
                         }).then(value=>{
                             if(value === true)
                             {
-                                axios.delete(`/admin/naciones/${nacion.id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/naciones/${nacion.id}`)
                                     .then(()=>{
                                         this.naciones.splice(index, 1);
                                     });
@@ -219,7 +219,7 @@ export default {
         guardarCambios(item, index)
         {
             const params = {nacion_id: item.nacion_id}
-            axios.put(`/admin/proyectospadre/nacionUpdate/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/nacionUpdate/${item.id}`, params)
                 .then(res=>{
                     const index = this.proyectospadre.findIndex(proyectopadreBuscar => proyectopadreBuscar.id === res.data.id)
                     this.proyectospadre[index] = res.data;

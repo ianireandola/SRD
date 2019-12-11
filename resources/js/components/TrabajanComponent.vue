@@ -126,15 +126,15 @@
         },
         created()
         {
-            axios.get('/admin/trabajan/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/admin/trabajan/create')
                 .then(res=>{
                     this.trabajans = res.data;
                 });
-            axios.get('/admin/proyectos/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectos/create')
                 .then(res=>{
                     this.proyectos = res.data;
                 });
-            axios.get('/admin/secciones/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/admin/secciones/create')
                 .then(res=>{
                     this.secciones = res.data;
                 })           
@@ -162,7 +162,7 @@
                 this.proyecto = '',
                 this.seccion = ''
                 
-                axios.post('/admin/trabajan', params)
+                axios.post('http://localhost/laravel/prueba4/public/index.php/admin/trabajan', params)
                     .then(res=>{
                         this.trabajans.push(res.data);
                     });
@@ -208,7 +208,7 @@
                     horasEstimadas: this.trabajan.horasEstimadas, 
                     presupuesto: this.trabajan.presupuesto}
 
-                axios.put(`/admin/trabajan/${this.trabajan.id}`, params)
+                axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/trabajan/${this.trabajan.id}`, params)
                     .then(res =>{
                         this.editarActivo = false;
                         const index = this.trabajans.findIndex(trabajanBuscar => trabajanBuscar.id === res.data.id)
@@ -251,7 +251,7 @@
                 {
                     if(value === true)
                     {
-                        axios.delete(`/admin/trabajan/${trabajan.id}`)
+                        axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/trabajan/${trabajan.id}`)
                             .then(()=>
                             {
                                 this.trabajans.splice(index, 1);

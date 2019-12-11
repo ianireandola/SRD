@@ -111,15 +111,15 @@ export default {
     },
     created()
     {
-        axios.get(`/admin/secciones/create`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/create`)
             .then(res=>{
                 this.secciones = res.data;               
             });
-        axios.get('/admin/areas/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/areas/create')
             .then(res=>{
                 this.areas = res.data;
             });
-        axios.get('/admin/plantas/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/plantas/create')
             .then(res=>{
                 this.plantas = res.data;
             });
@@ -149,7 +149,7 @@ export default {
             this.area = '',
             this.planta = ''
             
-            axios.post('/admin/secciones', params)
+            axios.post('http://localhost/laravel/prueba4/public/index.php/admin/secciones', params)
                 .then(res=>{
                     this.secciones.push(res.data);
                 });
@@ -170,7 +170,7 @@ export default {
             }
             const params={nombre: this.seccion.nombre, nivel2: this.seccion.nivel2, area_id: this.seccion.area_id, planta_id: this.seccion.planta_id}
 
-            axios.put(`/admin/secciones/${seccion.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/${seccion.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.secciones.findIndex(seccionBuscar => seccionBuscar.id === res.data.id)
@@ -243,11 +243,11 @@ export default {
         },
         eliminarSeccion(seccion, index)
         {
-            axios.get(`/admin/usuarios/showSeccion/${seccion.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios/showSeccion/${seccion.id}`)
                 .then(res=>{
                     this.total = res.data;
                 })
-            axios.get(`/admin/secciones/showTrabajan/${seccion.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/showTrabajan/${seccion.id}`)
                 .then(res=>{
                     this.total = this.total + res.data;
                     if(this.total === 0)
@@ -259,7 +259,7 @@ export default {
                     }).then(value=>{
                         if(value === true)
                         {
-                            axios.delete(`/admin/secciones/${seccion.id}`)
+                            axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/${seccion.id}`)
                                 .then(()=>{
                                     this.secciones.splice(index, 1);
                                 });

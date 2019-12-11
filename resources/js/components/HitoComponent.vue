@@ -81,12 +81,12 @@ export default {
     },
     created()
     {
-        axios.get('/admin/hitos/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/hitos/create')
             .then(res=>{
                 this.hitos = res.data;
             });
 
-        axios.get('/admin/fases/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/fases/create')
             .then(res=>{
                 this.fases = res.data;
             });
@@ -107,7 +107,7 @@ export default {
             this.hito.fase_id = '';
             this.fase = ''
 
-            axios.post(`/admin/hitos`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/hitos`, params)
                 .then(res=>{
                     this.hitos.push(res.data);
                 });
@@ -122,7 +122,7 @@ export default {
         editarHito(item)
         {
             const params = {nombre: item.nombre, descripcion: item.descripcion, fase_id: this.hito.fase_id}
-            axios.put(`/admin/hitos/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/hitos/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.hitos.findIndex(hitoBuscar => hitoBuscar.id === res.data.id)
@@ -168,7 +168,7 @@ export default {
         },
         eliminarHito(hito, index)
         {
-            axios.get(`/admin/hitos/${hito.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/hitos/${hito.id}`)
                 .then(res =>{
                     if(res.data === 0)
                     {
@@ -179,7 +179,7 @@ export default {
                     }).then(value=>{
                         if(value === true)
                         {
-                            axios.delete(`/admin/hitos/${hito.id}`)
+                            axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/hitos/${hito.id}`)
                                 .then(()=>{
                                     this.hitos.splice(index, 1);
                                 });

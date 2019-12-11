@@ -55,7 +55,7 @@ export default {
     created()
     {
         console.log('DedicacionComponent created')
-        axios.get('/admin/dedicaciones/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/dedicaciones/create')
             .then(res=>{
                 this.dedicaciones = res.data;
             });
@@ -73,7 +73,7 @@ export default {
 
             this.dedicacion.nombre = '';
 
-            axios.post(`/admin/dedicaciones`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/dedicaciones`, params)
                 .then(res=>{
                     this.dedicaciones.push(res.data);
                 });
@@ -87,7 +87,7 @@ export default {
         editarDedicacion(item)
         {
             const params = {nombre: item.nombre}
-            axios.put(`/admin/dedicaciones/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/dedicaciones/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.dedicaciones.findIndex(dedicacionBuscar => dedicacionBuscar.id === res.data.id)
@@ -104,7 +104,7 @@ export default {
         },
         eliminarDedicacion(dedicacion, index)
         {
-            axios.delete(`/admin/dedicaciones/${dedicacion.id}`)
+            axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/dedicaciones/${dedicacion.id}`)
                 .then(()=>{
                     this.dedicaciones.splice(index, 1);
                 });

@@ -64,7 +64,7 @@ export default {
     },
     created()
     {
-        axios.get('/admin/admins/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/admins/create')
             .then(res=>{
                 this.admins = res.data;
             });
@@ -80,7 +80,7 @@ export default {
             }
             const params = {chapa: this.admin.chapa, nombre: this.admin.nombre, password_confirmation: this.admin.password_confirmation};
 
-            axios.post(`/admin/admins`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/admins`, params)
                 .then(res=>{
                     this.admins.push(res.data);
                 });
@@ -111,7 +111,7 @@ export default {
                 }).then(value=> {
                 if( value === true )
                 {
-                    axios.delete(`/admin/admins/${admin.id}`)
+                    axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/admins/${admin.id}`)
                         .then(()=>{
                             this.admins.splice(index, 1);
                         })
@@ -136,7 +136,7 @@ export default {
         editarAdmin(item)
         {
             const params = {nombre: item.nombre, password_confirmation: item.password_confirmation}
-            axios.put(`/admin/admins/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/admins/${item.id}`, params)
                 .then(res=>{
                     this.editarActivo = false;
                     const index = this.admins.findIndex(adminBuscar => adminBuscar.id === res.data.id)

@@ -124,12 +124,12 @@ export default {
     },
     created()
     {
-        axios.get('/admin/areas/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/areas/create')
             .then(res=>{
                 this.areas = res.data;
             });
 
-        axios.get(`/admin/secciones/create`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/create`)
             .then(res=>{
                 this.secciones = res.data;
             })
@@ -148,7 +148,7 @@ export default {
             this.area.nombre = '';
             this.area.Q_Ind = '';
 
-            axios.post(`/admin/areas`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/areas`, params)
                 .then(res=>{
                     this.areas.push(res.data);
                 })
@@ -162,7 +162,7 @@ export default {
         editarArea(item)
         {
             const params = {nombre: item.nombre, Q_Ind: item.Q_Ind}
-            axios.put(`/admin/areas/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/areas/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.areas.findIndex(areaBuscar => areaBuscar.id === res.data.id)
@@ -194,7 +194,7 @@ export default {
         },
         eliminarArea(area, index)
         {
-            axios.get(`/admin/secciones/${area.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/${area.id}`)
                 .then(res=>{
                     if (res.data === 0 )
                     {
@@ -205,7 +205,7 @@ export default {
                         }).then(value=>{
                             if(value === true)
                             {
-                                axios.delete(`/admin/areas/${area.id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/areas/${area.id}`)
                                     .then(()=>{
                                         this.areas.splice(index, 1);
                                     });
@@ -244,7 +244,7 @@ export default {
         guardarCambios(item, index)
         {
             const params = {nombre: item.nombre, nivel2: item.nivel2, area_id: item.area_id, planta_id: item.planta_id}
-            axios.put(`/admin/secciones/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/${item.id}`, params)
                 .then(res=>{
                     const index = this.secciones.findIndex(seccionBuscar => seccionBuscar.id === res.data.id)
                     this.secciones[index] = res.data;

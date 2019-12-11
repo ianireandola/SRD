@@ -281,29 +281,29 @@ export default {
     },
     created()
     {
-        axios.get(`/letras_todo`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/letras_todo`)
             .then(res=>{
                 this.todoLetras = res.data;
             });
-        axios.get(`proyectos/${this.seccionId}`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/proyectos/${this.seccionId}`)
             .then(res=>{
                 this.todoProyectos = res.data;
             });
-        axios.get(`/letras`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/letras`)
             .then(res=>{
                 this.letras = res.data;
             });
-        axios.get(`/proyecto_user`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/proyecto_user`)
             .then(res=>{
                 this.proyectos = res.data;
             });
 
-        axios.get(`/acciones2`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/acciones2`)
             .then(res=>{
                 this.acciones2 = res.data;
             });
 
-        axios.get(`/elementos`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/elementos`)
             .then(res =>{
                 this.elementos = res.data;
             })
@@ -343,7 +343,7 @@ export default {
                             cantidadHoras: this.srd_letra.cantidadHoras[i],
                             viaje: this.srd_letra.viaje[i]
                         }
-                        axios.post(`/srd_letras`, params)
+                        axios.post(`http://localhost/laravel/prueba4/public/index.php/srd_letras`, params)
                     }
                 }
                 for(var i=0; i<=this.finalindexproyecto; i++)
@@ -369,7 +369,7 @@ export default {
                                 accion2_id: this.srd_proyecto.accion2_id[i],
                                 elemento_id: this.srd_proyecto.elemento_id[i]                  
                             }
-                            axios.post(`/srd_proyectos`, params)
+                            axios.post(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos`, params)
                         }
                     }
                 }
@@ -422,7 +422,7 @@ export default {
         },
         eliminarLetra(item, index)
         {
-            axios.delete(`/letras/${item.id}/${this.currentUser}`)
+            axios.delete(`http://localhost/laravel/prueba4/public/index.php/letras/${item.id}/${this.currentUser}`)
                 .then(()=>{
                     this.letras.splice(index, 1);
                 });
@@ -430,7 +430,7 @@ export default {
         },
         eliminarProyecto(item, index)
         {
-            axios.delete(`/proyecto_user/${item.id}/${this.currentUser}`)
+            axios.delete(`http://localhost/laravel/prueba4/public/index.php/proyecto_user/${item.id}/${this.currentUser}`)
                 .then(()=>{
                     this.proyectos.splice(index, 1);
                 });
@@ -444,7 +444,7 @@ export default {
             }).then(value=> {
                 if( value === true )
                 {
-                    axios.delete(`/srd_letras/${item.id}`)
+                    axios.delete(`http://localhost/laravel/prueba4/public/index.php/srd_letras/${item.id}`)
                         .then(()=>{
                             this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
                         });
@@ -460,7 +460,7 @@ export default {
             }).then(value=> {
                 if( value === true )
                 {
-                    axios.delete(`/srd_proyectos/${item.id}`)
+                    axios.delete(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos/${item.id}`)
                         .then(()=>{
                             this.$root.$emit('bv::hide::modal', 'modal-tabla', '#focusThisOnClose');
                         }); 
@@ -479,8 +479,8 @@ export default {
                 }
             }
             const params = {letra_id: item.id, user_id: this.currentUser}
-            axios.post(`/letras`, params)
-            axios.get(`/letras`)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/letras`, params)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/letras`)
                 .then(res=>{
                     this.letras = null;
                     this.letras = res.data;
@@ -498,8 +498,8 @@ export default {
                 }
             }
             const params = {proyecto_id: item.id, user_id: this.currentUser}
-            axios.post(`/proyecto_user`, params)
-            axios.get(`/proyecto_user`)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/proyecto_user`, params)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/proyecto_user`)
                 .then(res=>{
                     this.proyectos = null;
                     this.proyectos = res.data;
@@ -536,7 +536,7 @@ export default {
         },
         comprobarFecha()
         {
-            axios.get(`srd_proyectos/${this.date}/edit`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos/${this.date}/edit`)
                 .then(res =>{
 
                     this.numCoincidentes = res.data;
@@ -554,12 +554,12 @@ export default {
                     }
                 });
 
-            axios.get(`/srd_letras/${this.date}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/srd_letras/${this.date}`)
                 .then(res =>{
                     this.srd_letra_coincidentes = res.data;
                 });
 
-            axios.get(`/srd_proyectos/${this.date}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos/${this.date}`)
                 .then(res=>{
                     this.srd_proyecto_coincidentes = res.data;
                 });

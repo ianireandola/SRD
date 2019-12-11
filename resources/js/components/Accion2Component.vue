@@ -80,12 +80,12 @@ export default {
     },
     created()
     {
-        axios.get('/admin/accion2s/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/accion2s/create')
             .then(res=>{
                 this.accion2s = res.data;
             });
 
-        axios.get('/admin/proyectos/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectos/create')
             .then(res =>{
                 this.proyectos = res.data;
             })
@@ -101,7 +101,7 @@ export default {
             }
             const params = {nombre: this.accion2.nombre, descripcion: this.accion2.descripcion, proyecto_id: this.accion2.proyecto_id, nombre_proyecto: this.accion2.nombre_proyecto};
 
-            axios.post(`/admin/accion2s`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/accion2s`, params)
                 .then(res=>{
                     this.accion2s.push(res.data);
                 });
@@ -124,7 +124,7 @@ export default {
         editarAccion2(item)
         {
             const params = {nombre: item.nombre, descripcion: item.descripcion, proyecto_id: this.accion2.proyecto_id}
-            axios.put(`/admin/accion2s/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/accion2s/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
 
@@ -138,14 +138,14 @@ export default {
                 showConfirmButton: false,
                 timer: 1300
             });
-            axios.get('/admin/accion2s/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/admin/accion2s/create')
                 .then(res=>{
                     this.accion2s = res.data;
                 });
         },
         eliminarAccion2(accion2, index)
         {
-            axios.get(`/srd_proyectos/showAccion2/${accion2.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos/showAccion2/${accion2.id}`)
                 .then(res=>{
                     if(res.data===0)
                     {
@@ -156,7 +156,7 @@ export default {
                         }).then(value=>{
                             if(value === true)
                             {
-                                axios.delete(`/admin/accion2s/${accion2.id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/accion2s/${accion2.id}`)
                                     .then(()=>{
                                         this.accion2s.splice(index, 1);
                                     })

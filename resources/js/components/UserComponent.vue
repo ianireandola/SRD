@@ -337,19 +337,19 @@ export default {
     },
     created()
     {
-        axios.get('/admin/usuarios/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/usuarios/create')
             .then(res=>{
                 this.usuarios = res.data;
             });
-        axios.get('/admin/categorias/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/categorias/create')
             .then(res=>{
                 this.categorias = res.data;
             });
-        axios.get('/admin/fijos_eventuales/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/fijos_eventuales/create')
             .then(res=>{
                 this.fijos_eventuales = res.data;
             });
-        axios.get('/admin/secciones/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/secciones/create')
             .then(res=>{
                 this.secciones = res.data;
             })
@@ -439,7 +439,7 @@ export default {
                     CPUportatil: this.usuario.CPUportatil,
                     fechaCPUportatil: this.usuario.fechaCPUportatil
                 }
-                axios.post(`/admin/usuarios`, params)
+                axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios`, params)
                     .then(res=>{
                         this.usuario.chapa = '',
                         this.usuario.nombre = '',
@@ -465,7 +465,7 @@ export default {
                     title: 'Registro realizado',
                     showConfirmButton: false,
                     timer: 1300});
-                axios.get('/admin/usuarios/create')
+                axios.get('http://localhost/laravel/prueba4/public/index.php/admin/usuarios/create')
                     .then(res=>{
                         this.usuarios = res.data;
                     });
@@ -481,21 +481,21 @@ export default {
                 if(value === true)
                 {
                     //Se buscan separadamente las horas a proyectos y letras dedicadas de cada usuario y se devuelven los ids. Esos ids estan en res y se borran en el for
-                    axios.get(`/srd_proyectos/showUsuario/${usuario.id}`)
+                    axios.get(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos/showUsuario/${usuario.id}`)
                         .then(res =>{
                             for(var i=0; i<res.data.length; i++)
                             {
-                                axios.delete(`/srd_proyectos/${res.data[i].id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos/${res.data[i].id}`)
                             }
                         });
-                    axios.get(`/srd_letras/showUsuario/${usuario.id}`)
+                    axios.get(`http://localhost/laravel/prueba4/public/index.php/srd_letras/showUsuario/${usuario.id}`)
                         .then(res=>{
                             for(var i=0; i<res.data.length; i++)
                             {
-                                axios.delete(`/srd_letras/${res.data[i].id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/srd_letras/${res.data[i].id}`)
                             }
                         })
-                    axios.delete(`/admin/usuarios/${usuario.id}`)
+                    axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios/${usuario.id}`)
                         .then(()=>{
                             this.usuarios.splice(index, 1);
                         });
@@ -525,7 +525,7 @@ export default {
                 CPUportatil: this.usuario.CPUportatil,
                 fechaCPUportatil: this.usuario.fechaCPUportatil
             }
-            axios.put(`/admin/usuarios/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios/${item.id}`, params)
                 .then(res=>{
                     this.editarActivo = false;
                     const index = this.usuarios.findIndex(usuarioBuscar => usuarioBuscar.id === res.data.id)

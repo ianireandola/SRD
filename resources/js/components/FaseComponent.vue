@@ -51,7 +51,7 @@
             <thead class="thead-light">
                 <tr>
                     <th class="text-center" scope="col">HITO</th>
-                    <th class="text-center" scope="col">ELEGIR OTRO HITO</th>
+                    <th class="text-center" scope="col">ELEGIR OTRA FASE</th>
                 </tr>
             </thead>
             <tbody>
@@ -108,11 +108,11 @@ export default {
     },
     created()
     {
-        axios.get('/admin/fases/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/fases/create')
             .then(res=>{
                 this.fases = res.data;
             });
-        axios.get('/admin/hitos/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/hitos/create')
             .then(res=>{
                 this.hitos = res.data;
             })
@@ -131,7 +131,7 @@ export default {
             this.fase.nombre = '';
             this.fase.descripcion = '';
 
-            axios.post(`/admin/fases`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/fases`, params)
                 .then(res=>{
                     this.fases.push(res.data);
                 });
@@ -146,7 +146,7 @@ export default {
         editarFase(item)
         {
             const params = {nombre: item.nombre, descripcion: item.descripcion}
-            axios.put(`/admin/fases/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/fases/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.fases.findIndex(faseBuscar => faseBuscar.id === res.data.id)
@@ -178,7 +178,7 @@ export default {
         },
         eliminarFase(fase, index)
         {
-            axios.get(`/admin/hitos/${fase.id}/edit`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/hitos/${fase.id}/edit`)
                 .then(res=>{
                     if(res.data === 0)
                     {
@@ -189,7 +189,7 @@ export default {
                         }).then(value=>{
                             if(value === true)
                             {
-                                axios.delete(`/admin/fases/${fase.id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/fases/${fase.id}`)
                                     .then(()=>{
                                         this.fases.splice(index, 1);
                                     });
@@ -227,7 +227,7 @@ export default {
         guardarCambios(item, index)
         {
             const params = {fase_id: item.fase_id, nombre: item.nombre, descripcion: item.descripcion}
-            axios.put(`/admin/hitos/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/hitos/${item.id}`, params)
                 .then(res=>{
                     const index = this.hitos.findIndex(hitoBuscar => hitoBuscar.id === res.data.id)
                     this.hitos[index] = res.data;

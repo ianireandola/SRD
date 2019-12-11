@@ -103,11 +103,11 @@ export default {
     },
     created()
     {
-        axios.get('/admin/fijos_eventuales/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/fijos_eventuales/create')
             .then(res=>{
                 this.fijos_eventuales = res.data;
             });
-        axios.get(`/admin/usuarios/create`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios/create`)
             .then(res=>{
                 this.usuarios = res.data;
             })
@@ -125,7 +125,7 @@ export default {
 
             this.fijo_eventual.nombre = '';
 
-            axios.post(`/admin/fijos_eventuales`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/fijos_eventuales`, params)
                 .then(res=>{
                     this.fijos_eventuales.push(res.data);
                 });
@@ -140,7 +140,7 @@ export default {
         editarFijoEventual(item)
         {
             const params = {nombre: item.nombre}
-            axios.put(`/admin/fijos_eventuales/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/fijos_eventuales/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.fijos_eventuales.findIndex(fijoEventualBuscar => fijoEventualBuscar.id === res.data.id)
@@ -173,7 +173,7 @@ export default {
         },
         eliminarFijoEventual(item, index)
         {
-            axios.get(`/admin/usuarios/${item.id}/buscarFE`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios/${item.id}/buscarFE`)
                 .then(res=>{
                     if (res.data === 0 )
                     {
@@ -184,7 +184,7 @@ export default {
                         }).then(value=>{
                             if(value === true)
                             {
-                                axios.delete(`/admin/fijos_eventuales/${item.id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/fijos_eventuales/${item.id}`)
                                     .then(()=>{
                                         this.fijos_eventuales.splice(index, 1);
                                     });
@@ -221,7 +221,7 @@ export default {
         guardarCambios(item, index)
         {
             const params = {fijo_eventual_id: item.fijoeventual_id}
-            axios.put(`/admin/usuarios/fijoeventualUpdate/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios/fijoeventualUpdate/${item.id}`, params)
                 .then(res=>{
                     const index = this.usuarios.findIndex(usuarioBuscar => usuarioBuscar.id === res.data.id)
                     this.usuarios[index] = res.data;

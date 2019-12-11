@@ -107,19 +107,19 @@
         },
         created()
         {
-            axios.get('/srd_letras')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/srd_letras')
                 .then(res=>{
                     this.srd_letras = res.data;
                 });
-            axios.get('/srd_proyectos/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/srd_proyectos/create')
                 .then(res=>{
                     this.srd_proyectos = res.data;
                 });
-            axios.get('/acciones2')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/acciones2')
                 .then(res=>{
                     this.acciones2 = res.data;
                 });   
-            axios.get('/elementos')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/elementos')
                 .then(res=>{
                     this.elementos = res.data;
                 });
@@ -132,14 +132,14 @@
             },
             eliminarSRDLetra(item, index)
             {
-                axios.delete(`/srd_letras/${item.id}`)
+                axios.delete(`http://localhost/laravel/prueba4/public/index.php/srd_letras/${item.id}`)
                     .then(()=>{
                         this.srd_letras.splice(index, 1);
                     });
             }, 
             eliminarSRDProyecto(item, index)
             {
-                axios.delete(`/srd_proyectos/${item.id}`)
+                axios.delete(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos/${item.id}`)
                     .then(()=>{
                         this.srd_proyectos.splice(index, 1);
                     });

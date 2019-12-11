@@ -22,7 +22,6 @@ Auth::routes(['reset' => false]);
 
 Route::get('/home', 'HomeController@index')->name('registroHoras');
 
-
 Route::delete('/letras/{letra_id}/{user_id}', 'LetraController@destroy');
 Route::resource('/letras', 'LetraController');
 Route::resource('/letras_todo', 'LetrasTodoController');
@@ -40,7 +39,6 @@ Route::resource('/acciones2', 'Accion2Controller');
 Route::resource('/elementos', 'ElementoController');
 Route::delete('/proyecto_user/{proyecto_id}/{user_id}', 'ProyectoUserController@destroy');
 Route::resource('/proyecto_user', 'ProyectoUserController');
-
 
 Route::prefix('admin')->group(function()
 {

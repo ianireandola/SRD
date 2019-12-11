@@ -108,11 +108,11 @@ export default {
     },
     created()
     {
-        axios.get('/admin/tipo_elementos/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/tipo_elementos/create')
             .then(res=>{
                 this.tipo_elementos = res.data;
             });
-        axios.get(`/admin/elementos/create`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/elementos/create`)
             .then(res=>{
                 this.elementos = res.data;
             })
@@ -130,7 +130,7 @@ export default {
 
             this.tipo_elemento.nombre = '';
 
-            axios.post(`/admin/tipo_elementos`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/tipo_elementos`, params)
                 .then(res=>{
                     this.tipo_elementos.push(res.data);
                 });
@@ -144,7 +144,7 @@ export default {
         editarTipoElemento(tipo_elemento)
         {
             const params = {nombre: tipo_elemento.nombre}
-            axios.put(`/admin/tipo_elementos/${tipo_elemento.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/tipo_elementos/${tipo_elemento.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.tipo_elementos.findIndex(tipoElementoBuscar => tipoElementoBuscar.id === res.data.id)
@@ -175,11 +175,11 @@ export default {
         },
         eliminarTipoElemento(tipo_elemento, index)
         {
-            axios.get(`/admin/elementos/${tipo_elemento.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/elementos/${tipo_elemento.id}`)
                 .then(res=>{
                     this.total = res.data;
                 });
-            axios.get(`/admin/tipo_elementos/${tipo_elemento.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/tipo_elementos/${tipo_elemento.id}`)
                 .then(res=>{
                     this.total = this.total + res.data;
                     if(this.total ===0)
@@ -191,7 +191,7 @@ export default {
                     }).then(value=>{
                         if(value === true)
                         {
-                            axios.delete(`/admin/tipo_elementos/${tipo_elemento.id}`)
+                            axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/tipo_elementos/${tipo_elemento.id}`)
                                 .then(()=>{
                                     this.tipo_elementos.splice(index, 1);
                                 });
@@ -228,7 +228,7 @@ export default {
         guardarCambios(elemento_coincidente, index)
         {
             const params= {tipoElemento_id: elemento_coincidente.tipoElemento_id}
-            axios.put(`/admin/elementos/tipoElementoUpdate/${elemento_coincidente.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/elementos/tipoElementoUpdate/${elemento_coincidente.id}`, params)
                 .then(res =>{
                     const index = this.elementos.findIndex(elementoBuscar => elementoBuscar.id === res.data.id)
                     this.elementos[index] = res.data;

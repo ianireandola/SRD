@@ -47,14 +47,12 @@
             <thead class="thead-light">
                 <tr>
                     <th class="text-center" scope="col">SECCIÓN</th>
-                    <th class="text-center" scope="col">PLANTA PERTENECIENTE</th>
                     <th class="text-center" scope="col">ELEGIR OTRA PLANTA</th>
                 </tr>
             </thead>
             <tbody>
                 <tr v-for="(seccion_coincidente, index) in secciones_coincidentes" v-bind:key="index">
                     <td>{{seccion_coincidente.id}} - {{seccion_coincidente.nombre}}</td>
-                    <td class="text-center">{{seccion_coincidente.planta_id}}</td>
                     <td class="text-center">
                         <b-form-select v-model="seccion_coincidente.planta_id" v-on:change="guardarCambios(seccion_coincidente, index)">
                             <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta.id">{{planta.id}} - {{planta.nombre}}</option>
@@ -107,11 +105,11 @@ export default {
     },
     created()
     {
-        axios.get('/admin/plantas/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/plantas/create')
             .then(res=>{
                 this.plantas = res.data;
             });
-        axios.get(`/admin/secciones/create`)
+        axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/create`)
             .then(res=>{
                 this.secciones = res.data;
             })
@@ -129,7 +127,7 @@ export default {
 
             this.planta.nombre = '';
 
-            axios.post(`/admin/plantas`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/plantas`, params)
                 .then(res=>{
                     this.plantas.push(res.data);
                 });
@@ -143,7 +141,7 @@ export default {
         editarPlanta(item)
         {
             const params = {nombre: item.nombre}
-            axios.put(`/admin/plantas/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/plantas/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.plantas.findIndex(plantaBuscar => plantaBuscar.id === res.data.id)
@@ -174,7 +172,7 @@ export default {
         },
         eliminarPlanta(item, index)
         {
-            axios.get(`/admin/secciones/${item.id}/edit`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/${item.id}/edit`)
                 .then(res=>{
                     if (res.data === 0 )
                     {
@@ -185,7 +183,7 @@ export default {
                         }).then(value=>{
                             if(value === true)
                             {
-                                axios.delete(`/admin/plantas/${item.id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/plantas/${item.id}`)
                                     .then(()=>{
                                         this.plantas.splice(index, 1);
                                     });
@@ -222,7 +220,7 @@ export default {
         guardarCambios(item, index)
         {
             const params = {nombre: item.nombre, nivel2: item.nivel2, area_id: item.area_id, planta_id: item.planta_id}
-            axios.put(`/admin/secciones/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/${item.id}`, params)
                 .then(res=>{
                     const index = this.secciones.findIndex(seccionBuscar =>seccionBuscar.id === res.data.id)
                     this.secciones[index] = res.data;

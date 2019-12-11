@@ -85,17 +85,6 @@ class Accion2AdminController extends Controller
         return $num;
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
     public function updateProyecto(Request $request, $id)
     {
         $accion2 = Accion2::find($id);

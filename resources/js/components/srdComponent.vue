@@ -144,22 +144,22 @@ export default {
     },
     created()
     {
-        axios.get('/admin/srd/createLetras')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/srd/createLetras')
             .then(res=>{
                 this.srd_letras = res.data;
             });
 
-        axios.get('/admin/srd/createProyectos')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/srd/createProyectos')
             .then(res=>{
                 this.srd_todoproyectos = res.data;
             });
 
-        axios.get('/acciones2')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/acciones2')
             .then(res=>{
                 this.acciones2 = res.data;
             });  
 
-        axios.get('/elementos')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/elementos')
             .then(res=>{
                 this.elementos = res.data;
             });        
@@ -170,19 +170,19 @@ export default {
         {
             this.srd_letras = [];
             this.srd_todoproyectos = [];
-            axios.get(`/admin/srd/${this.date}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/srd/${this.date}`)
                 .then(res=>{
                     this.srd_todoproyectos = res.data;
                 });
 
-            axios.get(`/admin/srd/showLetras/${this.date}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/srd/showLetras/${this.date}`)
                 .then(res=>{
                     this.srd_letras = res.data;
                 })
         },
         llevarA()
         {
-            window.location.href = '/admin/srd/descarga';
+            window.location.href = 'http://localhost/laravel/prueba4/public/index.php/admin/srd/descarga';
         },
         eliminarSRDProyecto(srd_todoproyecto, index)
         {
@@ -193,7 +193,7 @@ export default {
                 }).then(value=> {
                     if( value === true )
                     {
-                        axios.delete(`/srd_proyectos/${srd_todoproyecto.id}`)
+                        axios.delete(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos/${srd_todoproyecto.id}`)
                             .then(()=>{
                                 this.srd_todoproyectos.splice(index, 1);
                             }); 
@@ -209,7 +209,7 @@ export default {
                 }).then(value=> {
                     if( value === true )
                     {
-                        axios.delete(`/srd_letras/${srd_letra.id}`)
+                        axios.delete(`http://localhost/laravel/prueba4/public/index.php/srd_letras/${srd_letra.id}`)
                             .then(()=>{
                                 this.srd_letras.splice(index, 1);
                             });

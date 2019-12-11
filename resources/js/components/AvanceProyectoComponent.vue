@@ -108,15 +108,15 @@
         },
         created()
         {
-            axios.get('/admin/avance_proyectos/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/admin/avance_proyectos/create')
                 .then(res=>{
                     this.avances = res.data;
                 });
-            axios.get('/admin/hitos/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/admin/hitos/create')
                 .then(res=>{
                     this.hitos = res.data;
                 }); 
-            axios.get('/admin/proyectospadre/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/create')
                 .then(res=>{
                     this.proyectos_padre = res.data;
                 });        
@@ -138,7 +138,7 @@
                 this.proyecto_padre = '',
                 this.hito = ''
 
-                axios.post(`/admin/avance_proyectos`, params)
+                axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/avance_proyectos`, params)
                     .then(res=>{
                         this.avances.push(res.data);
                     });
@@ -191,7 +191,7 @@
                     proyectoPadre_id: this.avance.proyectoPadre_id,
                     NTP: this.avance.NTP }
                 
-                axios.put(`/admin/avance_proyectos/${this.avance.id}`, params)
+                axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/avance_proyectos/${this.avance.id}`, params)
                     .then(res=>{
                         this.editarActivo = false;
                         const index = this.avances.findIndex(avanceBuscar => avanceBuscar.id === res.data.id)
@@ -230,7 +230,7 @@
                 {
                     if(value === true)
                     {
-                        axios.delete(`/admin/avance_proyectos/${avance.id}`)
+                        axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/avance_proyectos/${avance.id}`)
                             .then(()=>
                             {
                                 this.avances.splice(index, 1);

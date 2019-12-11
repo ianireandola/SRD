@@ -102,12 +102,12 @@ export default {
     },
     created()
     {
-        axios.get('/admin/tipos_proyecto/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/tipos_proyecto/create')
             .then(res=>{
                 this.tipos_proyecto = res.data;
             });
 
-        axios.get('/admin/proyectospadre/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/create')
             .then(res=>{
                 this.proyectospadre = res.data;
             })
@@ -125,7 +125,7 @@ export default {
 
             this.tipo_proyecto.nombre = '';
 
-            axios.post(`/admin/tipos_proyecto`, params)
+            axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/tipos_proyecto`, params)
                 .then(res=>{
                     this.tipos_proyecto.push(res.data);
                 });
@@ -139,7 +139,7 @@ export default {
         editarTipoProyecto(item)
         {
             const params = {nombre: item.nombre}
-            axios.put(`/admin/tipos_proyecto/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/tipos_proyecto/${item.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.tipos_proyecto.findIndex(tipo_proyectoBuscar => tipo_proyectoBuscar.id === res.data.id)
@@ -170,7 +170,7 @@ export default {
         },
         eliminarTipoProyecto(tipo_proyecto, index)
         {
-            axios.get(`/admin/proyectospadre/${tipo_proyecto.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/${tipo_proyecto.id}`)
                 .then(res=>{
                     if(res.data === 0)
                     {
@@ -181,7 +181,7 @@ export default {
                         }).then(value=>{
                             if(value === true)
                             {
-                                axios.delete(`/admin/tipos_proyecto/${tipo_proyecto.id}`)
+                                axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/tipos_proyecto/${tipo_proyecto.id}`)
                                     .then(()=>{
                                         this.tipos_proyecto.splice(index, 1);
                                     });
@@ -219,7 +219,7 @@ export default {
         guardarCambios(item, index)
         {
             const params = {tipoProyecto_id: item.tipoProyecto_id}
-            axios.put(`/admin/proyectospadre/tipoProyectoUpdate/${item.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/tipoProyectoUpdate/${item.id}`, params)
                 .then(res=>{
                     const index = this.proyectospadre.findIndex(proyectopadreBuscar => proyectopadreBuscar.id === res.data.id)
                     this.proyectospadre[index] = res.data;

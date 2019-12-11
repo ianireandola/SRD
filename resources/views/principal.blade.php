@@ -78,7 +78,7 @@
 
             <div class="content">
                 <div class="title m-b-md">
-                    Sistema de registro de Dedicación
+                    Sistema de Registro de Dedicación
                 </div>
 
                 <div class="links">

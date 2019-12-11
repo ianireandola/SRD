@@ -245,22 +245,22 @@ export default {
     },
     created()
     {
-        axios.get('/admin/proyectospadre/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/create')
             .then(res=>{
                 this.proyecto_padres = res.data;
             });
         
-        axios.get('/admin/tipos_proyecto/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/tipos_proyecto/create')
             .then(res =>{
                 this.tipo_proyectos = res.data;
             });
 
-        axios.get('/admin/proyectos/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectos/create')
             .then(res=>{
                 this.proyectos = res.data;
             });
 
-        axios.get('/admin/naciones/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/naciones/create')
             .then(res =>{
                 this.naciones = res.data;
             })
@@ -298,7 +298,7 @@ export default {
             this.tipo_proyecto = '',
             this.nacion = ''
             
-            axios.post('/admin/proyectospadre', params)
+            axios.post('http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre', params)
                 .then(res=>{
                     this.proyecto_padres.push(res.data);
                 });
@@ -323,7 +323,7 @@ export default {
                 nacion_id: this.proyecto_padre.nacion_id,
                 dedicacion_id: this.proyecto_padre.dedicacion_id}
 
-            axios.put(`/admin/proyectospadre/${proyecto_padre.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/${proyecto_padre.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.proyecto_padres.findIndex(proyectoPadreBuscar => proyectoPadreBuscar.id === res.data.id)
@@ -401,11 +401,11 @@ export default {
         },
         eliminarProyectoPadre(proyecto_padre, index)
         {
-            axios.get(`/admin/proyectos/showProyectoPadre/${proyecto_padre.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/proyectos/showProyectoPadre/${proyecto_padre.id}`)
                 .then(res=>{
                     this.total = res.data;
                 })
-            axios.get(`/admin/proyectospadre/showAvance/${proyecto_padre.id}`)
+            axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/showAvance/${proyecto_padre.id}`)
                 .then(res=>{
                     this.total = this.total + res.data;
                     if(this.total === 0)
@@ -417,7 +417,7 @@ export default {
                     }).then(value=>{
                         if(value === true)
                         {
-                            axios.delete(`/admin/proyectospadre/${proyecto_padre.id}`)
+                            axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/proyectospadre/${proyecto_padre.id}`)
                                 .then(()=>{
                                     this.proyecto_padres.splice(index, 1);
                                 });
@@ -480,7 +480,7 @@ export default {
                 nombre: proyecto.nombre,
                 descripcion: proyecto.descripcion}
 
-            axios.put(`/admin//proyectos/proyectoPadreUpdate/${proyecto.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin//proyectos/proyectoPadreUpdate/${proyecto.id}`, params)
                 .then(res=>{
                     const index = this.proyectos.findIndex(proyectoBuscar => proyectoBuscar.id === res.data.id)
                     this.proyectos[index] = res.data;

@@ -94,15 +94,15 @@
         },
         created()
         {
-            axios.get('/admin/composicion/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/admin/composicion/create')
                 .then(res=>{
                     this.composiciones = res.data;
                 });
-            axios.get('/admin/tipo_elementos/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/admin/tipo_elementos/create')
                 .then(res=>{
                     this.tipo_elementos = res.data;
                 }); 
-            axios.get('/admin/proyectos/create')
+            axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectos/create')
                 .then(res=>{
                     this.proyectos = res.data;
                 });        
@@ -123,7 +123,7 @@
                 this.proyecto = '',
                 this.tipo_elemento = ''
 
-                axios.post(`/admin/composicion`, params)
+                axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/composicion`, params)
                     .then(res=>{
                         this.composiciones.push(res.data);
                     });
@@ -174,7 +174,7 @@
                     tipoElemento_id: this.composicion.tipoElemento_id,
                     proyecto_id: this.composicion.proyecto_id}
                 
-                axios.put(`/admin/composicion/${this.composicion.id}`, params)
+                axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/composicion/${this.composicion.id}`, params)
                     .then(res=>{
                         this.editarActivo = false;
                         const index = this.composiciones.findIndex(composicionBuscar => composicionBuscar.id === res.data.id)
@@ -211,7 +211,7 @@
                 {
                     if(value === true)
                     {
-                        axios.delete(`/admin/composicion/${composicion.id}`)
+                        axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/composicion/${composicion.id}`)
                             .then(()=>
                             {
                                 this.composiciones.splice(index, 1);

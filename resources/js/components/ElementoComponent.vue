@@ -129,17 +129,17 @@ export default {
     },
     created()
     {
-        axios.get('/admin/elementos/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/elementos/create')
             .then(res=>{
                 this.elementos = res.data;
             });
 
-        axios.get('/admin/proyectos/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/proyectos/create')
             .then(res =>{
                 this.proyectos = res.data;
             });
 
-        axios.get('/admin/tipo_elementos/create')
+        axios.get('http://localhost/laravel/prueba4/public/index.php/admin/tipo_elementos/create')
             .then(res=>{
                 this.tipo_elementos = res.data;
             });
@@ -169,7 +169,7 @@ export default {
             this.tipo_elemento = '',
             this.estado = ''
             
-            axios.post('/admin/elementos', params)
+            axios.post('http://localhost/laravel/prueba4/public/index.php/admin/elementos', params)
                 .then(res=>{
                     this.elementos.push(res.data);
                 });
@@ -202,7 +202,7 @@ export default {
                 tipoElemento_id: this.elemento.tipoElemento_id,
                 proyecto_id: this.elemento.proyecto_id}
 
-            axios.put(`/admin/elementos/${elemento.id}`, params)
+            axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/elementos/${elemento.id}`, params)
                 .then(res =>{
                     this.editarActivo = false;
                     const index = this.elementos.findIndex(elementoBuscar => elementoBuscar.id === res.data.id)
@@ -227,7 +227,7 @@ export default {
         },
         eliminarElemento(elemento, index)
         {
-           axios.get(`/srd_proyectos/showElemento/${elemento.id}`)
+           axios.get(`http://localhost/laravel/prueba4/public/index.php/srd_proyectos/showElemento/${elemento.id}`)
                 .then(res=>{
                     if(res.data === 0)
                     {
@@ -238,7 +238,7 @@ export default {
                     }).then(value=>{
                         if(value === true)
                         {
-                            axios.delete(`/admin/elementos/${elemento.id}`)
+                            axios.delete(`http://localhost/laravel/prueba4/public/index.php/admin/elementos/${elemento.id}`)
                                 .then(()=>{
                                     this.elementos.splice(index, 1);
                                 });
