@@ -21,7 +21,7 @@ class ProyectoController extends Controller
 
         echo($usuario);
 
-        $proyectos = Proyecto::select('proyectos.id', 'proyectos.nombre', 'proyectos.descripcion', 'proyectos.estado')
+        $proyectos = Proyecto::select('proyectos.id', 'proyectos.identificador', 'proyectos.nombre', 'proyectos.estado')
             ->join('trabajan', 'trabajan.proyecto_id', '=', 'proyectos.id')
             ->where('trabajan.seccion_id', '=', $usuario)
             ->get();    
@@ -38,7 +38,7 @@ class ProyectoController extends Controller
      */
     public function show($id)
     {
-        $proyectos = Proyecto::select('proyectos.id', 'proyectos.nombre', 'proyectos.descripcion', 'proyectos.estado')
+        $proyectos = Proyecto::select('proyectos.id', 'proyectos.identificador', 'proyectos.nombre', 'proyectos.estado')
             ->join('trabajan', 'trabajan.proyecto_id', '=', 'proyectos.id')
             ->where('trabajan.seccion_id', '=', $id)
             ->get();    

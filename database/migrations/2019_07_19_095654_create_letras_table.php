@@ -16,8 +16,8 @@ class CreateLetrasTable extends Migration
         Schema::create('letras', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->bigInteger('dedicacion_id')->unsigned();
-            $table->string('nombre');
-            $table->text('descripcion')->nullable();
+            $table->string('identificador');
+            $table->text('nombre');
 
             $table->foreign('dedicacion_id')->references('id')->on('dedicacions');
         });

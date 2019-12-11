@@ -7,6 +7,7 @@
                 <tr>
                     <th class="text-center" scope="col"> FECHA </th>
                     <th class="text-center" scope="col"> PROYECTO/LETRA </th>
+                    <th class="text-center" scope="col"> DEDICACIÓN </th>
                     <th class="text-center" scope="col"> CANTIDAD HORAS </th>
                     <th class="text-center" scope="col"> SERVICIO OFICIAL </th>
                     <th class="text-center" scope="col"> ELIMINAR </th>
@@ -15,7 +16,16 @@
             <tbody>
                 <tr v-for="(srd_letra, index) in srd_letras" v-bind:key="index">
                     <td class="text-center">{{srd_letra.fecha}}</td>
-                    <td>{{srd_letra.nombre}}</td>
+                    <td>{{srd_letra.identificador}} - {{srd_letra.nombre}}</td>
+                        <td v-if="srd_letra.dedicacion_id == 2">
+                            Gasto General
+                        </td>
+                        <td v-if="srd_letra.dedicacion_id == 3">
+                            No Presencia
+                        </td>
+                        <td v-if="srd_letra.dedicacion_id == 4">
+                            SAT
+                        </td>
                     <td class="text-center">{{srd_letra.cantidadHoras}}</td>
                     <td class="text-center">
                         <input class="form-check-input" type="checkbox" v-model="srd_letra.viaje" disabled>
@@ -24,7 +34,8 @@
                 </tr>
                 <tr v-for="(srd_proyecto, index) in srd_proyectos" v-bind:key="`A-${index}`">
                     <td class="text-center">{{srd_proyecto.fecha}}</td>
-                    <td>{{srd_proyecto.nombre}}</td>
+                    <td>{{srd_proyecto.identificador}} - {{srd_proyecto.nombre}}</td>
+                    <td>Proyecto</td>
                     <td class="text-center">{{srd_proyecto.cantidadHoras}}</td>
                     <td class="text-center">
                         <input class="form-check-input" type="checkbox" v-model="srd_proyecto.viaje" disabled>
@@ -50,7 +61,9 @@
                     id: '',
                     letra_id: '',
                     fecha: '', 
+                    identificador: '',
                     nombre: '',
+                    dedicacion_id: '',
                     cantidadHoras: '',
                     viaje: ''
                 },
@@ -59,6 +72,7 @@
                 {
                     id: '',
                     fecha: '',
+                    identificador: '',
                     nombre: '',
                     cantidadHoras: '',
                     viaje: ''

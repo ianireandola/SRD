@@ -14,7 +14,7 @@ class LetraController extends Controller
      */
     public function index()
     {
-        $letras = Letra::select('letras.id', 'letras.dedicacion_id', 'letras.nombre', 'letras.descripcion')
+        $letras = Letra::select('letras.id', 'letras.dedicacion_id', 'letras.identificador', 'letras.nombre')
             ->join('user_letras', 'letras.id', '=', 'user_letras.letra_id')
             ->where('user_letras.user_id', '=', auth()->id())
             ->get();

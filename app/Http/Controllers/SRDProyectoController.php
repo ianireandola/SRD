@@ -35,7 +35,7 @@ class SRDProyectoController extends Controller
      */
     public function create()
     {
-        $proyectos = Proyecto::select('srd_proyectos.id', 'srd_proyectos.fecha', 'proyectos.nombre', 'srd_proyectos.acc_id', 
+        $proyectos = Proyecto::select('srd_proyectos.id', 'srd_proyectos.fecha', 'proyectos.identificador', 'proyectos.nombre', 'srd_proyectos.acc_id', 
                                         'srd_proyectos.el_id', 'srd_proyectos.cantidadHoras', 'srd_proyectos.viaje')
             ->join('srd_proyectos', 'proyectos.id', '=', 'srd_proyectos.proy_id')
             ->where('srd_proyectos.us_id', '=', auth()->id())

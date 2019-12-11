@@ -15,8 +15,8 @@ class CreateProyectosTable extends Migration
     {
         Schema::create('proyectos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre');
-            $table->text('descripcion')->nullable();
+            $table->string('identificador');
+            $table->text('nombre');
             $table->enum('estado', ['Activo', 'Cerrado', 'Bloqueado']);
             $table->integer('cantidadActual');
             $table->integer('cantidadTotal');

@@ -14,7 +14,7 @@ class ProyectoUserController extends Controller
      */
     public function index()
     {
-        $proyectos = Proyecto::select('proyectos.id', 'proyectos.nombre', 'proyectos.descripcion', 'proyectos.estado')
+        $proyectos = Proyecto::select('proyectos.id', 'proyectos.identificador', 'proyectos.nombre', 'proyectos.estado')
             ->join('user_proyectos', 'proyectos.id', '=', 'user_proyectos.proyecto_id')
             ->where('user_proyectos.user_id', '=', auth()->id())
             ->get();

@@ -77,7 +77,7 @@
                 <tbody>
                     <tr v-for="(letra, index) in letras" v-bind:key="index">
                         <td class="text-center"><font-awesome-icon :icon="['fas', 'times-circle']"  @click="eliminarLetra(letra, index)"/></td>
-                        <td>{{letra.nombre}}</td>
+                        <td>{{letra.identificador}} - {{letra.nombre}}</td>
                         <td></td>
                         <td></td>
                         <td class="text-center"><b-form-input type="number" min="0" max="12" step="0.25" v-model="srd_letra.cantidadHoras[index]" v-on:change="guardarSRDLetra(letra, index)"/></td>
@@ -88,7 +88,7 @@
                             <font-awesome-icon :icon="['fas', 'times-circle']"  @click="eliminarProyecto(proyecto, index)"/>
                             <font-awesome-icon :icon="['fas', 'plus-circle']"  @click="añadirMismoProyecto(proyecto, index)"/>
                         </td>
-                        <td>{{proyecto.nombre}}</td>
+                        <td>{{proyecto.identificador}} - {{proyecto.nombre}}</td>
                         <td>
                             <b-form-select v-model="srd_proyecto.accion2_id[index]" v-on:change="guardarSRDProyecto(proyecto, index)">
                                 <template v-for="accion2 in acciones2">
@@ -196,30 +196,30 @@ export default {
             letra:
             {
                 id: '',
-                nombre: '',
-                descripcion: ''
+                identificador: '',
+                nombre: ''
             },
             proyectos: [],
             proyecto:
             {
                 id: '',
+                identificador: '',
                 nombre: '',
-                descripcion: '',
                 estado: ''
             },
             todoLetras: [],
             todoLetra:
             {
                 id: '',
-                nombre: '',
-                descripcion: ''
+                identificador: '',
+                nombre: ''
             },
             todoProyectos: [],
             todoProyecto: 
             {
                 id: '', 
+                identificador: '',
                 nombre: '',
-                descripcion: '',
                 estado: ''
             },
             srd_letras: [],

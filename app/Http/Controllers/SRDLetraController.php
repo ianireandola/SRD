@@ -17,7 +17,7 @@ class SRDLetraController extends Controller
      */
     public function index()
     {
-        $letras = Letra::select('srd_letras.id', 'srd_letras.fecha', 'letras.nombre', 'srd_letras.cantidadHoras', 'srd_letras.viaje')
+        $letras = Letra::select('srd_letras.id', 'srd_letras.fecha', 'letras.identificador', 'letras.nombre', 'letras.dedicacion_id', 'srd_letras.cantidadHoras', 'srd_letras.viaje')
             ->join('srd_letras', 'letras.id', '=', 'srd_letras.letra_id')
             ->where('srd_letras.user_id', '=', auth()->id())
             ->orderBy('srd_letras.fecha')
