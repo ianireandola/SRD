@@ -6,24 +6,24 @@
         <table class="table table-hover table-reponsive overflow-auto">
             <thead class="thead-light">
                 <tr>
-                    <th class="text-center" scope="col" width="15%"> FECHA </th>
+                    <th class="text-center" scope="col" width="10%"> FECHA </th>
                     <th class="text-center" scope="col" width="30%"> PROYECTO/LETRA </th>
-                    <th class="text-center" scope="col" width="15%"> DEDICACIÓN </th>
-                    <th class="text-center" scope="col" width="10%"> ACCIÓN NIVEL 1 </th>
+                    <th class="text-center" scope="col" width="7%"> DEDICACIÓN </th>
+                    <th class="text-center" scope="col" width="20%"> ACCIÓN NIVEL 1 </th>
                     <th class="text-center" scope="col" width="20%"> ACCIÓN NIVEL 2 </th>
                     <th class="text-center" scope="col" width="3%"> CANTIDAD HORAS </th>
                     <th class="text-center" scope="col" width="3%"> SERVICIO OFICIAL </th>
-                    <th class="text-center" scope="col" width="4%"> ELIMINAR </th>
+                    <th class="text-center" scope="col" width="7%"> ELIMINAR </th>
                 </tr>
             </thead>
             <tbody>
                 <tr class="warning">
-                    <td class="text-center" colspan="7"><b>LETRAS</b></td>
+                    <td class="text-center" colspan="8"><b>LETRAS</b></td>
                 </tr>
 
                 <tr v-for="(srd_letra, index) in srd_letras" v-bind:key="index">
                     <td class="text-center">{{srd_letra.fecha}}</td>
-                    <td>{{srd_letra.nombre}}</td>
+                    <td>{{srd_letra.identificador}} - {{srd_letra.nombre}}</td>
                         <td v-if="srd_letra.dedicacion_id == 2">
                             Gasto General
                         </td>
@@ -43,24 +43,24 @@
                 </tr>
 
                 <tr class="warning">
-                    <td class="text-center" colspan="7"><b>PROYECTOS</b></td>
+                    <td class="text-center" colspan="8"><b>PROYECTOS</b></td>
                 </tr>
 
                 <tr v-for="(srd_proyecto, index) in srd_proyectos" v-bind:key="`A-${index}`">
                     <td class="text-center">{{srd_proyecto.fecha}}</td>
-                    <td>{{srd_proyecto.nombre}}</td>
+                    <td>{{srd_proyecto.identificador}} - {{srd_proyecto.nombre}}</td>
                     <td>Proyecto</td>
                     <td>
                     <template v-for="accion2 in acciones2">
                         <td v-if="accion2.id === srd_proyecto.acc_id" v-bind:key="`B-${accion2.id}`">
-                            {{accion2.nombre}}
+                            {{accion2.identificador}} - {{accion2.nombre}}
                         </td>
                     </template>
                     </td>
                     <td>
                     <template v-for="elemento in elementos">
                         <td v-if="elemento.id === srd_proyecto.el_id"  v-bind:key="`C-${elemento.id}`">
-                            {{elemento.nombre}}
+                            {{elemento.identificador}} - {{elemento.nombre}}
                         </td>
                     </template>
                     </td>
@@ -89,6 +89,7 @@
                     id: '',
                     letra_id: '',
                     fecha: '', 
+                    identificador: '',
                     nombre: '',
                     dedicacion_id: '',
                     cantidadHoras: '',
@@ -99,6 +100,7 @@
                 {
                     id: '',
                     fecha: '',
+                    identificador: '',
                     nombre: '',
                     acc_id: '',
                     el_id: '',
@@ -109,12 +111,14 @@
                 accion2:
                 {
                     id: '',
-                    nombre: '',
+                    identificador: '',
+                    nombre: ''
                 },
                 elementos: [],
                 elemento:
                 {
                     id:'',
+                    identificador: '',
                     nombre: ''
                 }
             }

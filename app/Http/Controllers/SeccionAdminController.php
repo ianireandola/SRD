@@ -129,6 +129,15 @@ class SeccionAdminController extends Controller
         return $seccion; 
     }
 
+    public function areaUpdate()
+    {
+        $seccion = Seccion::find($id);
+        $seccion->area_id = $request->area_id;
+        $seccion->save();
+
+        return $seccion;
+    }
+
     /**
      * Remove the specified resource from storage.
      *

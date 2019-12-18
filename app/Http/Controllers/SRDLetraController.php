@@ -52,7 +52,8 @@ class SRDLetraController extends Controller
      */
     public function show($fecha)
     {
-        $letras = Letra::select('srd_letras.id', 'letras.nombre', 'srd_letras.user_id', 'srd_letras.fecha', 'srd_letras.cantidadHoras', 'srd_letras.viaje')
+        $letras = Letra::select('srd_letras.id', 'letras.nombre', 'letras.identificador', 'srd_letras.user_id', 'srd_letras.fecha', 
+            'srd_letras.cantidadHoras', 'srd_letras.viaje')
             ->join('srd_letras', 'letras.id', '=', 'srd_letras.letra_id')
             ->where('srd_letras.fecha', '=', $fecha)
             ->get();

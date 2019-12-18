@@ -33,14 +33,14 @@
             <b-col class="text-center">
                 <b-dropdown id="dropdown-1" dropright variant="info" text="Añadir Letra" class="m-md-2">
                     <div v-for="(todoLetra, index) in todoLetras" v-bind:key="index">
-                        <b-dropdown-item @click="añadirLetra(todoLetra)">{{todoLetra.nombre}}</b-dropdown-item>
+                        <b-dropdown-item @click="añadirLetra(todoLetra)">{{todoLetra.identificador}} - {{todoLetra.nombre}}</b-dropdown-item>
                     </div>
                 </b-dropdown>
             </b-col>
             <b-col class="text-center">
                 <b-dropdown id="dropdown-2" dropright variant="info" text="Añadir Proyecto" class="m-md-2">
                     <div v-for="(todoProyecto, index) in todoProyectos" v-bind:key="index">
-                        <b-dropdown-item @click="añadirProyecto(todoProyecto)">{{todoProyecto.nombre}}</b-dropdown-item>
+                        <b-dropdown-item @click="añadirProyecto(todoProyecto)">{{todoProyecto.identificador}} - {{todoProyecto.nombre}}</b-dropdown-item>
                     </div>
                 </b-dropdown>
             </b-col>
@@ -109,7 +109,7 @@
                 </thead>
                 <tbody>
                     <tr v-for="(srd_letra_coincidente, index) in srd_letra_coincidentes" v-bind:key="index">
-                        <td>{{srd_letra_coincidente.nombre}}</td>
+                        <td>{{srd_letra_coincidente.identificador}} - {{srd_letra_coincidente.nombre}}</td>
                         <td class="text-center">{{srd_letra_coincidente.cantidadHoras}}</td>
                         <td class="text-center">
                             <input class="form-check-input" type="checkbox" v-model="srd_letra_coincidente.viaje" disabled>
@@ -117,7 +117,7 @@
                         <td class="text-center"><b-button block variant="secondary" type="submit" @click="eliminarSRDLetra(srd_letra_coincidente, index)">Eliminar</b-button></td>
                     </tr>
                     <tr v-for="(srd_proyecto_coincidente, index) in srd_proyecto_coincidentes" v-bind:key="`A-${index}`">
-                        <td>{{srd_proyecto_coincidente.nombre}}</td>
+                        <td>{{srd_proyecto_coincidente.identificador}} - {{srd_proyecto_coincidente.nombre}}</td>
                         <td class="text-center">{{srd_proyecto_coincidente.cantidadHoras}}</td>
                         <td class="text-center">
                             <input class="form-check-input" type="checkbox" v-model="srd_proyecto_coincidente.viaje" disabled>
@@ -215,6 +215,7 @@ export default {
                 id: '',
                 letra_id: '',
                 fecha: '',
+                identificador: '',
                 nombre: '',
                 cantidadHoras: '',
                 viaje: ''
@@ -224,6 +225,7 @@ export default {
             {
                 id: '',
                 fecha: '',
+                identificador: '',
                 nombre: '',
                 cantidadHoras: '',
                 viaje: ''

@@ -445,6 +445,7 @@ export default {
                 }
                 axios.post(`http://localhost/laravel/prueba4/public/index.php/admin/usuarios`, params)
                     .then(res=>{
+                        this.usuarios.push(res.data);
                         this.usuario.chapa = '',
                         this.usuario.nombre = '',
                         this.usuario.email = '',

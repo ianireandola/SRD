@@ -14,7 +14,7 @@ class ElementoController extends Controller
      */
     public function index()
     {
-        $elementos = Elemento::select('elementos.id', 'elementos.nombre', 'elementos.proyecto_id')
+        $elementos = Elemento::select('elementos.id', 'elementos.nombre', 'elementos.identificador', 'elementos.proyecto_id')
             ->orderBy('elementos.nombre')
             ->get();
 
