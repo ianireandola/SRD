@@ -35,7 +35,7 @@ class SeccionAdminController extends Controller
     public function create()
     {
         $secciones = Seccion::select('*')
-            ->orderBy('seccions.nombre')
+            ->orderBy('seccions.identificador')
             ->get();
 
         return $secciones;
@@ -50,6 +50,7 @@ class SeccionAdminController extends Controller
     public function store(Request $request)
     {
         $seccion = new Seccion();
+        $seccion->identificador = $request->identificador;
         $seccion->nombre = $request->nombre;
         $seccion->nivel2 = $request->nivel2;
         $seccion->area_id = $request->area_id;
@@ -118,6 +119,7 @@ class SeccionAdminController extends Controller
     public function update(Request $request, $id)
     {
         $seccion = Seccion::find($id);
+        $seccion->identificador = $request->identificador;
         $seccion->nombre = $request->nombre;
         $seccion->nivel2 = $request->nivel2;
         $seccion->area_id = $request->area_id;

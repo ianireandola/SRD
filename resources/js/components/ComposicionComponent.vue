@@ -6,12 +6,12 @@
         <form @submit.prevent="editarComposicion()" v-if="editarActivo" class="mb-5">
             <b-form-group label="Proyecto:">
                 <b-form-select v-model="proyecto" v-on:change="asignarProyecto(proyecto)">
-                    <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.id}} - {{proyecto.nombre}}</option>
+                    <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.identificador}} - {{proyecto.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <b-form-group label="Tipo de Elemento:">
                 <b-form-select class="form-control" v-model="tipo_elemento" v-on:change="asignarTipoElemento(tipo_elemento)">
-                    <option v-for="tipo_elemento in tipo_elementos" v-bind:key="tipo_elemento.id" :value="tipo_elemento">{{tipo_elemento.id}} - {{tipo_elemento.nombre}}</option>
+                    <option v-for="tipo_elemento in tipo_elementos" v-bind:key="tipo_elemento.id" :value="tipo_elemento">{{tipo_elemento.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <button type="submit" class="btn btn-success btn-block">Guardar</button>
@@ -22,12 +22,12 @@
         <form @submit.prevent="agregar" v-else class="mb-5">
             <b-form-group label="Proyecto:">
                 <b-form-select v-model="proyecto" v-on:change="asignarProyecto(proyecto)">
-                    <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.id}} - {{proyecto.nombre}}</option>
+                    <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto">{{proyecto.identificador}} - {{proyecto.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <b-form-group label="Tipo de Elemento:">
                 <b-form-select class="form-control" v-model="tipo_elemento" v-on:change="asignarTipoElemento(tipo_elemento)">
-                    <option v-for="tipo_elemento in tipo_elementos" v-bind:key="tipo_elemento.id" :value="tipo_elemento">{{tipo_elemento.id}} - {{tipo_elemento.nombre}}</option>
+                    <option v-for="tipo_elemento in tipo_elementos" v-bind:key="tipo_elemento.id" :value="tipo_elemento">{{tipo_elemento.nombre}}</option>
                 </b-form-select>
             </b-form-group>
             <button type="submit" class="btn btn-success btn-block mb-7 md-2">Agregar</button>
@@ -44,7 +44,7 @@
                 <tr v-for="(composicion, index) in composiciones" v-bind:key="index">
                     <template v-for="proyecto in proyectos">
                         <td v-if="proyecto.id === composicion.proyecto_id" v-bind:key="`B-${proyecto.id}`">
-                            {{proyecto.nombre}}
+                            {{proyecto.identificador}} - {{proyecto.nombre}}
                         </td>
                     </template>
                     <template v-for="tipo_elemento in tipo_elementos">
@@ -85,8 +85,8 @@
                 proyecto:
                 {
                     id: '',
+                    identificador: '',
                     nombre: '', 
-                    descripcion: '', 
                     proyectoPadre_id: ''
                 },
                 editarActivo: false

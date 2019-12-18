@@ -61,7 +61,7 @@
                     </b-col>
                     <b-col sm="9">
                         <b-form-select class="form-control" v-model="seccion" v-on:change="seccionElegida(seccion)">
-                            <option v-for="seccion in secciones" v-bind:key="seccion.id" :value="seccion">{{seccion.nombre}}</option>
+                            <option v-for="seccion in secciones" v-bind:key="seccion.id" :value="seccion">{{seccion.identificador}} - {{seccion.nombre}}</option>
                         </b-form-select>
                     </b-col>
                 </b-row>
@@ -169,7 +169,7 @@
                     </b-col>
                     <b-col sm="9">
                         <b-form-select class="form-control" v-model="seccion" v-on:change="seccionElegida(seccion)">
-                            <option v-for="seccion in secciones" v-bind:key="seccion.id" :value="seccion">{{seccion.nombre}}</option>
+                            <option v-for="seccion in secciones" v-bind:key="seccion.id" :value="seccion">{{seccion.identificador}} - {{seccion.nombre}}</option>
                         </b-form-select>
                     </b-col>
                 </b-row>
@@ -262,9 +262,9 @@
             <p><b>Contraseña:</b> {{usuario.password_confirmation}}</p>
             <p><b>Funcion:</b> {{usuario.funcion}}</p>
             <p><b>Comentario:</b> {{usuario.comentario}}</p>
-            <p><b>Sección:</b> {{usuario.seccion_id}} - {{usuario.seccion_nombre}}</p>
-            <p><b>Categoria:</b> {{usuario.categoria_id}} - {{usuario.categoria_nombre}}</p>
-            <p><b>Fijo/Eventual:</b> {{usuario.fijoeventual_id}} - {{fijo_eventual.nombre}}</p>
+            <p><b>Sección:</b> {{usuario.seccion_identificador}} - {{usuario.seccion_nombre}}</p>
+            <p><b>Categoria:</b> {{usuario.categoria_nombre}}</p>
+            <p><b>Fijo/Eventual:</b> {{fijo_eventual.nombre}}</p>
             <p><b>CPU/Portatil:</b> {{usuario.CPUportatil_nombre}}</p>
             <p><b>Fecha CPU/Portatil:</b> {{usuario.fechaCPUportatil}}</p>
         </div>
@@ -304,6 +304,7 @@ export default {
                 funcion: '',
                 comentario: '',
                 seccion_id: '',
+                seccion_identificador: '',
                 seccion_nombre: '',
                 categoria_id: '', 
                 categoria_nombre: '',
@@ -330,6 +331,7 @@ export default {
             seccion:
             {
                 id: '',
+                identificador: '',
                 nombre: ''
             }
 
@@ -366,6 +368,7 @@ export default {
                 if(this.usuario.seccion_id === this.secciones[i].id)
                 {
                     this.usuario.seccion_nombre = this.secciones[i].nombre;
+                    this.usuario.seccion_identificador = this.secciones[i].identificador;
                     this.seccion = this.secciones[i];
                 }
             }
@@ -408,6 +411,7 @@ export default {
         {
             this.usuario.seccion_id = item.id;
             this.usuario.seccion_nombre = item.nombre;
+            this.usuario.seccion_identificador = item.identificador;
         },
         agregarUsuario()
         {

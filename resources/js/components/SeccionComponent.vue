@@ -4,16 +4,23 @@
 
     <!--Cuando "editarActivo=true" EDITAR-->
     <form @submit.prevent="editarSeccion(seccion)" v-if="editarActivo" class="mb-5">
-        <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="seccion.nombre">
+        <b-row>
+            <b-col >
+                <input type="text" class="form-control mb-2" placeholder="Identificador" v-model="seccion.identificador">
+            </b-col>
+            <b-col>
+                <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="seccion.nombre">
+            </b-col>
+        </b-row>
         <b-form-checkbox v-model="checkbox_nivel2">Nivel 2</b-form-checkbox>
         <b-form-group label="Área relacionada:">
             <b-form-select class="form-control" v-model="area" v-on:change="areaElegida(area)">
-                <option v-for="area in areas" v-bind:key="area.id" :value="area">{{area.id}} - {{area.nombre}}</option>
+                <option v-for="area in areas" v-bind:key="area.id" :value="area">{{area.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <b-form-group label="Planta relacionada:">
             <b-form-select class="form-control mb-2" v-model="planta" v-on:change="plantaElegida(planta)">
-                <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta">{{planta.id}} - {{planta.nombre}}</option>
+                <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta">{{planta.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <button type="submit" class="btn btn-success btn-block">Guardar</button>
@@ -22,16 +29,23 @@
 
     <!--Cuando "editarActivo=false" AGREGAR -->
     <form @submit.prevent="agregar" v-else class="mb-5">
-        <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="seccion.nombre">
+        <b-row>
+            <b-col>
+                <input type="text" class="form-control mb-2" placeholder="Identificador" v-model="seccion.identificador">
+            </b-col>
+            <b-col>
+                <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="seccion.nombre">
+            </b-col>
+        </b-row>
         <b-form-checkbox v-model="checkbox_nivel2">Nivel 2</b-form-checkbox>
         <b-form-group label="Área relacionada:">
             <b-form-select class="form-control" v-model="area" v-on:change="areaElegida(area)">
-                <option v-for="area in areas" v-bind:key="area.id" :value="area">{{area.id}} - {{area.nombre}}</option>
+                <option v-for="area in areas" v-bind:key="area.id" :value="area">{{area.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <b-form-group label="Planta relacionada:">
             <b-form-select class="form-control mb-2" v-model="planta" v-on:change="plantaElegida(planta)">
-                <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta">{{planta.id}} - {{planta.nombre}}</option>
+                <option v-for="planta in plantas" v-bind:key="planta.id" :value="planta">{{planta.nombre}}</option>
             </b-form-select>
         </b-form-group>
         <button type="submit" class="btn btn-success btn-block mb-7">Agregar</button>
@@ -40,7 +54,7 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col">ID</th>
+                <th class="text-center" scope="col">IDENTIFICADOR</th>
                 <th class="text-center" scope="col">NOMBRE</th>
                 <th class="text-center" scope="col">NIVEL 2</th>
                 <th scope="col">ÁREA PERTENECIENTE</th>
@@ -50,8 +64,8 @@
         </thead>
         <tbody>
             <tr v-for="(seccion, index) in secciones" v-bind:key="index">
-                <td class="text-center">{{seccion.id}}</td>
-                <td class="text-center">{{seccion.nombre}}</td>
+                <td class="text-center">{{seccion.identificador}}</td>
+                <td>{{seccion.nombre}}</td>
                 <td class="text-center">
                     <input class="form-check-input" type="checkbox" v-model="seccion.nivel2" disabled>
                 </td>
@@ -86,6 +100,7 @@ export default {
             seccion:
             {
                 id: '',
+                identificador: '',
                 nombre: '',
                 nivel2: '',
                 area_id: '',
@@ -134,13 +149,20 @@ export default {
             }else{
                 this.seccion.nivel2 = 0;
             }
-            if(this.seccion.nombre.trim() === '' || this.seccion.area_id === '' || this.seccion.planta_id === '')
+            if(this.seccion.identificador.trim() === '' || this.seccion.nombre.trim() === '' || this.seccion.area_id === '' || 
+                this.seccion.planta_id === '')
             {
                 alert('Debes completar todos los campos antes de guardar');
                 return;
             }
-            const params = {nombre: this.seccion.nombre, nivel2: this.seccion.nivel2, area_id: this.seccion.area_id, planta_id: this.seccion.planta_id}
+            const params = {
+                identificador: this.seccion.identificador,
+                nombre: this.seccion.nombre, 
+                nivel2: this.seccion.nivel2, 
+                area_id: this.seccion.area_id, 
+                planta_id: this.seccion.planta_id}
 
+            this.seccion.identificador = '',
             this.seccion.nombre = '',
             this.seccion.nivel2 = '',
             this.seccion.area_id = '',
@@ -168,7 +190,12 @@ export default {
             }else{
                 this.seccion.nivel2 = 0;
             }
-            const params={nombre: this.seccion.nombre, nivel2: this.seccion.nivel2, area_id: this.seccion.area_id, planta_id: this.seccion.planta_id}
+            const params={
+                identificador: this.seccion.identificador,
+                nombre: this.seccion.nombre, 
+                nivel2: this.seccion.nivel2, 
+                area_id: this.seccion.area_id, 
+                planta_id: this.seccion.planta_id}
 
             axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/secciones/${seccion.id}`, params)
                 .then(res =>{
@@ -176,6 +203,7 @@ export default {
                     const index = this.secciones.findIndex(seccionBuscar => seccionBuscar.id === res.data.id)
                     this.secciones[index] = res.data;
 
+                    this.seccion.identificador = '',
                     this.seccion.nombre = '',
                     this.seccion.nivel2 = '',
                     this.seccion.area_id = '',
@@ -202,6 +230,7 @@ export default {
         editarFormulario(seccion)
         {
             this.editarActivo = true;
+            this.seccion.identificador = seccion.identificador;
             this.seccion.nombre = seccion.nombre;
             this.seccion.id = seccion.id;
             this.seccion.descripcion = seccion.descripcion;
@@ -280,7 +309,15 @@ export default {
         cancelarEdicion()
         {
             this.editarActivo = false;
-            this.seccion = { id: '', nombre: '', nivel2: '', area_id: '', area_nombre: '', planta_id: '', planta_nombre: ''}
+            this.seccion = { 
+                id: '', 
+                identificador: '',
+                nombre: '',
+                nivel2: '', 
+                area_id: '', 
+                area_nombre: '', 
+                planta_id: '', 
+                planta_nombre: ''}
             this.area = '',
             this.planta = ''
         }

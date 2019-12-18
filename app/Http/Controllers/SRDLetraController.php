@@ -93,7 +93,10 @@ class SRDLetraController extends Controller
     public function edit($fecha)
     {
         $srd_letras = srd_letra::select('srd_letras.id')
-            ->where('srd_letras.fecha', '=', $fecha)
+            ->where([
+                ['srd_letras.fecha', '=', $fecha],
+                ['srd_letras.user_id', '=', auth()->id()]
+            ])
             ->count();
             
         return $srd_letras;

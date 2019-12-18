@@ -7,6 +7,7 @@ use App\srd_proyecto;
 use App\Proyecto;
 use Illuminate\Http\Request;
 use App\Exports\SRDExport;
+use DB;
 
 class SRDAdminController extends Controller
 {
@@ -93,6 +94,74 @@ class SRDAdminController extends Controller
             ->get();
 
         return $srd_proyectos;
+    }
+
+    public function showUserProyectos($date)
+    {
+       $mes = substr($date, -4, 2);
+       $año = substr($date, 0, 4);
+
+       $users = DB::select(DB::raw("SELECT users.chapa, users.nombre FROM users WHERE users.id NOT IN
+                                    (SELECT srd_proyectos.us_id FROM srd_proyectos WHERE srd_proyectos.fecha LIKE '$año-$mes-%')"));
+
+        return $users;
+    }
+
+    public function showUserLetras($date)
+    {
+       $mes = substr($date, -4, 2);
+       $año = substr($date, 0, 4);
+
+       $users = DB::select(DB::raw("SELECT users.chapa, users.nombre FROM users WHERE users.id NOT IN
+                                    (SELECT srd_letras.user_id FROM srd_letras WHERE srd_letras.fecha LIKE '$año-$mes-%')"));
+
+        return $users;
+    }
+
+    public function showDistinctProyectos($date)
+    {
+       $mes = substr($date, -4, 2);
+       if($mes == 12)
+       {
+           $año = substr($date, -8, 4);
+           $año = $año + 1;
+           $tope = $año."01"."01";
+       }else
+       {
+           $tope = $date + 100;
+       }
+
+       $srd_proyectos = srd_proyecto::select('users.chapa AS usuario_chapa', 'srd_proyectos.fecha', 'users.nombre')
+            ->distinct('users.chapa', 'srd_proyectos.fecha')
+            ->join('users', 'srd_proyectos.us_id', '=', 'users.id')
+            ->whereBetween('srd_proyectos.fecha', [$date, $tope])
+            ->orderBy('srd_proyectos.fecha')
+            ->get();
+
+        return $srd_proyectos;
+    }
+
+    public function showDistinctLetras($date)
+    {
+       $mes = substr($date, -4, 2);
+       if($mes == 12)
+       {
+           $año = substr($date, -8, 4);
+           $año = $año + 1;
+           $tope = $año."01"."01";
+       }else
+       {
+           $tope = $date + 100;
+       }
+
+       $srd_letras = srd_letra::select('users.chapa AS usuario_chapa', 'srd_letras.fecha', 'users.nombre')
+            ->distinct('users.chapa', 'srd_letras.fecha')
+            ->join('users', 'srd_letras.user_id', '=', 'users.id')
+            ->whereBetween('srd_letras.fecha', [$date, $tope])
+            ->orderBy('srd_letras.fecha')
+            ->get();
+
+        return $srd_letras;
     }
 
     public function showLetras($date)

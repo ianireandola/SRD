@@ -14,6 +14,10 @@
                 </tr>
             </thead>
             <tbody>
+                <tr class="warning">
+                    <td class="text-center" colspan="7"><b>LETRAS</b></td>
+                </tr>
+
                 <tr v-for="(srd_letra, index) in srd_letras" v-bind:key="index">
                     <td class="text-center">{{srd_letra.fecha}}</td>
                     <td>{{srd_letra.identificador}} - {{srd_letra.nombre}}</td>
@@ -32,6 +36,11 @@
                     </td>
                     <td class="text-center"><b-button block variant="secondary" type="submit" @click="eliminarSRDLetra(srd_letra, index)">Eliminar</b-button></td>
                 </tr>
+
+                <tr class="warning">
+                    <td class="text-center" colspan="7"><b>PROYECTOS</b></td>
+                </tr>
+
                 <tr v-for="(srd_proyecto, index) in srd_proyectos" v-bind:key="`A-${index}`">
                     <td class="text-center">{{srd_proyecto.fecha}}</td>
                     <td>{{srd_proyecto.identificador}} - {{srd_proyecto.nombre}}</td>

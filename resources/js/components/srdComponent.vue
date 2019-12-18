@@ -14,11 +14,17 @@
             </date-picker>
         </b-col>
         <b-col>
-            <b-button @click="llevarA()" variant="info">Descargar horas a Hoja Excel</b-button>
+            <b-button class="mb-4" @click="llevarA()" variant="info">Descargar horas a Hoja Excel</b-button>
+        </b-col>
+        <b-col>
+            <b-button class="mb-4" @click="usersSinHoras()" variant="info">Trabajadores SIN registrar horas en mes {{this.date}} </b-button>
+        </b-col>
+        <b-col>
+            <b-button class="mb-4" @click="usersConHoras()" variant="info">Trabajadores CON horas registradas en mes {{this.date}} </b-button>
         </b-col>
     </b-row>
     
-    <form class="mb-3">
+    <form class="mb-5">
         <table class="table table-hover table-responsive overflow-auto">
             <thead class="thead-light">
                 <tr>
@@ -81,6 +87,38 @@
             </tbody>
         </table>
     </form>
+
+    <b-modal id="modal-users-SIN" hide-footer>
+        <template v-slot:modal-title>
+            Trabajadores sin horas registradas en mes: <b> {{date}} </b>
+        </template>
+        <div class="d-block text-left">
+            <template v-for="srd_user_sin in srd_users_sin">
+                <p><b>Chapa:</b> {{srd_user_sin.chapa}} - <b>Nombre: </b> {{srd_user_sin.nombre}} </p>
+            </template>
+        </div>
+        <b-button class="mt-3" block @click="cerrarModal()">Cerrar</b-button>
+    </b-modal>
+
+    <b-modal id="modal-users-CON" hide-footer>
+        <template v-slot:modal-title>
+            Trabajadores con horas registradas en mes: <b>{{date}}</b>
+        </template>
+        <div class="d-block text-left">
+            <p class="text-center"> <b>HORAS REGISTRADAS A LETRAS</b> </p>
+            <template v-for="srd_letrauser in srd_letrausers">
+                <p><b>Chapa:</b> {{srd_letrauser.usuario_chapa}} - <b>Nombre:</b> {{srd_letrauser.nombre}} 
+                <b>     Fecha:</b> {{srd_letrauser.fecha}}</p>
+            </template>
+            <p class="text-center"> <b>HORAS REGISTRADAS A PROYECTOS</b> </p>
+            <template v-for="srd_proyectouser in srd_proyectousers">
+                <p><b>Chapa:</b> {{srd_proyectouser.usuario_chapa}} - <b>Nombre:</b> {{srd_proyectouser.nombre}} 
+                <b>     Fecha:</b> {{srd_proyectouser.fecha}}</p>
+            </template>            
+        </div>
+        <b-button class="mt-3" block @click="cerrarModal2()"> Cerrar </b-button>
+    </b-modal>
+
 </div>
 </template>
 
@@ -128,6 +166,38 @@ export default {
                 viaje: '',
                 nivel2: ''
             },
+            srd_users_psin: [],
+            srd_user_psin:
+            {
+                chapa: '',
+                nombre: ''
+            },
+            srd_users_lsin: [],
+            srd_user_lsin:
+            {
+                chapa: '',
+                nombre: ''
+            },
+            srd_users_sin: [],
+            srd_user_sin:
+            {
+                chapa: '',
+                nombre: ''
+            },
+            srd_proyectousers: [],
+            srd_proyectouser:
+            {
+                fecha: '',
+                usuario_chapa: '',
+                nombre: ''
+            },
+            srd_letrausers: [],
+            srd_letrauser:
+            {
+                fecha: '',
+                usuario_chapa: '',
+                nombre: ''
+            },
             acciones2: [],
             accion2: 
             {
@@ -162,7 +232,7 @@ export default {
         axios.get('http://localhost/laravel/prueba4/public/index.php/elementos')
             .then(res=>{
                 this.elementos = res.data;
-            });        
+            });       
     },
     methods:
     {
@@ -183,6 +253,79 @@ export default {
         llevarA()
         {
             window.location.href = 'http://localhost/laravel/prueba4/public/index.php/admin/srd/descarga';
+        },
+        usersSinHoras()
+        {
+            if(this.date === null)
+            {
+                alert('Debe elegir un mes');
+                return;
+            }else
+            {
+                axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/srd/showUserProyectos/${this.date}`)
+                .then(res=>{
+                    this.srd_users_psin = res.data;
+                });
+
+                axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/srd/showUserLetras/${this.date}`)
+                .then(res=>{
+                    this.srd_users_lsin = res.data;
+                });
+
+                //En srd_users_sin estan aquellos trabajadores que no han insertado ninguna hora en mes X
+                for(var i=0; i<this.srd_users_psin.length; i++)
+                {
+                    for(var j=0; j<this.srd_users_lsin.length; j++)
+                    {
+                        if(this.srd_users_psin[i].chapa === this.srd_users_lsin[j].chapa)
+                        {
+                            this.srd_users_sin.push(this.srd_users_psin[i]);
+                        }
+                    }
+                }
+
+                this.$root.$emit('bv::show::modal', 'modal-users-SIN', '#btnShow');
+            }
+            
+        },
+        cerrarModal()
+        {
+            if(this.srd_users_sin.length !== 0)
+            {
+                this.srd_users_psin = [],
+                this.srd_users_lsin = [],
+                this.srd_users_sin = []
+            }
+            this.$root.$emit('bv::hide::modal', 'modal-users-SIN');
+        },
+        usersConHoras()
+        {
+            if(this.date === null)
+            {
+                alert('Debe elegir un mes');
+                return;
+            }else{
+                axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/srd/showDistinctProyectos/${this.date}`)
+                .then(res=>{
+                    this.srd_proyectousers = res.data;
+                });
+
+                axios.get(`http://localhost/laravel/prueba4/public/index.php/admin/srd/showDistinctLetras/${this.date}`)
+                .then(res=>{
+                    this.srd_letrausers = res.data;
+                });
+
+                this.$root.$emit('bv::show::modal', 'modal-users-CON', '#btnShow');
+            }
+        },
+        cerrarModal2()
+        {
+            if(this.srd_proyectosusers !== 0)
+            {
+                this.srd_proyectosusers = [],
+                this.srd_letrasusers = []
+            }
+            this.$root.$emit('bv::hide::modal', 'modal-users-CON');
         },
         eliminarSRDProyecto(srd_todoproyecto, index)
         {

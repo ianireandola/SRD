@@ -4,8 +4,8 @@
 
     <!--Cuando "editarActivo=true" EDITAR-->
     <form @submit.prevent="editarProyecto(proyecto)" v-if="editarActivo" class="mb-5">
-        <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="proyecto.nombre">
-        <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="proyecto.descripcion"/>
+        <input type="text" class="form-control mb-2" placeholder="Identificador" v-model="proyecto.identificador">
+        <input class="form-control mb-2" placeholder="Nombre" v-model="proyecto.nombre"/>
         <div class="row">
             <div class="col">
                 <b-form-input class="mb-4" type="number" v-model="proyecto.cantidadActual" placeholder="Cantidad Actual"/>
@@ -33,7 +33,9 @@
             <div class="col">
                 <b-form-group label="Proyecto Padre relacionado:">
                     <b-form-select v-model="proyecto_padre" v-on:change="asignarProyectoPadre(proyecto_padre)">
-                        <option v-for="proyecto_padre in proyecto_padres" v-bind:key="proyecto_padre.id" :value="proyecto_padre">{{proyecto_padre.id}} - {{proyecto_padre.nombre}}</option>
+                        <option v-for="proyecto_padre in proyecto_padres" v-bind:key="proyecto_padre.id" :value="proyecto_padre">
+                            {{proyecto_padre.identificador}} - {{proyecto_padre.nombre}}
+                        </option>
                     </b-form-select>
                 </b-form-group>
             </div>
@@ -57,8 +59,8 @@
 
     <!--Cuando "editarActivo=false" AGREGAR -->
     <form @submit.prevent="agregar" v-else class="mb-5">
-        <input type="text" class="form-control mb-2" placeholder="Nombre" v-model="proyecto.nombre">
-        <textarea class="form-control mb-2" placeholder="Descripcion" rows="3" v-model="proyecto.descripcion"/>
+        <input type="text" class="form-control mb-2" placeholder="Identificador" v-model="proyecto.identificador">
+        <input class="form-control mb-2" placeholder="Nombre" v-model="proyecto.nombre"/>
         <div class="row">
             <div class="col">
                 <b-form-input class="mb-4" type="number" v-model="proyecto.cantidadActual" placeholder="Cantidad Actual"/>
@@ -86,7 +88,9 @@
             <div class="col">
                 <b-form-group label="Proyecto Padre relacionado:">
                     <b-form-select v-model="proyecto_padre" v-on:change="asignarProyectoPadre(proyecto_padre)">
-                        <option v-for="proyecto_padre in proyecto_padres" v-bind:key="proyecto_padre.id" :value="proyecto_padre">{{proyecto_padre.id}} - {{proyecto_padre.nombre}}</option>
+                        <option v-for="proyecto_padre in proyecto_padres" v-bind:key="proyecto_padre.id" :value="proyecto_padre">
+                            {{proyecto_padre.identificador}} - {{proyecto_padre.nombre}}
+                        </option>
                     </b-form-select>
                 </b-form-group>
             </div>
@@ -110,17 +114,15 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col" width="3%">ID</th>
-                <th class="text-center" scope="col" width="30%">NOMBRE</th>
-                <th class="text-center" scope="col" width="20%">DESCRIPCIÓN</th>
-                <th class="text-center" scope="col" width="47%">OPCIONES</th>
+                <th class="text-center" scope="col" width="5%">IDENTIFICADOR</th>
+                <th class="text-center" scope="col" width="40%">NOMBRE</th>
+                <th class="text-center" scope="col" width="55%">OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(proyecto, index) in proyectos" v-bind:key="proyecto.id">
-                <td class="text-center">{{proyecto.id}}</td>
-                <td >{{proyecto.nombre}}</td>
-                <td>{{proyecto.descripcion}}</td>
+                <td >{{proyecto.identificador}}</td>
+                <td>{{proyecto.nombre}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(proyecto)" class="btn btn-primary">Modificar</button>
                     <b-button variant="info" v-b-modal.center @click="mostrarDetalle(proyecto, $bvModal.show('modal-center'))">Detalle</b-button>
@@ -134,12 +136,10 @@
 
     <b-modal id="modal-center" hide-footer>
         <template v-slot:modal-title>
-            Detalle del Proyecto Padre: <b> {{proyecto.nombre}} </b>
+            Detalle del Proyecto: <b> {{proyecto.identificador}} - {{proyecto.nombre}} </b>
         </template>
         <div class="d-block text-left">
-            <p><b>ID:</b> {{proyecto.id}}</p>
-            <p><b>Nombre:</b> {{proyecto.nombre}}</p>
-            <p><b>Descripción:</b> {{proyecto.descripcion}}</p>
+            <p><b>Nombre:</b> {{proyecto.identificador}} - {{proyecto.nombre}}</p>
             <p><b>Estado:</b> {{proyecto.estado}}</p>
             <p><b>Cantidad Actual:</b> {{proyecto.cantidadActual}}</p>
             <p><b>Cantidad Total:</b> {{proyecto.cantidadTotal}}</p>
@@ -149,7 +149,7 @@
             <p><b>Proyecto Padre:</b> 
                 <template v-for="proyecto_padre in proyecto_padres">
                     <p v-if="proyecto_padre.id === proyecto.proyectoPadre_id" v-bind:key="`B-${proyecto_padre.id}`">
-                        {{proyecto_padre.nombre}}
+                        {{proyecto_padre.identificador}} - {{proyecto_padre.nombre}}
                     </p>
                 </template>
             </p>
@@ -159,7 +159,7 @@
 
     <b-modal size="xl" id="modal-nivel2" ref="btnproyecto" hide-footer no-close-on-esc hide-header-close>
         <template v-slot:modal-title>
-            Proyecto a eliminar: <b> {{proyecto.id}} - {{proyecto.nombre}} </b>
+            Proyecto a eliminar: <b> {{proyecto.identificador}} - {{proyecto.nombre}} </b>
         </template>
         <div>
             <p>No se puede eliminar, está relacionada con las siguientes acciones de nivel 2: </p>
@@ -173,10 +173,10 @@
             </thead>
             <tbody>
                 <tr v-for="(nivel2_coincidente, index) in niveles2_coincidentes" v-bind:key="index">
-                    <td>{{nivel2_coincidente.id}} - {{nivel2_coincidente.nombre}}</td>
+                    <td>{{nivel2_coincidente.identificador}} - {{nivel2_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="nivel2_coincidente.proyecto_id" v-on:change="guardarCambiosNivel2(nivel2_coincidente, index)">
-                            <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto.id">{{proyecto.id}} - {{proyecto.nombre}}</option>
+                            <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto.id">{{proyecto.identificador}} - {{proyecto.nombre}}</option>
                         </b-form-select>
                     </td>
                 </tr>
@@ -191,7 +191,7 @@
 
     <b-modal size="xl" id="modal-elemento" ref="btnproyecto" hide-footer no-close-on-esc hide-header-close>
         <template v-slot:modal-title>
-            Proyecto a eliminar: <b> {{proyecto.nombre}} </b>
+            Proyecto a eliminar: <b> {{proyecto.identificador}} - {{proyecto.nombre}} </b>
         </template>
         <div>
             <p>No se puede eliminar, está relacionada con los siguientes elementos: </p>
@@ -205,10 +205,10 @@
             </thead>
             <tbody>
                 <tr v-for="(elemento_coincidente, index) in elementos_coincidentes" v-bind:key="index">
-                    <td>{{elemento_coincidente.id}} - {{elemento_coincidente.nombre}}</td>
+                    <td>{{elemento_coincidente.identificador}} - {{elemento_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="elemento_coincidente.proyecto_id" v-on:change="guardarCambiosElementos(elemento_coincidente, index)">
-                            <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto.id">{{proyecto.id}} - {{proyecto.nombre}}</option>
+                            <option v-for="proyecto in proyectos" v-bind:key="proyecto.id" :value="proyecto.id">{{proyecto.identificador}} - {{proyecto.nombre}}</option>
                         </b-form-select>
                     </td>
                 </tr>
@@ -339,15 +339,15 @@ export default {
         agregar()
         {
             this.proyecto.ultimaRevision = this.date;
-            if(this.proyecto.nombre.trim() === '' || this.proyecto.estado === '' || this.proyecto.cantidadActual === '' || this.proyecto.cantidadTotal === ''
-                 || this.proyecto.ultimaRevision === '' || this.proyecto.fabricacion === '' || this.proyecto.proyectoPadre_id === '')
+            if(this.proyecto.identificador.trim() === '' || this.proyecto.nombre.trim() === '' || this.proyecto.estado === '' || this.proyecto.cantidadActual === '' ||
+                this.proyecto.cantidadTotal === '' || this.proyecto.ultimaRevision === '' || this.proyecto.fabricacion === '' || this.proyecto.proyectoPadre_id === '')
             {
                 alert('Debes completar todos los campos antes de guardar');
                 return;
             }
             const params = {
                 nombre: this.proyecto.nombre,
-                descripcion: this.proyecto.descripcion,
+                identificador: this.proyecto.identificador,
                 estado: this.proyecto.estado,
                 cantidadActual: this.proyecto.cantidadActual,
                 cantidadTotal: this.proyecto.cantidadTotal,
@@ -357,7 +357,7 @@ export default {
                 proyectoPadre_id: this.proyecto.proyectoPadre_id}
 
             this.proyecto.nombre = '',
-            this.proyecto.descripcion = '',
+            this.proyecto.identificador = '',
             this.proyecto.estado = '',
             this.proyecto.cantidadActual = '',
             this.proyecto.cantidadTotal = '',
@@ -385,7 +385,7 @@ export default {
             this.proyecto.ultimaRevision = this.date;
             const params = {
                 nombre: this.proyecto.nombre, 
-                descripcion: this.proyecto.descripcion, 
+                identificador: this.proyecto.identificador, 
                 estado: this.proyecto.estado, 
                 cantidadActual: this.proyecto.cantidadActual,
                 cantidadTotal: this.proyecto.cantidadTotal,
@@ -402,7 +402,7 @@ export default {
 
                     this.proyecto.id = '',
                     this.proyecto.nombre = '',
-                    this.proyecto.descripcion = '',
+                    this.proyecto.identificador = '',
                     this.proyecto.estado = '',
                     this.proyecto.cantidadActual = '',
                     this.proyecto.cantidadTotal = '',
@@ -427,7 +427,7 @@ export default {
             this.proyecto = {
                 id: '',
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 estado: '',
                 cantidadActual: '',
                 cantidadTotal: '',
@@ -442,7 +442,7 @@ export default {
         {
             this.proyecto = {
                 nombre: '',
-                descripcion: '',
+                idnetificador: '',
                 estado: '',
                 cantidadActual: '',
                 cantidadTotal: '',
@@ -456,7 +456,7 @@ export default {
         {
             this.proyecto = {
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 estado: '',
                 cantidadActual: '',
                 cantidadTotal: '',
@@ -470,7 +470,7 @@ export default {
         {
             this.editarActivo = true;
             this.proyecto.nombre = proyecto.nombre;
-            this.proyecto.descripcion = proyecto.descripcion;
+            this.proyecto.identificador = proyecto.identificador;
             this.proyecto.id = proyecto.id;
             this.proyecto.estado = proyecto.estado;
             this.proyecto.cantidadActual = proyecto.cantidadActual;
@@ -557,7 +557,7 @@ export default {
         relacionNivel2(proyecto)
         {
             this.proyecto.nombre = proyecto.nombre;
-            this.proyecto.descripcion = proyecto.descripcion;
+            this.proyecto.identificador = proyecto.identificador;
             this.proyecto.estado = proyecto.estado;
             this.proyecto.cantidadActual = proyecto.cantidadActual;
             this.proyecto.cantidadTotal = proyecto.cantidadTotal;
@@ -578,7 +578,7 @@ export default {
         relacionElementos(proyecto)
         {
             this.proyecto.nombre = proyecto.nombre;
-            this.proyecto.descripcion = proyecto.descripcion;
+            this.proyecto.identificador = proyecto.identificador;
             this.proyecto.estado = proyecto.estado;
             this.proyecto.cantidadActual = proyecto.cantidadActual;
             this.proyecto.cantidadTotal = proyecto.cantidadTotal;
@@ -598,7 +598,7 @@ export default {
         },
         guardarCambiosNivel2(nivel2, index)
         {
-            const params = {nombre: nivel2.nombre, descripcion: nivel2.descripcion, proyecto_id: nivel2.proyecto_id, nombre_proyecto: this.proyecto.nombre}
+            const params = {nombre: nivel2.nombre, identificador: nivel2.identificador, proyecto_id: nivel2.proyecto_id, nombre_proyecto: this.proyecto.nombre}
             
             axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/accions2/updateProyecto/${nivel2.id}`, params)
                 .then(res=>{
@@ -609,7 +609,7 @@ export default {
             this.$root.$emit('bv::hide::modal', 'modal-nivel2', '#btnShow');
             this.proyecto = {
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 estado: '',
                 cantidadActual: '',
                 cantidadTotal: '',
@@ -621,7 +621,7 @@ export default {
         },
         guardarCambiosElementos(elemento, index)
         {
-            const params = {nombre: elemento.nombre, descripcion: elemento.descripcion, tipoElemento_id: elemento.tipoElemento_id, proyecto_id: elemento.proyecto_id, estado: elemento.estado}
+            const params = {nombre: elemento.nombre, identificador: elemento.identificador, tipoElemento_id: elemento.tipoElemento_id, proyecto_id: elemento.proyecto_id, estado: elemento.estado}
 
             axios.put(`http://localhost/laravel/prueba4/public/index.php/admin/elementos/proyectoUpdate/${elemento.id}`, params)
                 .then(res=>{
@@ -632,7 +632,7 @@ export default {
             this.$root.$emit('bv::hide::modal', 'modal-elemento', '#btnShow');
             this.proyecto = {
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 estado: '',
                 cantidadActual: '',
                 cantidadTotal: '',

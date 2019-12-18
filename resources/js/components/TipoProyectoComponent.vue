@@ -18,14 +18,12 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col">ID</th>
-                <th class="text-center" scope="col">NOMBRE</th>
-                <th class="text-center" scope="col">OPCIONES</th>
+                <th class="text-center" scope="col" width="50%">NOMBRE</th>
+                <th class="text-center" scope="col" width="50%">OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(item, index) in tipos_proyecto" v-bind:key="index">
-                <td class="text-center">{{item.id}}</td>
                 <td class="text-center">{{item.nombre}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(item)" class="btn btn-primary">Modificar</button>
@@ -38,7 +36,7 @@
 
     <b-modal size="xl" id="modal-proyectopadre" ref="btnUser" hide-footer no-close-on-esc hide-header-close>
         <template v-slot:modal-title>
-            Tipo Proyecto a eliminar: <b> {{tipo_proyecto.id}} - {{tipo_proyecto.nombre}} </b>
+            Tipo Proyecto a eliminar: <b> {{tipo_proyecto.nombre}} </b>
         </template>
         <div>
             <p>No se puede eliminar, está relacionada con los siguientes atributos: </p>
@@ -52,10 +50,12 @@
             </thead>
             <tbody>
                 <tr v-for="(proyectopadre_coincidente, index) in proyectospadre_coincidentes" v-bind:key="index">
-                    <td>{{proyectopadre_coincidente.id}} - {{proyectopadre_coincidente.nombre}}</td>
+                    <td>{{proyectopadre_coincidente.identificador}} - {{proyectopadre_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="proyectopadre_coincidente.tipoProyecto_id" v-on:change="guardarCambios(proyectopadre_coincidente, index)">
-                            <option v-for="tipo_proyecto in tipos_proyecto" v-bind:key="tipo_proyecto.id" :value="tipo_proyecto.id">{{tipo_proyecto.id}} - {{tipo_proyecto.nombre}}</option>
+                            <option v-for="tipo_proyecto in tipos_proyecto" v-bind:key="tipo_proyecto.id" :value="tipo_proyecto.id">
+                                {{tipo_proyecto.nombre}}
+                            </option>
                         </b-form-select>
                     </td>
                 </tr>
@@ -88,6 +88,7 @@ export default {
             proyectopadre:
             {
                 id: '',
+                identificador: '',
                 tipoProyecto_id: '',
                 nombre: '',
             },
@@ -95,6 +96,7 @@ export default {
             proyectopadre_coincidente: 
             {
                 id: '',
+                identificador: '',
                 tipoProyecto_id: '',
                 nombre: ''
             }

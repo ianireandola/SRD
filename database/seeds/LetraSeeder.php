@@ -14,143 +14,143 @@ class LetraSeeder extends Seeder
         DB::table('letras')->insert([
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'A - PROBETAS/MAQUETAS',
-                'descripcion' => 'GG'
+                'identificador' => 'A',
+                'nombre' => 'PROBETAS/MAQUETAS'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'B - FORMACIÓN',
-                'descripcion' => 'GG'
+                'identificador' => 'B',
+                'nombre' => 'FORMACIÓN'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'C - CALIBRACIONES/PREPARACIÓN DE MATERIAL',
-                'descripcion' => 'GG'
+                'identificador' => 'C', 
+                'nombre' => 'CALIBRACIONES/PREPARACIÓN DE MATERIAL'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'D - OTROS (NO IMPUTABLES A PROYECTO ALGUNO)',
-                'descripcion' => 'GG'
+                'identificador' => 'D',
+                'nombre' => 'OTROS (NO IMPUTABLES A PROYECTO ALGUNO)'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'E - REUNIONES (NO DE PROYECTO)',
-                'descripcion' => 'GG'
+                'identificador' => 'E',
+                'nombre' => 'REUNIONES (NO DE PROYECTO)'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'F - AUDITORÍAS AL S.G.C.',
-                'descripcion' => 'GG'
+                'identificador' => 'F', 
+                'nombre' => 'AUDITORÍAS AL S.G.C.'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'G - CONTROL ECONÓMICO',
-                'descripcion' => 'GG'
+                'identificador' => 'G', 
+                'nombre' => 'CONTROL ECONÓMICO'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'H - OFERTAS',
-                'descripcion' => 'GG'
+                'identificador' => 'H', 
+                'nombre' => 'OFERTAS'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'I - SEGUIMIENTO SUMINISTRADORES (NO IMPUTABLE A PROYECTO ALGUNO)',
-                'descripcion' => 'GG'
+                'identificador' => 'I',
+                'nombre' => 'SEGUIMIENTO SUMINISTRADORES (NO IMPUTABLE A PROYECTO ALGUNO)'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'J - ASAMBLEAS',
-                'descripcion' => 'GG'
+                'identificador' => 'J',
+                'nombre' => 'ASAMBLEAS'
             ],
             [
                 'dedicacion_id' => '3',
-                'nombre' => 'K - BAJA/MITIGACIÓN',
-                'descripcion' => 'NP'
+                'identificador' => 'K',
+                'nombre' => 'BAJA/MITIGACIÓN'
             ],
             [
                 'dedicacion_id' => '3',
-                'nombre' => 'L - PERMISOS PARA MÉDICOS',
-                'descripcion' => 'NP'
+                'identificador' => 'L',
+                'nombre' => 'PERMISOS PARA MÉDICOS'
             ],
             [
                 'dedicacion_id' => '3',
-                'nombre' => 'M - SALIDAS (ASUNTOS PROPIOS)',
-                'descripcion' => 'NP'
+                'identificador' => 'M', 
+                'nombre' => 'SALIDAS (ASUNTOS PROPIOS)'
             ],
             [
                 'dedicacion_id' => '3',
-                'nombre' => 'N - VACACIONES',
-                'descripcion' => 'NP'
+                'identificador' => 'N', 
+                'nombre' => 'VACACIONES'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'O - CALIDAD PRODUCTO: Otros',
-                'descripcion' => 'GG'
+                'identificador' => 'O',
+                'nombre' => 'CALIDAD PRODUCTO: Otros'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'P - SQA: Otros',
-                'descripcion' => 'GG'
+                'identificador' => 'P',
+                'nombre' => 'SQA: Otros'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'Q - PROCESOS ESPECIALES - SOLDADURA: Otros',
-                'descripcion' => 'GG'
+                'identificador' => 'Q', 
+                'nombre' => 'PROCESOS ESPECIALES - SOLDADURA: Otros'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'R - PROCESOS ESPECIALES - PINTURA: Otros',
-                'descripcion' => 'GG'
+                'identificador' => 'R',
+                'nombre' => 'PROCESOS ESPECIALES - PINTURA: Otros'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'S - PROCESOS ESPECIALES - ADHESIVADO: Otros',
-                'descripcion' => 'GG'
+                'identificador' => 'S',
+                'nombre' => 'PROCESOS ESPECIALES - ADHESIVADO: Otros'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'T - PROCESOS ESPECIALES - CRIMPADO: Otros',
-                'descripcion' => 'GG'
+                'identificador' => 'T',
+                'nombre' => 'PROCESOS ESPECIALES - CRIMPADO: Otros'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'U - PROCESOS ESPECIALES - PARES DE APRIETE: Otros',
-                'descripcion' => 'GG'
+                'identificador' => 'U', 
+                'nombre' => 'PROCESOS ESPECIALES - PARES DE APRIETE: Otros'
             ],
             [
                 'dedicacion_id' => '4',
-                'nombre' => 'V - SERVICIOS A OTROS DEPARTAMENTOS',
-                'descripcion' => 'SAT'
+                'identificador' => 'V', 
+                'nombre' => 'SERVICIOS A OTROS DEPARTAMENTOS'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'V - RECONOCIMIENTO MÉDICO CAF',
-                'descripcion' => 'GG'
+                'identificador' => 'W', 
+                'nombre' => 'RECONOCIMIENTO MÉDICO CAF'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'X - HOMOLOGACIONES: Otros',
-                'descripcion' => 'GG'
+                'identificador' => 'X',
+                'nombre' => 'HOMOLOGACIONES: Otros'
             ],
             [
                 'dedicacion_id' => '3',
-                'nombre' => 'Y - HORAS RECUPERADAS/DE LIBRE DISPOSICIÓN',
-                'descripcion' => 'NP'
+                'identificador' => 'Y',
+                'nombre' => 'HORAS RECUPERADAS/DE LIBRE DISPOSICIÓN'
             ],
             [
                 'dedicacion_id' => '3',
-                'nombre' => 'Z - PARO/HUELGA',
-                'descripcion' => 'NP'
+                'identificador' => 'Z',
+                'nombre' => 'PARO/HUELGA'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'AA - PROCESOS ESPECIALES - REMACHADO: Otros',
-                'descripcion' => 'GG'
+                'identificador' => 'AA',
+                'nombre' => 'PROCESOS ESPECIALES - REMACHADO: Otros'
             ],
             [
                 'dedicacion_id' => '2',
-                'nombre' => 'AB - REVISIÓN GUÍAS DE DISEÑO',
-                'descripcion' => 'GG'
+                'identificador' => 'AB',
+                'nombre' => 'REVISIÓN GUÍAS DE DISEÑO'
             ]
         ]);
 

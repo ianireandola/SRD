@@ -18,14 +18,12 @@
     <table class="table table-hover">
         <thead class="thead-light">
             <tr>
-                <th class="text-center" scope="col">ID</th>
-                <th class="text-center" scope="col">NOMBRE</th>
-                <th class="text-center" scope="col">OPCIONES</th>
+                <th class="text-center" scope="col" width="50%">NOMBRE</th>
+                <th class="text-center" scope="col" width="50%">OPCIONES</th>
             </tr>
         </thead>
         <tbody>
             <tr v-for="(tipo_elemento, index) in tipo_elementos" v-bind:key="index">
-                <td class="text-center">{{tipo_elemento.id}}</td>
                 <td class="text-center">{{tipo_elemento.nombre}}</td>
                 <td class="text-center">
                     <button type="button" @click="editarFormulario(tipo_elemento)" class="btn btn-primary">Modificar</button>
@@ -38,7 +36,7 @@
 
      <b-modal size="xl" id="modal-tipoelemento" ref="btnElemento" hide-footer no-close-on-esc hide-header-close>
         <template v-slot:modal-title>
-            Tipo de Elemento a eliminar: <b> {{tipo_elemento.id}} - {{tipo_elemento.nombre}} </b>
+            Tipo de Elemento a eliminar: <b> {{tipo_elemento.nombre}} </b>
         </template>
         <div>
             <p>No se puede eliminar, está relacionado con los siguientes atributos: </p>
@@ -52,10 +50,12 @@
             </thead>
             <tbody>
                 <tr v-for="(elemento_coincidente, index) in elementos_coincidentes" v-bind:key="index">
-                    <td>{{elemento_coincidente.id}} - {{elemento_coincidente.nombre}}</td>
+                    <td>{{elemento_coincidente.identificador}} - {{elemento_coincidente.nombre}}</td>
                     <td class="text-center">
                         <b-form-select v-model="elemento_coincidente.tipoElemento_id" v-on:change="guardarCambios(elemento_coincidente, index)">
-                            <option v-for="tipo_elemento in tipo_elementos" v-bind:key="tipo_elemento.id" :value="tipo_elemento.id">{{tipo_elemento.id}} - {{tipo_elemento.nombre}}</option>
+                            <option v-for="tipo_elemento in tipo_elementos" v-bind:key="tipo_elemento.id" :value="tipo_elemento.id">
+                                {{tipo_elemento.nombre}}
+                            </option>
                         </b-form-select>
                     </td>
                 </tr>
@@ -88,7 +88,7 @@ export default {
             {
                 id: '',
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 estado: '',
                 tipoElemento_id: '', 
                 proyecto_id: ''
@@ -98,7 +98,7 @@ export default {
             {
                 id: '',
                 nombre: '',
-                descripcion: '',
+                identificador: '',
                 estado: '',
                 tipoElemento_id: '', 
                 proyecto_id: '' 

@@ -35,7 +35,7 @@ class ProyectoAdminController extends Controller
     public function create()
     {
         $proyectos = Proyecto::select('*')
-            ->orderBy('proyectos.nombre')
+            ->orderBy('proyectos.identificador')
             ->get();
 
         return $proyectos;
@@ -50,8 +50,8 @@ class ProyectoAdminController extends Controller
     public function store(Request $request)
     {
         $proyecto = new Proyecto();
+        $proyecto->identificador = $request->identificador;
         $proyecto->nombre = $request->nombre;
-        $proyecto->descripcion = $request->descripcion;
         $proyecto->estado = $request->estado;
         $proyecto->cantidadActual = $request->cantidadActual;
         $proyecto->cantidadTotal = $request->cantidadTotal;
@@ -83,8 +83,8 @@ class ProyectoAdminController extends Controller
     public function update(Request $request, $id)
     {
         $proyecto = Proyecto::find($id);
+        $proyecto->identificador = $request->identificador;
         $proyecto->nombre = $request->nombre;
-        $proyecto->descripcion = $request->descripcion;
         $proyecto->estado = $request->estado;
         $proyecto->cantidadActual = $proyecto->cantidadActual;
         $proyecto->cantidadTotal = $request->cantidadTotal;

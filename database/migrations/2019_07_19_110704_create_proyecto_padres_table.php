@@ -15,7 +15,7 @@ class CreateProyectoPadresTable extends Migration
     {
         Schema::create('proyecto_padres', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->Integer('identificador');
+            $table->string('identificador');
             $table->string('nombre');
             $table->enum('estado', ['Activo', 'Cerrado', 'Bloqueado']);
             $table->string('Q_Proyecto');

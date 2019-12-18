@@ -93,7 +93,10 @@ class SRDProyectoController extends Controller
         $proyectos = Proyecto::select('srd_proyectos.id', 'srd_proyectos.fecha', 'proyectos.nombre', 'srd_proyectos.acc_id', 'srd_proyectos.el_id', 
                                     'srd_proyectos.cantidadHoras', 'srd_proyectos.viaje')
             ->join('srd_proyectos', 'proyectos.id', '=', 'srd_proyectos.proy_id')
-            ->where('srd_proyectos.fecha', '=', $fecha)
+            ->where([
+                ['srd_proyectos.fecha', '=', $fecha],
+                ['srd_proyectos.us_id', '=', auth()->id()]
+            ])
             ->get();
 
         return $proyectos;
@@ -144,11 +147,17 @@ class SRDProyectoController extends Controller
     public function edit($fecha)
     {
         $srd_proyectos = srd_proyecto::select('srd_proyectos.id')
-            ->where('srd_proyectos.fecha', '=', $fecha)
+            ->where([
+                ['srd_proyectos.fecha', '=', $fecha],
+                ['srd_proyectos.us_id', '=', auth()->id()]
+            ])
             ->count();
 
         $srd_letras = srd_letra::select('srd_letras.id')
-            ->where('srd_letras.fecha', '=', $fecha)
+            ->where([
+                ['srd_letras.fecha', '=', $fecha],
+                ['srd_letras.user_id', '=', auth()->id()]
+            ])
             ->count();
 
         $srd_total = $srd_letras + $srd_proyectos;

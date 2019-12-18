@@ -14,8 +14,8 @@ class Accion2Controller extends Controller
      */
     public function index()
     {
-        $acciones2 = Accion2::select('accion2s.id', 'accion2s.nombre', 'accion2s.descripcion', 'accion2s.proyecto_id')
-            ->orderBy('accion2s.nombre')
+        $acciones2 = Accion2::select('accion2s.id', 'accion2s.nombre', 'accion2s.identificador', 'accion2s.proyecto_id')
+            ->orderBy('accion2s.identificador')
             ->get();
 
         return $acciones2;
