@@ -35,7 +35,7 @@
         "@progress/kendo-theme-default": "^4.6.0",
         "@progress/kendo-vue-grid": "^0.3.7",
         "bootstrap-vue": "^2.0.0-rc.28",
-        "moment": "^2.24.0",
+        "moment": "^2.29.2",
         "vue-js-popover": "^1.1.8",
         "vue-material-design-icons": "^4.1.0",
         "vue-sweetalert2": "^2.1.1",
